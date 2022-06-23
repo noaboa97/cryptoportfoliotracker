@@ -8,6 +8,17 @@ public class Platform {
     private BigDecimal investedBalance; // Methode to calc it?
     private BigDecimal CurrentBalance; // Methode to calc it?
 
+    public BigDecimal investedBalance() {
+
+        Transactions T = new Transactions();
+
+        T.getTransactions();
+
+        BigDecimal Balance = new BigDecimal(54);
+
+        return Balance;
+    }
+
     public Platform(int id, String name) {
         this.id = id;
         this.name = name;

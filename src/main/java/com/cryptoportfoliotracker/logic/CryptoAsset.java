@@ -2,7 +2,7 @@ package com.cryptoportfoliotracker.logic;
 
 import java.math.BigDecimal;
 
-public class CryptoAsset {
+public class CryptoAsset extends Asset {
 
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
     private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto
@@ -11,6 +11,9 @@ public class CryptoAsset {
     private BigDecimal interestEarnedFiat;
     private BigDecimal interestEarnedCrypto;
 
+    public CryptoAsset(int id, String fullname, String shortname, Platform platform) {
+        super(id, fullname, shortname, platform);
+    }
 
 
     public BigDecimal getInvestedCapitalFiat() {
