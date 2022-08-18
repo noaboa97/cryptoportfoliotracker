@@ -1,11 +1,13 @@
-package com.cryptoportfoliotracker.logic;
+package com.cryptoportfoliotracker.entities;
+
+import com.cryptoportfoliotracker.repository.Transactions;
 
 import java.math.BigDecimal;
 
 public class Platform {
     private int id;
     private String name;
-    private BigDecimal investedBalance; // Methode to calc it?
+    private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
     private BigDecimal CurrentBalance; // Methode to calc it?
 
     public BigDecimal investedBalance() {

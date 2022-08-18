@@ -1,8 +1,7 @@
-package com.cryptoportfoliotracker.logic;
+package com.cryptoportfoliotracker.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import com.cryptoportfoliotracker.entities.Transaction;
 
-import javax.persistence.Entity;
 import java.util.ArrayList;
 
 

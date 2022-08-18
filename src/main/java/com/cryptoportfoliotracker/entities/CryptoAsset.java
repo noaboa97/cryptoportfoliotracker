@@ -1,4 +1,7 @@
-package com.cryptoportfoliotracker.logic;
+package com.cryptoportfoliotracker.entities;
+
+import com.cryptoportfoliotracker.entities.Asset;
+import com.cryptoportfoliotracker.entities.Platform;
 
 import java.math.BigDecimal;
 

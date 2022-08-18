@@ -1,4 +1,4 @@
-package com.cryptoportfoliotracker.logic;
+package com.cryptoportfoliotracker.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,11 +7,11 @@ import javax.persistence.Id;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
+//@Entity
 public class Transaction {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
     private Date dateAndTime;
     private BigDecimal srcAmount;

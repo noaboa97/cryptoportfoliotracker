@@ -1,4 +1,4 @@
-package com.cryptoportfoliotracker.logic;
+package com.cryptoportfoliotracker.entities;
 
 public class Asset {
     private int id;
@@ -43,5 +43,12 @@ public class Asset {
 
     public void setPlatform(Platform platform) {
         this.platform = platform;
+    }
+
+    public static class FiatAsset {
+
+        public FiatAsset() {
+        }
+
     }
 }
