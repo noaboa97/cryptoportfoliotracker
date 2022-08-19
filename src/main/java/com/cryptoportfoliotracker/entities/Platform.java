@@ -1,6 +1,6 @@
 package com.cryptoportfoliotracker.entities;
 
-import com.cryptoportfoliotracker.repository.Transactions;
+import com.cryptoportfoliotracker.repository.TransactionRepository;
 
 import java.math.BigDecimal;
 
@@ -12,9 +12,9 @@ public class Platform {
 
     public BigDecimal investedBalance() {
 
-        Transactions T = new Transactions();
+        TransactionRepository T = new TransactionRepository();
 
-        T.getTransactions();
+        T.getTransactionList();
 
         BigDecimal Balance = new BigDecimal(54);
 

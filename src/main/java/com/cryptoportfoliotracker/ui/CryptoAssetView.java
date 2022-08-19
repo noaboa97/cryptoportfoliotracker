@@ -1,6 +1,7 @@
 package com.cryptoportfoliotracker.ui;
 
 import com.vaadin.flow.component.html.H1;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -10,6 +11,6 @@ import com.vaadin.flow.router.Route;
 public class CryptoAssetView extends VerticalLayout {
 
     public CryptoAssetView() {
-        add(new H1("My Crypto Assets"));
+        add(new H2("My Crypto Assets"));
     }
 }
