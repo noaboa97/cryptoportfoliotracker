@@ -3,23 +3,24 @@ package com.cryptoportfoliotracker.repository;
 import com.cryptoportfoliotracker.entities.Platform;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PlatformRepository {
-    private ArrayList<Platform> PlatformList;
+    private List<Platform> PlatformList = new ArrayList<>();
 
-    public PlatformRepository(ArrayList<Platform> List) {
-        PlatformList = List;
+    public PlatformRepository(List<Platform> List) {
+        this.PlatformList = List;
     }
 
     public PlatformRepository() {
     }
 
-    public ArrayList<Platform> getPlatformList() {
-        return PlatformList;
+    public List<Platform> getPlatformList() {
+        return this.PlatformList;
     }
 
     public void addPlatform(Platform Platform) {
-        PlatformList.add(Platform);
+        this.PlatformList.add(Platform);
     }
 
 }

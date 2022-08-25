@@ -1,6 +1,13 @@
 package com.cryptoportfoliotracker.ui;
 
+import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
+import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
+import com.cryptoportfoliotracker.repository.PlatformRepository;
+import com.cryptoportfoliotracker.repository.TransactionRepository;
+import com.fasterxml.jackson.databind.type.PlaceholderForType;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -19,15 +26,28 @@ public class ListView extends VerticalLayout {
 
     Grid<Transaction> grid = new Grid<>(Transaction.class, false);
     TextField filterText = new TextField();
-    public ListView() {
+
+    // Test Only
+    CryptoAssetRepository CryptoAssetRepo = new CryptoAssetRepository();
+    PlatformRepository PlatformRepo = new PlatformRepository();
+    //TransactionRepository TransactionRepo = new TransactionRepository();
+
+    //-------*/
+
+    CompAddTransaction compAddTransaction;
+    public ListView(TransactionRepository TransactionRepository) {
 
         add(new H2("Transactions"));
 
         addClassName("list-view");
         setSizeFull();
         configureGrid();
+        configureCompAddTransaction();
 
-        add(getToolbar(), grid);
+        add(getToolbar(), getContent());
+
+        updateList();
+
 
     }
 
@@ -37,7 +57,7 @@ public class ListView extends VerticalLayout {
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
         grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
-        grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
+        //grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getSrcAmount()).setHeader("Source Amount");
         grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
         grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
@@ -48,6 +68,17 @@ public class ListView extends VerticalLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
     }
+
+    private Component getContent() {
+        HorizontalLayout content = new HorizontalLayout(grid, compAddTransaction);
+        content.setFlexGrow(2, grid);
+
+        content.setFlexGrow(1, compAddTransaction);
+        content.addClassNames("content");
+        content.setSizeFull();
+        return content;
+    }
+
     private HorizontalLayout getToolbar() {
         filterText.setPlaceholder("Filter by name...");
         filterText.setClearButtonVisible(true);
@@ -62,6 +93,29 @@ public class ListView extends VerticalLayout {
 
         toolbar.addClassName("toolbar");
         return toolbar;
+    }
+
+    private void configureCompAddTransaction(){
+
+
+        //Testing only
+        Platform P = new Platform(1, "Bitpanda");
+        PlatformRepo.addPlatform(P);
+        CryptoAsset CA = new CryptoAsset(1, "Bitcoin", "BTC",P);
+
+
+        CryptoAssetRepo.addCryptoAsset(CA);
+
+
+
+        compAddTransaction = new CompAddTransaction(CryptoAssetRepo.getCryptoAssetList(),PlatformRepo.getPlatformList());
+        compAddTransaction.setWidth("25em");
+    }
+
+    public void updateList(){
+
+        //grid.setItems(TransactionRepo.getTransactionList());
+
     }
 
 

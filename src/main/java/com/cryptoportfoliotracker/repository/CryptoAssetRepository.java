@@ -2,25 +2,27 @@ package com.cryptoportfoliotracker.repository;
 
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class CryptoAssetRepository {
 
-    private ArrayList<CryptoAsset> CryptoAssetList;
+    private List<CryptoAsset> CryptoAssetList = new ArrayList<>();
 
-    public CryptoAssetRepository(ArrayList<CryptoAsset> List) {
-        CryptoAssetList = List;
+    public CryptoAssetRepository(List<CryptoAsset> List) {
+        this.CryptoAssetList = List;
     }
 
     public CryptoAssetRepository() {
     }
 
-    public ArrayList<CryptoAsset> getCryptoAssetList() {
-        return CryptoAssetList;
+    public List<CryptoAsset> getCryptoAssetList() {
+        return this.CryptoAssetList;
     }
 
     public void addCryptoAsset(CryptoAsset CryptoAsset) {
-        CryptoAssetList.add(CryptoAsset);
+        this.CryptoAssetList.add(CryptoAsset);
     }
     
 }

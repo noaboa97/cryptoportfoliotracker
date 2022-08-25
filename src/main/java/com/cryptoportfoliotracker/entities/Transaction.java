@@ -1,26 +1,33 @@
 package com.cryptoportfoliotracker.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
-//@Entity
+@Entity
 public class Transaction {
 
-    //@Id
+    @Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+    @NotEmpty
     private Date dateAndTime;
+    @NotEmpty
     private BigDecimal srcAmount;
+    @NotEmpty
     private Asset srcAsset;
+    @NotEmpty
     private BigDecimal destAmount;
+    @NotEmpty
     private Asset destAsset;
+    @NotEmpty
     private Platform srcPlatform;
+    @NotEmpty
     private Platform destPlatform;
+    @NotEmpty
     private BigDecimal fees;
+    @NotEmpty
     private Asset feeAsset;
     private String notes;
 
@@ -30,7 +37,7 @@ public class Transaction {
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
         this.destAmount = destAmount;
-        this.destAsset = destAsset;
+        //this.destAsset = destAsset;
         this.srcPlatform = srcPlatform;
         this.destPlatform = destPlatform;
     }
@@ -75,13 +82,13 @@ public class Transaction {
         this.destAmount = destAmount;
     }
 
-    public Asset getDestAsset() {
+    /*public Asset getDestAsset() {
         return destAsset;
     }
 
     public void setDestAsset(Asset destAsset) {
         this.destAsset = destAsset;
-    }
+    }*/
 
     public Platform getSrcPlatform() {
         return srcPlatform;

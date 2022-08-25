@@ -1,11 +1,11 @@
 package com.cryptoportfoliotracker.ui;
 
-import com.vaadin.board.Board;
+//import com.vaadin.board.Board;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.ui.Component;
+//import com.vaadin.ui.Component;
 
 @Route(value="dashboard", layout = MainView.class)
 @PageTitle("Dashboard")

@@ -2,14 +2,22 @@ package com.cryptoportfoliotracker.entities;
 
 import com.cryptoportfoliotracker.repository.TransactionRepository;
 
+import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
+@Entity
 public class Platform {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
+
+    @NotEmpty
     private String name;
     private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
     private BigDecimal CurrentBalance; // Methode to calc it?
-
+/*
     public BigDecimal investedBalance() {
 
         TransactionRepository T = new TransactionRepository();
@@ -19,7 +27,9 @@ public class Platform {
         BigDecimal Balance = new BigDecimal(54);
 
         return Balance;
-    }
+
+
+    }*/
 
     public Platform(int id, String name) {
         this.id = id;
