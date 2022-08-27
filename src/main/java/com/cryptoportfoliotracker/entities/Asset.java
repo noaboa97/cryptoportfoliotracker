@@ -3,16 +3,16 @@ package com.cryptoportfoliotracker.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-@Entity
+//@Entity
 public class Asset {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty
+    //@NotEmpty
     private String fullname;
-    @NotEmpty
+    //@NotEmpty
     private String shortname;
-    @NotEmpty
+    //@NotEmpty
     private Platform platform;
 
     public Asset(int id, String fullname, String shortname, Platform platform) {

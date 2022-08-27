@@ -6,14 +6,14 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 
-@Entity
+//@Entity
 public class Platform {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@Id
+    //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
-    @NotEmpty
+    //@NotEmpty
     private String name;
     private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
     private BigDecimal CurrentBalance; // Methode to calc it?

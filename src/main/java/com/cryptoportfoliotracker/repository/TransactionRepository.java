@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-@Repository
-public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
 
-    /*
+public class TransactionRepository {
+
+
     private List<Transaction> TransactionList = new ArrayList<>();
 
     public TransactionRepository(ArrayList<Transaction> List) {
@@ -28,5 +28,5 @@ public interface TransactionRepository extends JpaRepository<Transaction, UUID> 
 
     public void addTransaction(Transaction Transaction) {
         this.TransactionList.add(Transaction);
-    }*/
+    }
 }

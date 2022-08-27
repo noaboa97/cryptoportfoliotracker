@@ -5,29 +5,29 @@ import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
 
-@Entity
+//@Entity
 public class Transaction {
 
-    @Id
+    //@Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    @NotEmpty
+    //@NotEmpty
     private Date dateAndTime;
-    @NotEmpty
+    //@NotEmpty
     private BigDecimal srcAmount;
-    @NotEmpty
+    //@NotEmpty
     private Asset srcAsset;
-    @NotEmpty
+    //@NotEmpty
     private BigDecimal destAmount;
-    @NotEmpty
+    //@NotEmpty
     private Asset destAsset;
-    @NotEmpty
+    //@NotEmpty
     private Platform srcPlatform;
-    @NotEmpty
+    //@NotEmpty
     private Platform destPlatform;
-    @NotEmpty
+    //@NotEmpty
     private BigDecimal fees;
-    @NotEmpty
+    //@NotEmpty
     private Asset feeAsset;
     private String notes;
 
@@ -82,13 +82,13 @@ public class Transaction {
         this.destAmount = destAmount;
     }
 
-    /*public Asset getDestAsset() {
+    public Asset getDestAsset() {
         return destAsset;
     }
 
     public void setDestAsset(Asset destAsset) {
         this.destAsset = destAsset;
-    }*/
+    }
 
     public Platform getSrcPlatform() {
         return srcPlatform;

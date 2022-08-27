@@ -23,6 +23,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+import org.hibernate.event.spi.DeleteEvent;
 
 
 import java.util.Collection;
@@ -56,7 +57,7 @@ public class CompAddTransaction extends FormLayout {
 
   public CompAddTransaction(List CryptoAssetList, List PlatformList) {
     addClassName("contact-form");
-    binder.bindInstanceFields(this);
+    //binder.bindInstanceFields(this);
 
     // umwandeln von Repo was ein ArrayList ist zu Interface List und befüllen der Dropdown listen
     SrcAsset.setItems(CryptoAssetList);
@@ -91,17 +92,17 @@ public class CompAddTransaction extends FormLayout {
     save.addClickShortcut(Key.ENTER);
     close.addClickShortcut(Key.ESCAPE);
 
-
+    /*
     save.addClickListener(event -> validateAndSave());
     delete.addClickListener(event -> fireEvent(new DeleteEvent(this, transaction)));
     close.addClickListener(event -> fireEvent(new CloseEvent(this)));
     binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
-
+*/
     return new HorizontalLayout(save, delete, close);
 
 
   }
-
+/*
   public void setContact(Transaction transaction) {
     this.transaction = transaction;
     binder.readBean(transaction);
@@ -160,7 +161,7 @@ public class CompAddTransaction extends FormLayout {
 
 
     return getEventBus().addListener(eventType, listener);
-  }
+  }*/
 
 
 }

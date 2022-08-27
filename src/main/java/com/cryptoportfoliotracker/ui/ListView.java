@@ -35,7 +35,9 @@ public class ListView extends VerticalLayout {
     //-------*/
 
     CompAddTransaction compAddTransaction;
-    public ListView(TransactionRepository TransactionRepository) {
+    public ListView(/*TransactionRepository TransactionRepository*/
+
+    ) {
 
         add(new H2("Transactions"));
 
@@ -86,7 +88,7 @@ public class ListView extends VerticalLayout {
 
 
 
-        Button addContactButton = new Button("Add contact");
+        Button addContactButton = new Button("Add transaction");
 
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
 

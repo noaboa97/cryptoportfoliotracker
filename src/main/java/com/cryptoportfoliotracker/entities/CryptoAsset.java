@@ -5,7 +5,7 @@ import com.cryptoportfoliotracker.entities.Platform;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-@Entity
+//@Entity
 public class CryptoAsset extends Asset {
 
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
