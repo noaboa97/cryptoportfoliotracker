@@ -55,7 +55,7 @@ public class CompAddTransaction extends FormLayout {
   Button delete = new Button("Delete");
   Button close = new Button("Cancel");
 
-  public CompAddTransaction(List CryptoAssetList, List PlatformList) {
+  public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList, List<Asset> AssetList) {
     addClassName("contact-form");
     //binder.bindInstanceFields(this);
 

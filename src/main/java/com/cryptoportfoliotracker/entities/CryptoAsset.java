@@ -5,7 +5,9 @@ import com.cryptoportfoliotracker.entities.Platform;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-//@Entity
+import java.util.UUID;
+
+@Entity
 public class CryptoAsset extends Asset {
 
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
@@ -15,7 +17,7 @@ public class CryptoAsset extends Asset {
     private BigDecimal interestEarnedFiat;
     private BigDecimal interestEarnedCrypto;
 
-    public CryptoAsset(int id, String fullname, String shortname, Platform platform) {
+    public CryptoAsset(UUID id, String fullname, String shortname, Platform platform) {
         super(id, fullname, shortname, platform);
     }
 

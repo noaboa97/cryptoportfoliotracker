@@ -5,15 +5,16 @@ import com.cryptoportfoliotracker.repository.TransactionRepository;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
+import java.util.UUID;
 
 //@Entity
 public class Platform {
 
     //@Id
     //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    private UUID id;
 
-    //@NotEmpty
+    @NotEmpty
     private String name;
     private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
     private BigDecimal CurrentBalance; // Methode to calc it?
@@ -31,16 +32,16 @@ public class Platform {
 
     }*/
 
-    public Platform(int id, String name) {
+    public Platform(UUID id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

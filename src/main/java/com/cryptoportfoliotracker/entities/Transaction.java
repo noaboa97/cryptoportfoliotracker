@@ -4,34 +4,35 @@ import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
-//@Entity
+@Entity
 public class Transaction {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    //@NotEmpty
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    @NotEmpty
     private Date dateAndTime;
-    //@NotEmpty
+    @NotEmpty
     private BigDecimal srcAmount;
-    //@NotEmpty
+    @NotEmpty
     private Asset srcAsset;
-    //@NotEmpty
+    @NotEmpty
     private BigDecimal destAmount;
-    //@NotEmpty
+    @NotEmpty
     private Asset destAsset;
-    //@NotEmpty
+    @NotEmpty
     private Platform srcPlatform;
-    //@NotEmpty
+    @NotEmpty
     private Platform destPlatform;
-    //@NotEmpty
+    @NotEmpty
     private BigDecimal fees;
-    //@NotEmpty
+    @NotEmpty
     private Asset feeAsset;
     private String notes;
 
-    public Transaction(int id, Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
+    public Transaction(UUID id, Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
         this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
@@ -42,11 +43,11 @@ public class Transaction {
         this.destPlatform = destPlatform;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

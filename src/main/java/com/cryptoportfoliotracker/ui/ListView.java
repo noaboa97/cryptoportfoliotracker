@@ -3,6 +3,10 @@ package com.cryptoportfoliotracker.ui;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
+import com.cryptoportfoliotracker.logic.AssetManager;
+import com.cryptoportfoliotracker.logic.CryptoAssetManager;
+import com.cryptoportfoliotracker.logic.PlatformManager;
+import com.cryptoportfoliotracker.logic.TransactionManager;
 import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
 import com.cryptoportfoliotracker.repository.PlatformRepository;
 import com.cryptoportfoliotracker.repository.TransactionRepository;
@@ -20,14 +24,14 @@ import com.vaadin.flow.router.Route;
 
 
 @PageTitle("Transactions")
-@Route(value = "",layout = MainView.class)
+@Route(value = "", layout = MainView.class)
 public class ListView extends VerticalLayout {
 
 
     Grid<Transaction> grid = new Grid<>(Transaction.class, false);
     TextField filterText = new TextField();
 
-    // Test Only
+    /*/ Test Only
     CryptoAssetRepository CryptoAssetRepo = new CryptoAssetRepository();
     PlatformRepository PlatformRepo = new PlatformRepository();
     //TransactionRepository TransactionRepo = new TransactionRepository();
@@ -35,9 +39,20 @@ public class ListView extends VerticalLayout {
     //-------*/
 
     CompAddTransaction compAddTransaction;
-    public ListView(/*TransactionRepository TransactionRepository*/
+    TransactionManager transactionManager;
+    CryptoAssetManager cryptoAssetManager;
+    PlatformManager platformManager;
 
-    ) {
+    AssetManager assetManager;
+
+    public ListView(TransactionManager transactionManager,CryptoAssetManager cryptoAssetManager,PlatformManager platformManager,AssetManager assetManager) {
+        this.transactionManager = transactionManager;
+        this.cryptoAssetManager = cryptoAssetManager;
+        this.platformManager = platformManager;
+        this.assetManager = assetManager;
+
+
+
 
         add(new H2("Transactions"));
 
@@ -45,9 +60,7 @@ public class ListView extends VerticalLayout {
         setSizeFull();
         configureGrid();
         configureCompAddTransaction();
-
         add(getToolbar(), getContent());
-
         updateList();
 
 
@@ -85,11 +98,9 @@ public class ListView extends VerticalLayout {
         filterText.setPlaceholder("Filter by name...");
         filterText.setClearButtonVisible(true);
         filterText.setValueChangeMode(ValueChangeMode.LAZY);
-
-
+        filterText.addValueChangeListener(e -> updateList());
 
         Button addContactButton = new Button("Add transaction");
-
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
 
 
@@ -97,26 +108,24 @@ public class ListView extends VerticalLayout {
         return toolbar;
     }
 
-    private void configureCompAddTransaction(){
+    private void configureCompAddTransaction() {
 
-
-        //Testing only
+        /*/Testing only
         Platform P = new Platform(1, "Bitpanda");
-        PlatformRepo.addPlatform(P);
-        CryptoAsset CA = new CryptoAsset(1, "Bitcoin", "BTC",P);
+        //PlatformRepo.addPlatform(P);
+        CryptoAsset CA = new CryptoAsset(1, "Bitcoin", "BTC", P);
 
 
-        CryptoAssetRepo.addCryptoAsset(CA);
+        //CryptoAssetRepo.addCryptoAsset(CA);*/
 
 
-
-        compAddTransaction = new CompAddTransaction(CryptoAssetRepo.getCryptoAssetList(),PlatformRepo.getPlatformList());
+        compAddTransaction = new CompAddTransaction(cryptoAssetManager.findAllCryptoAssets(),platformManager.findAllPlatforms(),assetManager.findAllAssets());
         compAddTransaction.setWidth("25em");
     }
 
-    public void updateList(){
+    public void updateList() {
 
-        //grid.setItems(TransactionRepo.getTransactionList());
+        grid.setItems(transactionManager.findAllTransactions(filterText.getValue()));
 
     }
 

@@ -2,31 +2,32 @@ package com.cryptoportfoliotracker.entities;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import java.util.UUID;
 
-//@Entity
+@Entity
 public class Asset {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    //@NotEmpty
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private UUID id;
+    @NotEmpty
     private String fullname;
-    //@NotEmpty
+    @NotEmpty
     private String shortname;
-    //@NotEmpty
+    @NotEmpty
     private Platform platform;
 
-    public Asset(int id, String fullname, String shortname, Platform platform) {
+    public Asset(UUID id, String fullname, String shortname, Platform platform) {
         this.id = id;
         this.fullname = fullname;
         this.shortname = shortname;
         this.platform = platform;
     }
 
-    public int getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
