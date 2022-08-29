@@ -9,6 +9,7 @@ import com.cryptoportfoliotracker.repository.PlatformRepository;
 import com.cryptoportfoliotracker.repository.TransactionRepository;
 import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -24,16 +25,8 @@ import com.vaadin.flow.router.Route;
 @Route(value = "", layout = MainView.class)
 public class ListView extends VerticalLayout {
 
-
     Grid<Transaction> grid = new Grid<>(Transaction.class, false);
     TextField filterText = new TextField();
-
-    /*/ Test Only
-    CryptoAssetRepository CryptoAssetRepo = new CryptoAssetRepository();
-    PlatformRepository PlatformRepo = new PlatformRepository();
-    //TransactionRepository TransactionRepo = new TransactionRepository();
-
-    //-------*/
 
     CompAddTransaction compAddTransaction;
     CptService service;
@@ -76,7 +69,7 @@ public class ListView extends VerticalLayout {
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event ->
-                editContact(event.getValue()));
+                editTransaction(event.getValue()));
 
     }
 
@@ -107,7 +100,7 @@ public class ListView extends VerticalLayout {
         return toolbar;
     }
 
-    public void editContact(Transaction transaction) {
+    public void editTransaction(Transaction transaction) {
 
 
         if (transaction == null) {
@@ -129,29 +122,42 @@ public class ListView extends VerticalLayout {
 
 
         grid.asSingleSelect().clear();
-        editContact(new Transaction());
+        editTransaction(new Transaction());
     }
 
 
     private void configureCompAddTransaction() {
 
-        /*/Testing only
-        Platform P = new Platform(1, "Bitpanda");
-        //PlatformRepo.addPlatform(P);
-        CryptoAsset CA = new CryptoAsset(1, "Bitcoin", "BTC", P);
-
-
-        //CryptoAssetRepo.addCryptoAsset(CA);*/
-
-
         compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(),service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
+        compAddTransaction.addListener(CompAddTransaction.SaveEvent.class, this::saveTransaction);
+
+
+        compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);
+
+
+        compAddTransaction.addListener(CompAddTransaction.CloseEvent.class, e -> closeEditor());
+
+
     }
 
     public void updateList() {
 
         grid.setItems(service.findAllTransactions(filterText.getValue()));
 
+    }
+
+
+    private void saveTransaction(CompAddTransaction.SaveEvent event) {
+        service.saveTransaction(event.getTransaction());
+        updateList();
+        closeEditor();
+    }
+
+    private void deleteTransaction(CompAddTransaction.DeleteEvent event) {
+        service.deleteTransaction(event.getTransaction());
+        updateList();
+        closeEditor();
     }
 
 

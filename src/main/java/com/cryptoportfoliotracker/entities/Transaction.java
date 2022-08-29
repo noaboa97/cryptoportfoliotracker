@@ -23,14 +23,14 @@ public class Transaction {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset",
             foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk"))
-    private Asset srcAsset;
+    private CryptoAsset srcAsset;
     //@NotNull
     private BigDecimal destAmount;
     //@NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "asset",
             foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk"),insertable = false,updatable = false)
-    private Asset destAsset;
+    private CryptoAsset destAsset;
     //@NotNull
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "platform",
@@ -50,7 +50,7 @@ public class Transaction {
     private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(/*UUID id,*/ Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
+    public Transaction(/*UUID id,*/ Date dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
         //this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
@@ -88,11 +88,11 @@ public class Transaction {
         this.srcAmount = srcAmount;
     }
 
-    public Asset getSrcAsset() {
+    public CryptoAsset getSrcAsset() {
         return srcAsset;
     }
 
-    public void setSrcAsset(Asset srcAsset) {
+    public void setSrcAsset(CryptoAsset srcAsset) {
         this.srcAsset = srcAsset;
     }
 
@@ -104,11 +104,11 @@ public class Transaction {
         this.destAmount = destAmount;
     }
 
-    public Asset getDestAsset() {
+    public CryptoAsset getDestAsset() {
         return destAsset;
     }
 
-    public void setDestAsset(Asset destAsset) {
+    public void setDestAsset(CryptoAsset destAsset) {
         this.destAsset = destAsset;
     }
 
@@ -136,7 +136,7 @@ public class Transaction {
         this.fees = fees;
     }
 
-    public Asset getFeeAsset() {
+    public CryptoAsset getFeeAsset() {
         return feeAsset;
     }
 

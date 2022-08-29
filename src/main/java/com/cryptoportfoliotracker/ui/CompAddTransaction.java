@@ -57,7 +57,7 @@ public class CompAddTransaction extends FormLayout {
 
   public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList) {
     addClassName("contact-form");
-    //binder.bindInstanceFields(this);
+    binder.bindInstanceFields(this);
 
     SrcAsset.setItems(CryptoAssetList);
     DstAsset.setItems(CryptoAssetList);
@@ -128,12 +128,9 @@ public class CompAddTransaction extends FormLayout {
     private Transaction transaction;
 
     protected CompAddTransactionEvent(CompAddTransaction source, Transaction transaction) {
-
-
       super(source, false);
       this.transaction = transaction;
     }
-
     public Transaction getTransaction() {
       return transaction;
     }
