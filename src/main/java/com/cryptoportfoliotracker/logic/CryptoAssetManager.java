@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 public class CryptoAssetManager {
-    @Autowired
+    //@Autowired
     private final CryptoAssetRepository cryptoAssetRepository;
 
 

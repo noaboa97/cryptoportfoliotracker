@@ -10,7 +10,7 @@ import java.util.List;
 @Service
 public class PlatformManager {
     //methods accessed by ui
-    @Autowired
+    //@Autowired
     private final PlatformRepository platformRepository;
 
     public PlatformManager(PlatformRepository platformRepository) {

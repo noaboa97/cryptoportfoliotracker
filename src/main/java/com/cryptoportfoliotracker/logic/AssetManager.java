@@ -9,13 +9,13 @@ import java.util.List;
 
 @Service
 public class AssetManager {
-    @Autowired
+    //@Autowired
     private final AssetRepository assetRepository;
-
     public AssetManager(AssetRepository assetRepository) {
         this.assetRepository = assetRepository;
     }
 
+    //@Autowired
     public List<Asset> findAllAssets() {
         return assetRepository.findAll();
     }

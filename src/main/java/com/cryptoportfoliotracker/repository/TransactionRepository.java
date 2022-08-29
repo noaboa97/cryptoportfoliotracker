@@ -15,11 +15,11 @@ import java.util.UUID;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, UUID> {
-
+/*
     @Query("select t from Transaction t " +
             "where lower(t.dateandtime) like lower(concat('%', :searchTerm, '%')) ")
 
 
     List<Transaction> search(@Param("searchTerm") String searchTerm);
-
+*/
 }

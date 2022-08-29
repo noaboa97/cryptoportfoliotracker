@@ -1,26 +1,35 @@
 package com.cryptoportfoliotracker.entities;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity
 public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="asset_id")
     private UUID id;
-    @NotEmpty
+    //@NotNull
     private String fullname;
-    @NotEmpty
+    //@NotNull
     private String shortname;
-    @NotEmpty
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "platform",
+            foreignKey = @javax.persistence.ForeignKey(name = "platform_fk"))
     private Platform platform;
 
-    public Asset(UUID id, String fullname, String shortname, Platform platform) {
-        this.id = id;
+    public Asset(/*UUID id,*/ String fullname, String shortname, Platform platform) {
+        //this.id = id;
         this.fullname = fullname;
         this.shortname = shortname;
         this.platform = platform;
+    }
+
+    public Asset() {
     }
 
     public UUID getId() {

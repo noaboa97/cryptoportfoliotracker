@@ -16,15 +16,12 @@ import java.util.UUID;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
-
-@Component
+@SpringComponent
 public class DemoData {
 
     @Bean
-    public CommandLineRunner loadData(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository,
-                                      PlatformRepository platformRepository, TransactionRepository transactionRepository) {
+    public CommandLineRunner loadData(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository, PlatformRepository platformRepository, TransactionRepository transactionRepository) {
 
         return args -> {
             if (transactionRepository.count() != 0L) {
@@ -32,8 +29,8 @@ public class DemoData {
             }
 
             // AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository,
-            //      PlatformRepository platformRepository, TransactionRepository transactionRepository
-            List<Asset> assets = (List<Asset>) assetRepository;
+            /*/      PlatformRepository platformRepository, TransactionRepository transactionRepository
+            List<Asset> assets = assetRepository;
 
             List<CryptoAsset> cryptoAssets = (List<CryptoAsset>) cryptoAssetRepository;
 
@@ -41,22 +38,22 @@ public class DemoData {
 
             List<Transaction> transactions = (List<Transaction>) transactionRepository;
             //Testing only
+*/
+            Platform P = new Platform( "Bitpanda");
+            Platform P2 = new Platform( "PostFinance");
+            platformRepository.save(P);
+            platformRepository.save(P2);
+            CryptoAsset CA = new CryptoAsset("Bitcoin", "BTC", P);
+            cryptoAssetRepository.save(CA);
+            CryptoAsset CA2 = new CryptoAsset("Schweizer Franken", "CHF", P2);
+            cryptoAssetRepository.save(CA2);
 
-            UUID puuid = UUID.randomUUID();
-            UUID p2uuid = UUID.randomUUID();
-            UUID cuuid = UUID.randomUUID();
-            Platform P = new Platform(puuid, "Bitpanda");
-            Platform P2 = new Platform(p2uuid, "PostFinance");
-            platforms.add(P);
-            platforms.add(P2);
-            CryptoAsset CA = new CryptoAsset( cuuid,"Bitcoin", "BTC", P);
-            cryptoAssets.add(CA);
-
+/*
             assetRepository.saveAll(assets);
             cryptoAssetRepository.saveAll(cryptoAssets);
             platformRepository.saveAll(platforms);
             transactionRepository.saveAll(transactions);
-
+*/
         };
     }
 

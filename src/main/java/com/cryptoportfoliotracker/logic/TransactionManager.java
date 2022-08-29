@@ -3,15 +3,17 @@ package com.cryptoportfoliotracker.logic;
 import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.repository.TransactionRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public class TransactionManager {
-    @Autowired
-    private final TransactionRepository transactionRepository;
-    @Autowired
+    //@Autowired
+    private TransactionRepository transactionRepository;
+    //@Autowired
     public TransactionManager(TransactionRepository transactionRepository) {
         this.transactionRepository = transactionRepository;
     }
@@ -21,9 +23,9 @@ public class TransactionManager {
         if (stringFilter == null || stringFilter.isEmpty()) {
 
 
-            return transactionRepository.findAll();
+            return (List<Transaction>) transactionRepository.findAll();
         } else {
-            return transactionRepository.search(stringFilter);
+            return null; //transactionRepository.search(stringFilter);
         }
     }
 

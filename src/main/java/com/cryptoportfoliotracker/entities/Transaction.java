@@ -1,7 +1,9 @@
 package com.cryptoportfoliotracker.entities;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -11,36 +13,55 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="transaction_id")
     private UUID id;
-    @NotEmpty
+    //@NotNull
     private Date dateAndTime;
-    @NotEmpty
+    //@NotNull
     private BigDecimal srcAmount;
-    @NotEmpty
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk"))
     private Asset srcAsset;
-    @NotEmpty
+    //@NotNull
     private BigDecimal destAmount;
-    @NotEmpty
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset",
+            foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk"),insertable = false,updatable = false)
     private Asset destAsset;
-    @NotEmpty
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "platform",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk"))
     private Platform srcPlatform;
-    @NotEmpty
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "platform",
+            foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk"),insertable = false,updatable = false)
     private Platform destPlatform;
-    @NotEmpty
+    //@NotNull
     private BigDecimal fees;
-    @NotEmpty
-    private Asset feeAsset;
+    //@NotNull
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "asset",
+            foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk"),insertable = false,updatable = false)
+    private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(UUID id, Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
-        this.id = id;
+    public Transaction(/*UUID id,*/ Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
+        //this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
         this.destAmount = destAmount;
-        //this.destAsset = destAsset;
+        this.destAsset = destAsset;
         this.srcPlatform = srcPlatform;
         this.destPlatform = destPlatform;
+    }
+
+    public Transaction() {
     }
 
     public UUID getId() {
@@ -119,7 +140,7 @@ public class Transaction {
         return feeAsset;
     }
 
-    public void setFeeAsset(Asset feeAsset) {
+    public void setFeeAsset(CryptoAsset feeAsset) {
         this.feeAsset = feeAsset;
     }
 

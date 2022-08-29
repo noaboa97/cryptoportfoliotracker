@@ -1,6 +1,5 @@
 
 package com.cryptoportfoliotracker.ui;
-import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
@@ -16,6 +15,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.BigDecimalField;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
@@ -37,12 +37,12 @@ public class CompAddTransaction extends FormLayout {
 
   ComboBox<CryptoAsset> SrcAsset = new ComboBox<>("Source Asset");
   ComboBox<CryptoAsset> DstAsset = new ComboBox<>("Destination Asset");
-  IntegerField SrcAmount = new IntegerField("Source Amount");
-  IntegerField DstAmount = new IntegerField("Destination Amount");
+  BigDecimalField SrcAmount = new BigDecimalField("Source Amount");
+  BigDecimalField DstAmount = new BigDecimalField("Destination Amount");
 
   ComboBox<Platform> SrcPlatform = new ComboBox<>("Source Platform");
   ComboBox<Platform> DstPlatform = new ComboBox<>("Destination Platform");
-  IntegerField Fee = new IntegerField("Fee");
+  BigDecimalField Fee = new BigDecimalField("Fee");
   ComboBox<CryptoAsset> FeeAsset = new ComboBox<>("Fee Asset");
   TextField Notes = new TextField("Notes");
 
@@ -55,28 +55,30 @@ public class CompAddTransaction extends FormLayout {
   Button delete = new Button("Delete");
   Button close = new Button("Cancel");
 
-  public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList, List<Asset> AssetList) {
+  public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList) {
     addClassName("contact-form");
     //binder.bindInstanceFields(this);
 
-    // umwandeln von Repo was ein ArrayList ist zu Interface List und befüllen der Dropdown listen
     SrcAsset.setItems(CryptoAssetList);
     DstAsset.setItems(CryptoAssetList);
     SrcPlatform.setItems(PlatformList);
     DstPlatform.setItems(PlatformList);
     FeeAsset.setItems(CryptoAssetList);
 
-    // Anzeigename defineieren welche in der Dropdown angezeigt werden??
+    // Anzeigename defineieren welche in der Dropdown angezeigt werden
     SrcAsset.setItemLabelGenerator(CryptoAsset::getShortname);
     DstAsset.setItemLabelGenerator(CryptoAsset::getShortname);
     SrcPlatform.setItemLabelGenerator(Platform::getName);
     DstPlatform.setItemLabelGenerator(Platform::getName);
-    FeeAsset.setItemLabelGenerator(Asset::getShortname);
+    DstPlatform.setItemLabelGenerator(Platform::getName);
+    FeeAsset.setItemLabelGenerator(CryptoAsset::getShortname);
 
     add(dateTimePicker,
+        SrcAmount,
         SrcAsset,
-        DstAsset,
         SrcPlatform,
+        DstAmount,
+        DstAsset,
         DstPlatform,
         Fee,
         FeeAsset,
@@ -92,18 +94,18 @@ public class CompAddTransaction extends FormLayout {
     save.addClickShortcut(Key.ENTER);
     close.addClickShortcut(Key.ESCAPE);
 
-    /*
+
     save.addClickListener(event -> validateAndSave());
     delete.addClickListener(event -> fireEvent(new DeleteEvent(this, transaction)));
     close.addClickListener(event -> fireEvent(new CloseEvent(this)));
     binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
-*/
+
     return new HorizontalLayout(save, delete, close);
 
 
   }
-/*
-  public void setContact(Transaction transaction) {
+
+  public void setTransaction(Transaction transaction) {
     this.transaction = transaction;
     binder.readBean(transaction);
   }
@@ -161,7 +163,7 @@ public class CompAddTransaction extends FormLayout {
 
 
     return getEventBus().addListener(eventType, listener);
-  }*/
+  }
 
 
 }

@@ -3,10 +3,7 @@ package com.cryptoportfoliotracker.ui;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
-import com.cryptoportfoliotracker.logic.AssetManager;
-import com.cryptoportfoliotracker.logic.CryptoAssetManager;
-import com.cryptoportfoliotracker.logic.PlatformManager;
-import com.cryptoportfoliotracker.logic.TransactionManager;
+import com.cryptoportfoliotracker.logic.*;
 import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
 import com.cryptoportfoliotracker.repository.PlatformRepository;
 import com.cryptoportfoliotracker.repository.TransactionRepository;
@@ -39,17 +36,10 @@ public class ListView extends VerticalLayout {
     //-------*/
 
     CompAddTransaction compAddTransaction;
-    TransactionManager transactionManager;
-    CryptoAssetManager cryptoAssetManager;
-    PlatformManager platformManager;
+    CptService service;
 
-    AssetManager assetManager;
-
-    public ListView(TransactionManager transactionManager,CryptoAssetManager cryptoAssetManager,PlatformManager platformManager,AssetManager assetManager) {
-        this.transactionManager = transactionManager;
-        this.cryptoAssetManager = cryptoAssetManager;
-        this.platformManager = platformManager;
-        this.assetManager = assetManager;
+    public ListView(CptService service) {
+        this.service = service;
 
 
 
@@ -62,6 +52,9 @@ public class ListView extends VerticalLayout {
         configureCompAddTransaction();
         add(getToolbar(), getContent());
         updateList();
+        closeEditor();
+
+
 
 
     }
@@ -72,7 +65,7 @@ public class ListView extends VerticalLayout {
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
         grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
-        //grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
+        grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getSrcAmount()).setHeader("Source Amount");
         grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
         grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
@@ -81,6 +74,9 @@ public class ListView extends VerticalLayout {
         grid.addColumn(transaction -> transaction.getFeeAsset()).setHeader("Fee Asset");
         grid.addColumn(transaction -> transaction.getNotes()).setHeader("Notes");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.asSingleSelect().addValueChangeListener(event ->
+                editContact(event.getValue()));
 
     }
 
@@ -101,12 +97,41 @@ public class ListView extends VerticalLayout {
         filterText.addValueChangeListener(e -> updateList());
 
         Button addContactButton = new Button("Add transaction");
+        addContactButton.addClickListener(click -> addTransaction());
+
+
         HorizontalLayout toolbar = new HorizontalLayout(filterText, addContactButton);
 
 
         toolbar.addClassName("toolbar");
         return toolbar;
     }
+
+    public void editContact(Transaction transaction) {
+
+
+        if (transaction == null) {
+            closeEditor();
+        } else {
+            compAddTransaction.setTransaction(transaction);
+            compAddTransaction.setVisible(true);
+            addClassName("editing");
+        }
+    }
+
+    private void closeEditor() {
+        compAddTransaction.setTransaction(null);
+        compAddTransaction.setVisible(false);
+        removeClassName("editing");
+    }
+
+    private void addTransaction() {
+
+
+        grid.asSingleSelect().clear();
+        editContact(new Transaction());
+    }
+
 
     private void configureCompAddTransaction() {
 
@@ -119,13 +144,13 @@ public class ListView extends VerticalLayout {
         //CryptoAssetRepo.addCryptoAsset(CA);*/
 
 
-        compAddTransaction = new CompAddTransaction(cryptoAssetManager.findAllCryptoAssets(),platformManager.findAllPlatforms(),assetManager.findAllAssets());
+        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(),service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
     }
 
     public void updateList() {
 
-        grid.setItems(transactionManager.findAllTransactions(filterText.getValue()));
+        grid.setItems(service.findAllTransactions(filterText.getValue()));
 
     }
 
