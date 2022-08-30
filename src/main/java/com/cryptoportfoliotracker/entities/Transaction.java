@@ -1,11 +1,8 @@
 package com.cryptoportfoliotracker.entities;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @Entity
@@ -16,7 +13,7 @@ public class Transaction {
     @Column(name="transaction_id")
     private Long id;
     //@NotNull
-    private Date dateAndTime;
+    private LocalDateTime dateAndTime;
     //@NotNull
     private BigDecimal srcAmount;
     //@NotNull
@@ -42,7 +39,7 @@ public class Transaction {
             foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
     //@NotNull
-    private BigDecimal fees;
+    private BigDecimal fee;
     //@NotNull
     @ManyToOne(/*fetch = FetchType.LAZY*/)
     @JoinColumn(name = "feeasset",
@@ -50,7 +47,7 @@ public class Transaction {
     private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(/*Long id,*/ Date dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
+    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
         //this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
@@ -72,11 +69,11 @@ public class Transaction {
         this.id = id;
     }
 
-    public Date getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(Date dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 
@@ -129,11 +126,11 @@ public class Transaction {
     }
 
     public BigDecimal getFees() {
-        return fees;
+        return fee;
     }
 
-    public void setFees(BigDecimal fees) {
-        this.fees = fees;
+    public void setFees(BigDecimal fee) {
+        this.fee = fee;
     }
 
     public CryptoAsset getFeeAsset() {
@@ -150,5 +147,20 @@ public class Transaction {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void getTransaction() {
+
+        System.out.println(dateAndTime);
+        System.out.println(srcAmount);
+        System.out.println(srcAsset);
+        System.out.println(destAmount);
+        System.out.println(destAsset);
+        System.out.println(srcPlatform);
+        System.out.println(destPlatform);
+        System.out.println(fee);
+        System.out.println(feeAsset);
+        System.out.println(notes);
+
     }
 }

@@ -55,7 +55,7 @@ public class CptService {
 
             return transactionRepository.findAll();
         } else {
-            return null; //transactionRepository.search(stringFilter);
+            return transactionRepository.search(stringFilter);
         }
     }
 
@@ -74,6 +74,8 @@ public class CptService {
             System.err.println("Transaction is null. Are you sure you have connected your form to the application?");
             return;
         }
+        System.out.println("CptService saveTransaction");
+        transaction.getTransaction();
         transactionRepository.save(transaction);
     }
 

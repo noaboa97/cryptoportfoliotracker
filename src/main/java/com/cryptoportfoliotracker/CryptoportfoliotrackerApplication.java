@@ -19,12 +19,4 @@ public class CryptoportfoliotrackerApplication {
 		SpringApplication.run(CryptoportfoliotrackerApplication.class, args);
 	}
 
-/*
-	@Bean(name="entityManagerFactory")
-	public LocalSessionFactoryBean sessionFactory() {
-		LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-
-		return sessionFactory;
-	}*/
-
 }

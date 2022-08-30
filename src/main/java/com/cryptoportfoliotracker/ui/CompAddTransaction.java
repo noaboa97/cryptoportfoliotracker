@@ -30,21 +30,17 @@ import java.util.Collection;
 import java.util.List;
 
 public class CompAddTransaction extends FormLayout {
-
   Transaction transaction;
-
-  DateTimePicker dateTimePicker = new DateTimePicker();
-
-  ComboBox<CryptoAsset> SrcAsset = new ComboBox<>("Source Asset");
-  ComboBox<CryptoAsset> DstAsset = new ComboBox<>("Destination Asset");
-  BigDecimalField SrcAmount = new BigDecimalField("Source Amount");
-  BigDecimalField DstAmount = new BigDecimalField("Destination Amount");
-
-  ComboBox<Platform> SrcPlatform = new ComboBox<>("Source Platform");
-  ComboBox<Platform> DstPlatform = new ComboBox<>("Destination Platform");
-  BigDecimalField Fee = new BigDecimalField("Fee");
-  ComboBox<CryptoAsset> FeeAsset = new ComboBox<>("Fee Asset");
-  TextField Notes = new TextField("Notes");
+  DateTimePicker dateAndTime = new DateTimePicker(); //not bound properly
+  ComboBox<CryptoAsset> srcAsset = new ComboBox<>("Source Asset");
+  ComboBox<CryptoAsset> destAsset = new ComboBox<>("Destination Asset");//not bound properly
+  BigDecimalField srcAmount = new BigDecimalField("Source Amount");
+  BigDecimalField destAmount = new BigDecimalField("Destination Amount");//not bound properly
+  ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
+  ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");//not bound properly
+  BigDecimalField fee = new BigDecimalField("Fee");
+  ComboBox<CryptoAsset> feeAsset = new ComboBox<>("Fee Asset");//not bound properly
+  TextField notes = new TextField("Notes");
 
   Binder<Transaction> binder = new BeanValidationBinder<>(Transaction.class);
 
@@ -60,30 +56,30 @@ public class CompAddTransaction extends FormLayout {
     binder.bindInstanceFields(this);
 
     // laden der Listen für die Dropdowns
-    SrcAsset.setItems(CryptoAssetList);
-    DstAsset.setItems(CryptoAssetList);
-    SrcPlatform.setItems(PlatformList);
-    DstPlatform.setItems(PlatformList);
-    FeeAsset.setItems(CryptoAssetList);
+    srcAsset.setItems(CryptoAssetList);
+    destAsset.setItems(CryptoAssetList);
+    srcPlatform.setItems(PlatformList);
+    destPlatform.setItems(PlatformList);
+    feeAsset.setItems(CryptoAssetList);
 
     // Anzeigename defineieren welche in der Dropdown angezeigt werden
-    SrcAsset.setItemLabelGenerator(CryptoAsset::getShortname);
-    DstAsset.setItemLabelGenerator(CryptoAsset::getShortname);
-    SrcPlatform.setItemLabelGenerator(Platform::getName);
-    DstPlatform.setItemLabelGenerator(Platform::getName);
-    DstPlatform.setItemLabelGenerator(Platform::getName);
-    FeeAsset.setItemLabelGenerator(CryptoAsset::getShortname);
+    srcAsset.setItemLabelGenerator(CryptoAsset::getShortname);
+    destAsset.setItemLabelGenerator(CryptoAsset::getShortname);
+    srcPlatform.setItemLabelGenerator(Platform::getName);
+    destPlatform.setItemLabelGenerator(Platform::getName);
+    destPlatform.setItemLabelGenerator(Platform::getName);
+    feeAsset.setItemLabelGenerator(CryptoAsset::getShortname);
 
-    add(dateTimePicker,
-        SrcAmount,
-        SrcAsset,
-        SrcPlatform,
-        DstAmount,
-        DstAsset,
-        DstPlatform,
-        Fee,
-        FeeAsset,
-        Notes,
+    add(dateAndTime,
+        srcAmount,
+        srcAsset,
+        srcPlatform,
+        destAmount,
+        destAsset,
+        destPlatform,
+        fee,
+        feeAsset,
+        notes,
         createButtonsLayout());
   }
 
@@ -114,8 +110,10 @@ public class CompAddTransaction extends FormLayout {
 
   private void validateAndSave() {
     try {
-      binder.writeBean(transaction);
 
+      binder.writeBean(transaction);
+      System.out.println("CompAddTransaction validateAndSave");
+      transaction.getTransaction();
 
       fireEvent(new SaveEvent(this, transaction));
 
