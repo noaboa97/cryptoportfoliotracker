@@ -59,6 +59,7 @@ public class CompAddTransaction extends FormLayout {
     addClassName("contact-form");
     binder.bindInstanceFields(this);
 
+    // laden der Listen für die Dropdowns
     SrcAsset.setItems(CryptoAssetList);
     DstAsset.setItems(CryptoAssetList);
     SrcPlatform.setItems(PlatformList);

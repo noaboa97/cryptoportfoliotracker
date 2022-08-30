@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.UUID;
+
 
 @Entity
 public class Transaction {
@@ -14,43 +14,43 @@ public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="transaction_id")
-    private UUID id;
+    private Long id;
     //@NotNull
     private Date dateAndTime;
     //@NotNull
     private BigDecimal srcAmount;
     //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset",
-            foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk"))
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "srcasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset srcAsset;
     //@NotNull
     private BigDecimal destAmount;
     //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset",
-            foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk"),insertable = false,updatable = false)
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "destasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset destAsset;
     //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "platform",
-            foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk"))
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "srcplatform",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform srcPlatform;
     //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "platform",
-            foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk"),insertable = false,updatable = false)
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "destplatform",
+            foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
     //@NotNull
     private BigDecimal fees;
     //@NotNull
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "asset",
-            foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk"),insertable = false,updatable = false)
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "feeasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(/*UUID id,*/ Date dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
+    public Transaction(/*Long id,*/ Date dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
         //this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
@@ -64,11 +64,11 @@ public class Transaction {
     public Transaction() {
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

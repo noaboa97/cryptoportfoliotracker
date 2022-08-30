@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 @Repository
-public interface AssetRepository extends JpaRepository<Asset, UUID> {
+public interface AssetRepository extends JpaRepository<Asset, Long> {
     /*
     @Query("select a from Asset a " +
             "where lower(a.name) like lower(concat('%', :searchTerm, '%')) " +

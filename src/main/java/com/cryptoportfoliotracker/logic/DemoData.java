@@ -24,9 +24,9 @@ public class DemoData {
     public CommandLineRunner loadData(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository, PlatformRepository platformRepository, TransactionRepository transactionRepository) {
 
         return args -> {
-            if (transactionRepository.count() != 0L) {
-                return;
-            }
+            //if (transactionRepository.count() != 0L) {
+                //return;
+            //}
 
             // AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository,
             /*/      PlatformRepository platformRepository, TransactionRepository transactionRepository
@@ -47,6 +47,8 @@ public class DemoData {
             cryptoAssetRepository.save(CA);
             CryptoAsset CA2 = new CryptoAsset("Schweizer Franken", "CHF", P2);
             cryptoAssetRepository.save(CA2);
+
+            //System.out.println(cryptoAssetRepository.findAll());
 
 /*
             assetRepository.saveAll(assets);

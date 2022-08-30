@@ -6,7 +6,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.UUID;
+
 
 @Entity
 public class Platform {
@@ -14,7 +14,7 @@ public class Platform {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="platform_id")
-    private UUID id;
+    private Long id;
 
     //@NotNull
     private String name;
@@ -34,7 +34,7 @@ public class Platform {
 
     }*/
 
-    public Platform(/*UUID id,*/ String name) {
+    public Platform(/*Long id,*/ String name) {
         //this.id = id;
         this.name = name;
     }
@@ -42,11 +42,11 @@ public class Platform {
     public Platform() {
     }
 
-    public UUID getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
