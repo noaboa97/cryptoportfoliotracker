@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<!-- Replace artifactId with vaadin-core to use only free components -->
-			<artifactId>vaadin-core</artifactId>
+			<artifactId>vaadin</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>com.vaadin</groupId>
@@ -54,11 +54,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-board</artifactId>
-			<version>1.1.0</version>
 		</dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -114,6 +109,20 @@
 		</profile>
 	</profiles>
 	<repositories>
+		<!-- Main Maven repository -->
+		<repository>
+			<id>central</id>
+			<url>https://repo.maven.apache.org/maven2</url>
+			<snapshots>
+				<enabled>false</enabled>
+			</snapshots>
+		</repository>
+		<repository>
+			<id>vaadin-prereleases</id>
+			<url>
+				https://maven.vaadin.com/vaadin-prereleases/
+			</url>
+		</repository>
 		<repository>
 			<id>vaadin-addons</id>
 			<url>https://maven.vaadin.com/vaadin-addons</url>
