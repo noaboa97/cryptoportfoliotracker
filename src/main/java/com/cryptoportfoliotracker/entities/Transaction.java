@@ -1,10 +1,9 @@
 package com.cryptoportfoliotracker.entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-
-
 @Entity
 public class Transaction {
 
@@ -12,43 +11,42 @@ public class Transaction {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="transaction_id")
     private Long id;
-    //@NotNull
+    @NotNull
     private LocalDateTime dateAndTime;
-    //@NotNull
+    @NotNull
     private BigDecimal srcAmount;
-    //@NotNull
-    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @NotNull
+    @ManyToOne()
     @JoinColumn(name = "srcasset",
             foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset srcAsset;
-    //@NotNull
+    @NotNull
     private BigDecimal destAmount;
-    //@NotNull
-    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @NotNull
+    @ManyToOne()
     @JoinColumn(name = "destasset",
             foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset destAsset;
-    //@NotNull
-    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @NotNull
+    @ManyToOne()
     @JoinColumn(name = "srcplatform",
             foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform srcPlatform;
-    //@NotNull
-    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @NotNull
+    @ManyToOne()
     @JoinColumn(name = "destplatform",
             foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
-    //@NotNull
+    @NotNull
     private BigDecimal fee;
-    //@NotNull
-    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @NotNull
+    @ManyToOne()
     @JoinColumn(name = "feeasset",
             foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset feeAsset;
     private String notes;
 
     public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
-        //this.id = id;
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
