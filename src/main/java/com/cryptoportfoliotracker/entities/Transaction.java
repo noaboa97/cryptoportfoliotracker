@@ -1,60 +1,77 @@
 package com.cryptoportfoliotracker.entities;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.Date;
-
-//@Entity
+import java.time.LocalDateTime;
+@Entity
 public class Transaction {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    //@NotEmpty
-    private Date dateAndTime;
-    //@NotEmpty
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="transaction_id")
+    private Long id;
+    @NotNull
+    private LocalDateTime dateAndTime;
+    @NotNull
     private BigDecimal srcAmount;
-    //@NotEmpty
-    private Asset srcAsset;
-    //@NotEmpty
+    @NotNull
+    @ManyToOne()
+    @JoinColumn(name = "srcasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
+    private CryptoAsset srcAsset;
+    @NotNull
     private BigDecimal destAmount;
-    //@NotEmpty
-    private Asset destAsset;
-    //@NotEmpty
+    @NotNull
+    @ManyToOne()
+    @JoinColumn(name = "destasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk")/*,insertable = false,updatable = false*/)
+    private CryptoAsset destAsset;
+    @NotNull
+    @ManyToOne()
+    @JoinColumn(name = "srcplatform",
+            foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform srcPlatform;
-    //@NotEmpty
+    @NotNull
+    @ManyToOne()
+    @JoinColumn(name = "destplatform",
+            foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
-    //@NotEmpty
-    private BigDecimal fees;
-    //@NotEmpty
-    private Asset feeAsset;
+    @NotNull
+    private BigDecimal fee;
+    @NotNull
+    @ManyToOne()
+    @JoinColumn(name = "feeasset",
+            foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
+    private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(int id, Date dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform) {
-        this.id = id;
+    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
         this.destAmount = destAmount;
-        //this.destAsset = destAsset;
+        this.destAsset = destAsset;
         this.srcPlatform = srcPlatform;
         this.destPlatform = destPlatform;
     }
 
-    public int getId() {
+    public Transaction() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    public Date getDateAndTime() {
+    public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(Date dateAndTime) {
+    public void setDateAndTime(LocalDateTime dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 
@@ -66,11 +83,11 @@ public class Transaction {
         this.srcAmount = srcAmount;
     }
 
-    public Asset getSrcAsset() {
+    public CryptoAsset getSrcAsset() {
         return srcAsset;
     }
 
-    public void setSrcAsset(Asset srcAsset) {
+    public void setSrcAsset(CryptoAsset srcAsset) {
         this.srcAsset = srcAsset;
     }
 
@@ -82,11 +99,11 @@ public class Transaction {
         this.destAmount = destAmount;
     }
 
-    public Asset getDestAsset() {
+    public CryptoAsset getDestAsset() {
         return destAsset;
     }
 
-    public void setDestAsset(Asset destAsset) {
+    public void setDestAsset(CryptoAsset destAsset) {
         this.destAsset = destAsset;
     }
 
@@ -107,18 +124,18 @@ public class Transaction {
     }
 
     public BigDecimal getFees() {
-        return fees;
+        return fee;
     }
 
-    public void setFees(BigDecimal fees) {
-        this.fees = fees;
+    public void setFees(BigDecimal fee) {
+        this.fee = fee;
     }
 
-    public Asset getFeeAsset() {
+    public CryptoAsset getFeeAsset() {
         return feeAsset;
     }
 
-    public void setFeeAsset(Asset feeAsset) {
+    public void setFeeAsset(CryptoAsset feeAsset) {
         this.feeAsset = feeAsset;
     }
 
@@ -128,5 +145,20 @@ public class Transaction {
 
     public void setNotes(String notes) {
         this.notes = notes;
+    }
+
+    public void getTransaction() {
+
+        System.out.println(dateAndTime);
+        System.out.println(srcAmount);
+        System.out.println(srcAsset);
+        System.out.println(destAmount);
+        System.out.println(destAsset);
+        System.out.println(srcPlatform);
+        System.out.println(destPlatform);
+        System.out.println(fee);
+        System.out.println(feeAsset);
+        System.out.println(notes);
+
     }
 }

@@ -17,7 +17,7 @@ public class MainView extends AppLayout {
     }
 
     private void createHeader() {
-        H1 logo = new H1("Crypto Portfolio Trackerafdsasdf");
+        H1 logo = new H1("Crypto Portfolio Tracker");
         logo.addClassNames("text-l", "m-m");
 
         HorizontalLayout header = new HorizontalLayout(

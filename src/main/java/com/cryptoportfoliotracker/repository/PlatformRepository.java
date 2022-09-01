@@ -1,26 +1,14 @@
 package com.cryptoportfoliotracker.repository;
 
+import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
-
-public class PlatformRepository {
-    private List<Platform> PlatformList = new ArrayList<>();
-
-    public PlatformRepository(List<Platform> List) {
-        this.PlatformList = List;
-    }
-
-    public PlatformRepository() {
-    }
-
-    public List<Platform> getPlatformList() {
-        return this.PlatformList;
-    }
-
-    public void addPlatform(Platform Platform) {
-        this.PlatformList.add(Platform);
-    }
+import java.util.UUID;
+@Repository
+public interface PlatformRepository extends JpaRepository<Platform, Long> {
 
 }

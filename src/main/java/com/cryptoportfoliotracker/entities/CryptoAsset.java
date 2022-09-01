@@ -5,9 +5,12 @@ import com.cryptoportfoliotracker.entities.Platform;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-//@Entity
+import java.util.UUID;
+
+@Entity
 public class CryptoAsset extends Asset {
 
+    private BigDecimal currentValue;
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
     private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto
     private BigDecimal currentBalanceCrypto; // stores the total value in crypto
@@ -15,10 +18,13 @@ public class CryptoAsset extends Asset {
     private BigDecimal interestEarnedFiat;
     private BigDecimal interestEarnedCrypto;
 
-    public CryptoAsset(int id, String fullname, String shortname, Platform platform) {
-        super(id, fullname, shortname, platform);
+    public CryptoAsset(/*UUID id,*/ String fullname, String shortname, Platform platform) {
+        super(/*id,*/ fullname, shortname, platform);
     }
 
+    public CryptoAsset() {
+        super();
+    }
 
     public BigDecimal getInvestedCapitalFiat() {
         return investedCapitalFiat;
@@ -66,5 +72,13 @@ public class CryptoAsset extends Asset {
 
     public void setInterestEarnedCrypto(BigDecimal interestEarnedCrypto) {
         this.interestEarnedCrypto = interestEarnedCrypto;
+    }
+
+    public BigDecimal getCurrentValue() {
+        return currentValue;
+    }
+
+    public void setCurrentValue(BigDecimal currentValue) {
+        this.currentValue = currentValue;
     }
 }

@@ -1,27 +1,23 @@
 package com.cryptoportfoliotracker.repository;
 
 import com.cryptoportfoliotracker.entities.Asset;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+@Repository
+public interface AssetRepository extends JpaRepository<Asset, Long> {
+    /*
+    @Query("select a from Asset a " +
+            "where lower(a.name) like lower(concat('%', :searchTerm, '%')) " +
+            "or lower(a.shortname) like lower(concat('%', :searchTerm, '%'))")
 
-public class AssetRepository {    
-    
-    private List<Asset> AssetList = new ArrayList<>();
 
-    public AssetRepository(List<Asset> List) {
-        this.AssetList = List;
-    }
+    List<Asset> search(@Param("searchTerm") String searchTerm);
 
-    public AssetRepository() {
-    }
-
-    public List<Asset> getAssetList() {
-        return this.AssetList;
-    }
-
-    public void addAsset(Asset Asset) {
-        this.AssetList.add(Asset);
-    }
-
+*/
 }

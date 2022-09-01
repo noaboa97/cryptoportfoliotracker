@@ -1,32 +1,41 @@
 package com.cryptoportfoliotracker.entities;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import org.springframework.stereotype.Component;
 
-//@Entity
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
+@Entity
 public class Asset {
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
-    //@NotEmpty
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="asset_id")
+    private Long id;
+    //@NotNull
     private String fullname;
-    //@NotEmpty
+    //@NotNull
     private String shortname;
-    //@NotEmpty
+    //@NotNull
+    @ManyToOne(/*fetch = FetchType.LAZY*/)
+    @JoinColumn(name = "platform",
+            foreignKey = @javax.persistence.ForeignKey(name = "platform_fk"))
     private Platform platform;
 
-    public Asset(int id, String fullname, String shortname, Platform platform) {
-        this.id = id;
+    public Asset(/*Long id,*/ String fullname, String shortname, Platform platform) {
+        //this.id = id;
         this.fullname = fullname;
         this.shortname = shortname;
         this.platform = platform;
     }
 
-    public int getId() {
+    public Asset() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

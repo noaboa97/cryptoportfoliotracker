@@ -3,17 +3,20 @@ package com.cryptoportfoliotracker.entities;
 import com.cryptoportfoliotracker.repository.TransactionRepository;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 
-//@Entity
+
+@Entity
 public class Platform {
 
-    //@Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
-    private int id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="platform_id")
+    private Long id;
 
-    //@NotEmpty
+    //@NotNull
     private String name;
     private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
     private BigDecimal CurrentBalance; // Methode to calc it?
@@ -31,16 +34,19 @@ public class Platform {
 
     }*/
 
-    public Platform(int id, String name) {
-        this.id = id;
+    public Platform(/*Long id,*/ String name) {
+        //this.id = id;
         this.name = name;
     }
 
-    public int getId() {
+    public Platform() {
+    }
+
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
