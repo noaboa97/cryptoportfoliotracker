@@ -1,15 +1,8 @@
 package com.cryptoportfoliotracker.ui;
 
-import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.logic.*;
-import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
-import com.cryptoportfoliotracker.repository.PlatformRepository;
-import com.cryptoportfoliotracker.repository.TransactionRepository;
-import com.fasterxml.jackson.databind.type.PlaceholderForType;
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
@@ -19,7 +12,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-
 
 @PageTitle("Transactions")
 @Route(value = "", layout = MainView.class)
@@ -34,9 +26,6 @@ public class ListView extends VerticalLayout {
     public ListView(CptService service) {
         this.service = service;
 
-
-
-
         add(new H2("Transactions"));
 
         addClassName("list-view");
@@ -46,9 +35,6 @@ public class ListView extends VerticalLayout {
         add(getToolbar(), getContent());
         updateList();
         closeEditor();
-
-
-
 
     }
 
@@ -68,9 +54,7 @@ public class ListView extends VerticalLayout {
         grid.addColumn(transaction -> transaction.getNotes()).setHeader("Notes");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
-        grid.asSingleSelect().addValueChangeListener(event ->
-                editTransaction(event.getValue()));
-
+        grid.asSingleSelect().addValueChangeListener(event -> editTransaction(event.getValue()));
     }
 
     private Component getContent() {
@@ -128,16 +112,11 @@ public class ListView extends VerticalLayout {
 
     private void configureCompAddTransaction() {
 
-        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(),service.findAllPlatforms());
+        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(), service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
         compAddTransaction.addListener(CompAddTransaction.SaveEvent.class, this::saveTransaction);
-
-
         compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);
-
-
         compAddTransaction.addListener(CompAddTransaction.CloseEvent.class, e -> closeEditor());
-
 
     }
 

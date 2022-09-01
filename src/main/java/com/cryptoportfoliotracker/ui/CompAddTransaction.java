@@ -3,50 +3,36 @@ package com.cryptoportfoliotracker.ui;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
-import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
-import com.cryptoportfoliotracker.repository.PlatformRepository;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
-
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.IntegerField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
-import org.hibernate.event.spi.DeleteEvent;
-
-
-import java.util.Collection;
 import java.util.List;
 
 public class CompAddTransaction extends FormLayout {
   Transaction transaction;
-  DateTimePicker dateAndTime = new DateTimePicker(); //not bound properly
+  DateTimePicker dateAndTime = new DateTimePicker();
   ComboBox<CryptoAsset> srcAsset = new ComboBox<>("Source Asset");
-  ComboBox<CryptoAsset> destAsset = new ComboBox<>("Destination Asset");//not bound properly
+  ComboBox<CryptoAsset> destAsset = new ComboBox<>("Destination Asset");
   BigDecimalField srcAmount = new BigDecimalField("Source Amount");
-  BigDecimalField destAmount = new BigDecimalField("Destination Amount");//not bound properly
+  BigDecimalField destAmount = new BigDecimalField("Destination Amount");
   ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
-  ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");//not bound properly
+  ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");
   BigDecimalField fee = new BigDecimalField("Fee");
-  ComboBox<CryptoAsset> feeAsset = new ComboBox<>("Fee Asset");//not bound properly
+  ComboBox<CryptoAsset> feeAsset = new ComboBox<>("Fee Asset");
   TextField notes = new TextField("Notes");
-
   Binder<Transaction> binder = new BeanValidationBinder<>(Transaction.class);
-
-
-
-
   Button save = new Button("Save");
   Button delete = new Button("Delete");
   Button close = new Button("Cancel");
@@ -99,14 +85,11 @@ public class CompAddTransaction extends FormLayout {
 
     return new HorizontalLayout(save, delete, close);
 
-
   }
-
   public void setTransaction(Transaction transaction) {
     this.transaction = transaction;
     binder.readBean(transaction);
   }
-
 
   private void validateAndSave() {
     try {
@@ -117,11 +100,11 @@ public class CompAddTransaction extends FormLayout {
 
       fireEvent(new SaveEvent(this, transaction));
 
-
     } catch (ValidationException e) {
       e.printStackTrace();
     }
   }
+
   // Events
   public static abstract class CompAddTransactionEvent extends ComponentEvent<CompAddTransaction> {
     private Transaction transaction;

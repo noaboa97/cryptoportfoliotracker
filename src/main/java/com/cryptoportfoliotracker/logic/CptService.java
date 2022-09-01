@@ -48,7 +48,6 @@ public class CptService {
         return platformRepository.findAll();
     }
 
-
     public List<Transaction> findAllTransactions(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
 
