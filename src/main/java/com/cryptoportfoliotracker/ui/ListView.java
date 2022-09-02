@@ -112,7 +112,7 @@ public class ListView extends VerticalLayout {
 
     private void configureCompAddTransaction() {
 
-        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(), service.findAllPlatforms());
+        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(""), service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
         compAddTransaction.addListener(CompAddTransaction.SaveEvent.class, this::saveTransaction);
         compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);

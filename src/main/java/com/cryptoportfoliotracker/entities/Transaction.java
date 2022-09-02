@@ -37,16 +37,16 @@ public class Transaction {
     @JoinColumn(name = "destplatform",
             foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
-    @NotNull
+
     private BigDecimal fee;
-    @NotNull
+
     @ManyToOne()
     @JoinColumn(name = "feeasset",
             foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
     private CryptoAsset feeAsset;
     private String notes;
 
-    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform) {
+    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform,BigDecimal fee,CryptoAsset feeAsset) {
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
@@ -54,6 +54,8 @@ public class Transaction {
         this.destAsset = destAsset;
         this.srcPlatform = srcPlatform;
         this.destPlatform = destPlatform;
+        this.fee = fee;
+        this.feeAsset = feeAsset;
     }
 
     public Transaction() {

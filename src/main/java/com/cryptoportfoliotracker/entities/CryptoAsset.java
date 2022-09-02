@@ -5,11 +5,11 @@ import com.cryptoportfoliotracker.entities.Platform;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Entity
 public class CryptoAsset extends Asset {
-
     private BigDecimal currentValue;
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
     private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto

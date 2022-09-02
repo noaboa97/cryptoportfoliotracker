@@ -39,12 +39,18 @@ public class CptService {
         return assetRepository.findAll();
     }
 
-    public List<CryptoAsset> findAllCryptoAssets() {
-        return cryptoAssetRepository.findAll();
+    public List<CryptoAsset> findAllCryptoAssets(String stringFilter) {
+        if (stringFilter == null || stringFilter.isEmpty()) {
 
+
+            return cryptoAssetRepository.findAll();
+        } else {
+            return cryptoAssetRepository.search(stringFilter);
+        }
     }
 
     public List<Platform> findAllPlatforms() {
+
         return platformRepository.findAll();
     }
 
