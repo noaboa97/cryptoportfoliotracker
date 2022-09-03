@@ -46,9 +46,9 @@ public class Dashboard extends VerticalLayout {
     private BigDecimal getReturnRate() {
         BigDecimal returnRate;
         if(getInvestedCapital().compareTo(getCurrentValue()) < 0) {
-            returnRate = getInvestedCapital().divide(getCurrentValue(), 1, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
+            returnRate = getInvestedCapital().divide(getCurrentValue(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
         }else{
-            returnRate = getCurrentValue().divide(getInvestedCapital(), 1, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
+            returnRate = getCurrentValue().divide(getInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
         }
 
         return returnRate;
@@ -110,7 +110,7 @@ public class Dashboard extends VerticalLayout {
             System.out.println("Dest Amount " + s);
 
             // multiply the destination amount with the current value of the crypto asset
-            currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValue()));
+            currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
 
             System.out.println("current Value " + currentValue);
         };

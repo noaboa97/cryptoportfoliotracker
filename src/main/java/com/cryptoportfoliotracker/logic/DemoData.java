@@ -28,7 +28,7 @@ public class DemoData {
             platformRepository.save(P2);
             CryptoAsset CA = new CryptoAsset("Bitcoin", "BTC", P);
             BigDecimal BD = new BigDecimal("19583.39");
-            CA.setCurrentValue(BD);
+            CA.setCurrentValueFiat(BD);
             cryptoAssetRepository.save(CA);
             CryptoAsset CA2 = new CryptoAsset("Schweizer Franken", "CHF", P2);
             cryptoAssetRepository.save(CA2);

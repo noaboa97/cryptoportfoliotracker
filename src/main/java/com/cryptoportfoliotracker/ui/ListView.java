@@ -43,11 +43,11 @@ public class ListView extends VerticalLayout {
         grid.setSizeFull();
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
-        grid.addColumn(transaction -> transaction.getSrcAsset().getShortname()).setHeader("Source Asset");
-        grid.addColumn(transaction -> transaction.getDestAsset().getShortname()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getSrcAmount()).setHeader("Source Amount");
-        grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getSrcAsset().getShortname()).setHeader("Source Asset");
         grid.addColumn(transaction -> transaction.getSrcPlatform().getName()).setHeader("Source Platform");
+        grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getDestAsset().getShortname()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
         grid.addColumn(transaction -> transaction.getFees()).setHeader("Fees");
         grid.addColumn(transaction -> transaction.getFeeAsset().getShortname()).setHeader("Fee Asset");

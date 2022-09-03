@@ -49,9 +49,57 @@ public class CptService {
         }
     }
 
+    public long countCryptoAsset() {
+        return cryptoAssetRepository.count();
+    }
+
+    public void deleteCryptoAsset(CryptoAsset cryptoAsset) {
+        cryptoAssetRepository.delete(cryptoAsset);
+    }
+
+    public void saveCryptoAsset(CryptoAsset cryptoAsset) {
+        if (cryptoAsset == null) {
+
+
+            System.err.println("Transaction is null. Are you sure you have connected your form to the application?");
+            return;
+        }
+        System.out.println("CptService saveTransaction");
+
+        cryptoAssetRepository.save(cryptoAsset);
+    }
+
+
     public List<Platform> findAllPlatforms() {
 
         return platformRepository.findAll();
+    }
+
+
+    public List<CryptoAsset> findAllAssetsOfPlatform(Platform p) {
+
+        return cryptoAssetRepository.findAllAssetsOfPlatform(p);
+    }
+
+    public List<Transaction> findBySrcPlatform(Platform p) {
+
+        return transactionRepository.findBySrcPlatform(p);
+    }
+    public List<Transaction> findByDestPlatform(Platform p) {
+
+        return transactionRepository.findByDestPlatform(p);
+    }
+
+
+    public List<Transaction> findBySrcAsset(CryptoAsset ca) {
+        System.out.println(ca);
+        return transactionRepository.findBySrcAsset(ca);
+    }
+
+
+    public List<Transaction> findByDestAsset(CryptoAsset ca) {
+
+        return transactionRepository.findByDestAsset(ca);
     }
 
     public List<Transaction> findAllTransactions(String stringFilter) {
@@ -60,7 +108,7 @@ public class CptService {
 
             return transactionRepository.findAll();
         } else {
-            return transactionRepository.search(stringFilter);
+            return null; //transactionRepository.search(stringFilter);
         }
     }
 
