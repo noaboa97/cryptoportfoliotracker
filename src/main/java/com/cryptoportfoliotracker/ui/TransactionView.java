@@ -14,8 +14,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Transactions")
-@Route(value = "", layout = MainView.class)
-public class ListView extends VerticalLayout {
+@Route(value = "transactions", layout = MainView.class)
+public class TransactionView extends VerticalLayout {
 
     Grid<Transaction> grid = new Grid<>(Transaction.class, false);
     TextField filterText = new TextField();
@@ -23,7 +23,7 @@ public class ListView extends VerticalLayout {
     CompAddTransaction compAddTransaction;
     CptService service;
 
-    public ListView(CptService service) {
+    public TransactionView(CptService service) {
         this.service = service;
 
         add(new H2("Transactions"));
@@ -43,11 +43,11 @@ public class ListView extends VerticalLayout {
         grid.setSizeFull();
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
-        grid.addColumn(transaction -> transaction.getSrcAsset().getShortname()).setHeader("Source Asset");
-        grid.addColumn(transaction -> transaction.getDestAsset().getShortname()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getSrcAmount()).setHeader("Source Amount");
-        grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getSrcAsset().getShortname()).setHeader("Source Asset");
         grid.addColumn(transaction -> transaction.getSrcPlatform().getName()).setHeader("Source Platform");
+        grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getDestAsset().getShortname()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
         grid.addColumn(transaction -> transaction.getFees()).setHeader("Fees");
         grid.addColumn(transaction -> transaction.getFeeAsset().getShortname()).setHeader("Fee Asset");
@@ -112,7 +112,7 @@ public class ListView extends VerticalLayout {
 
     private void configureCompAddTransaction() {
 
-        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(), service.findAllPlatforms());
+        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(""), service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
         compAddTransaction.addListener(CompAddTransaction.SaveEvent.class, this::saveTransaction);
         compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);

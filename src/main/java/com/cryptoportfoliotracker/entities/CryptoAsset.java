@@ -1,16 +1,14 @@
 package com.cryptoportfoliotracker.entities;
 
-import com.cryptoportfoliotracker.entities.Asset;
-import com.cryptoportfoliotracker.entities.Platform;
+import com.cryptoportfoliotracker.logic.CptService;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.util.UUID;
+import java.util.List;
 
 @Entity
 public class CryptoAsset extends Asset {
-
-    private BigDecimal currentValue;
+    private BigDecimal currentValueFiat;
     private BigDecimal investedCapitalFiat; // stores the invested money in fiat
     private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto
     private BigDecimal currentBalanceCrypto; // stores the total value in crypto
@@ -26,59 +24,78 @@ public class CryptoAsset extends Asset {
         super();
     }
 
-    public BigDecimal getInvestedCapitalFiat() {
-        return investedCapitalFiat;
-    }
+    // calculates how much money has been invested into crypto by adding all the source (CHF) amount
+    public BigDecimal getInvestedCapitalFiat(CptService service) {
 
-    public void setInvestedCapitalFiat(BigDecimal investedCapitalFiat) {
+        BigDecimal investedCapitalFiat = new BigDecimal("0");
+
+        List<Transaction> list = service.findBySrcAsset(this);
+        for ( Transaction t : list){
+
+            investedCapitalFiat.add(t.getSrcAmount());
+
+        }
         this.investedCapitalFiat = investedCapitalFiat;
+        return this.investedCapitalFiat;
     }
 
-    public BigDecimal getInvestedCapitalCrypto() {
+    public BigDecimal getInvestedCapitalCrypto(CptService service) {
+
+        BigDecimal investedCapitalCrypto = new BigDecimal("0");
+
+        List<Transaction> list = service.findByDestAsset(this);
+
+        for ( Transaction t : list){
+
+            investedCapitalCrypto.add(t.getDestAmount());
+
+        }
+
         return investedCapitalCrypto;
     }
 
-    public void setInvestedCapitalCrypto(BigDecimal investedCapitalCrypto) {
-        this.investedCapitalCrypto = investedCapitalCrypto;
-    }
+    /* TO DO
+    public BigDecimal getCurrentBalanceCrypto(CptService service) {
 
-    public BigDecimal getCurrentBalanceCrypto() {
+        BigDecimal currentBalanceCrypto = new BigDecimal("0");
+
+        List<Transaction> list = service.findByDestAsset(this.getFullname());
+
+        for ( Transaction t : list){
+
+            currentBalanceCrypto.add(t.getDestAmount().multiply(this.currentValue));
+
+        }
+
+        //
+
         return currentBalanceCrypto;
-    }
+    }*/
 
-    public void setCurrentBalanceCrypto(BigDecimal currentBalanceCrypto) {
-        this.currentBalanceCrypto = currentBalanceCrypto;
-    }
 
-    public BigDecimal getCurrentBalanceFiat() {
+
+    public BigDecimal getCurrentValueFiat(CptService service) {
+
+        BigDecimal currentBalanceFiat = new BigDecimal("0");
+
+        List<Transaction> list = service.findByDestAsset(this);
+
+        for ( Transaction t : list){
+
+            currentBalanceFiat.add(t.getDestAmount().multiply(this.currentValueFiat));
+
+        }
+
         return currentBalanceFiat;
     }
 
-    public void setCurrentBalanceFiat(BigDecimal currentBalanceFiat) {
-        this.currentBalanceFiat = currentBalanceFiat;
+
+
+    public BigDecimal getCurrentValueFiat() {
+        return currentValueFiat;
     }
 
-    public BigDecimal getInterestEarnedFiat() {
-        return interestEarnedFiat;
-    }
-
-    public void setInterestEarnedFiat(BigDecimal interestEarnedFiat) {
-        this.interestEarnedFiat = interestEarnedFiat;
-    }
-
-    public BigDecimal getInterestEarnedCrypto() {
-        return interestEarnedCrypto;
-    }
-
-    public void setInterestEarnedCrypto(BigDecimal interestEarnedCrypto) {
-        this.interestEarnedCrypto = interestEarnedCrypto;
-    }
-
-    public BigDecimal getCurrentValue() {
-        return currentValue;
-    }
-
-    public void setCurrentValue(BigDecimal currentValue) {
-        this.currentValue = currentValue;
+    public void setCurrentValueFiat(BigDecimal currentValueFiat) {
+        this.currentValueFiat = currentValueFiat;
     }
 }

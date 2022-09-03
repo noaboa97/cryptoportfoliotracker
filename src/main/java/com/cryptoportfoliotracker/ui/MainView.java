@@ -18,7 +18,7 @@ public class MainView extends AppLayout {
 
     private void createHeader() {
         H1 logo = new H1("Crypto Portfolio Tracker");
-        logo.addClassNames("text-l", "m-m");
+        logo.addClassNames("text-l", "m-0");
 
         HorizontalLayout header = new HorizontalLayout(
                 new DrawerToggle(),
@@ -35,15 +35,15 @@ public class MainView extends AppLayout {
 
     private void createDrawer() {
         RouterLink dashboard = new RouterLink("Dashboard", Dashboard.class);
-        RouterLink cryptoassetview = new RouterLink("Crypto Assets", CryptoAssetView.class);
-        RouterLink listLink = new RouterLink("Transactions", ListView.class);
+        RouterLink cryptoAssetView = new RouterLink("Crypto Assets", CryptoAssetView.class);
+        RouterLink TransactionView = new RouterLink("Transactions", com.cryptoportfoliotracker.ui.TransactionView.class);
 
-        listLink.setHighlightCondition(HighlightConditions.sameLocation());
+        TransactionView.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(
                 dashboard,
-                cryptoassetview,
-                listLink
+                cryptoAssetView,
+                TransactionView
         ));
     }
 }

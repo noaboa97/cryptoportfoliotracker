@@ -1,11 +1,9 @@
 package com.cryptoportfoliotracker.entities;
 
-import com.cryptoportfoliotracker.repository.TransactionRepository;
-
+import com.cryptoportfoliotracker.logic.CptService;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.util.List;
 
 
 @Entity
@@ -18,24 +16,12 @@ public class Platform {
 
     //@NotNull
     private String name;
-    private BigDecimal investedBalance; // Methode to calc it in the manager of the platform
-    private BigDecimal CurrentBalance; // Methode to calc it?
-/*
-    public BigDecimal investedBalance() {
+    private BigDecimal investedBalanceFiat;
+    private BigDecimal investedBalanceCrypto;
+    //private BigDecimal currentBalanceFiat;
+    private BigDecimal currentValueFiat;
 
-        TransactionRepository T = new TransactionRepository();
-
-        T.getTransactionList();
-
-        BigDecimal Balance = new BigDecimal(54);
-
-        return Balance;
-
-
-    }*/
-
-    public Platform(/*Long id,*/ String name) {
-        //this.id = id;
+    public Platform(String name) {
         this.name = name;
     }
 
@@ -58,19 +44,75 @@ public class Platform {
         this.name = name;
     }
 
-    public BigDecimal getInvestedBalance() {
-        return investedBalance;
+    public BigDecimal getCurrentValueFiat() {
+        return currentValueFiat;
     }
 
-    public void setInvestedBalance(BigDecimal investedBalance) {
-        this.investedBalance = investedBalance;
+    public void setCurrentValueFiat(BigDecimal currentValueFiat) {
+        this.currentValueFiat = currentValueFiat;
     }
 
-    public BigDecimal getCurrentBalance() {
-        return CurrentBalance;
+    public BigDecimal getInvestedCapitalFiat(CptService service) {
+
+        BigDecimal currentBalanceFiat = new BigDecimal("0");
+
+        List<CryptoAsset> assetList = service.findAllAssetsOfPlatform(this);
+
+        for (CryptoAsset a : assetList){
+
+            List<Transaction> transactionList = service.findBySrcPlatform(this);
+
+            for(Transaction t : transactionList) {
+
+                currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
+            }
+        }
+
+        return currentBalanceFiat;
     }
 
-    public void setCurrentBalance(BigDecimal currentBalance) {
-        CurrentBalance = currentBalance;
+    public BigDecimal getInvestedCapitalCrypto(CptService service) {
+
+        BigDecimal currentBalanceCrypto = new BigDecimal("0");
+
+        List<CryptoAsset> assetlist = service.findAllAssetsOfPlatform(this);
+
+        for (CryptoAsset a : assetlist) {
+
+            List<Transaction> transactionList = service.findByDestPlatform(this);
+
+            for (Transaction t : transactionList){
+
+                currentBalanceCrypto = currentBalanceCrypto.add(t.getDestAmount());
+            }
+
+        }
+
+        return currentBalanceCrypto;
     }
+
+
+    public BigDecimal getCurrentBalanceFiat(CptService service) {
+
+        BigDecimal currentBalanceFiat = new BigDecimal("0");
+
+        List<CryptoAsset> assetlist = service.findAllAssetsOfPlatform(this);
+
+        for (CryptoAsset a : assetlist){
+
+            List<Transaction> transactionList = service.findBySrcPlatform(this);
+
+            for(Transaction t : transactionList) {
+                BigDecimal la = a.getCurrentValueFiat();
+                System.out.println(t.getSrcAmount());
+                BigDecimal lo = t.getSrcAmount().multiply(la);
+
+                //currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount().multiply(a.getCurrentValueFiat()));
+                currentBalanceFiat = currentBalanceFiat.add(la);
+            }
+        }
+
+        return currentBalanceFiat;
+    }
+
 }

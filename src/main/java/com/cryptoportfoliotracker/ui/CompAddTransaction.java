@@ -38,7 +38,7 @@ public class CompAddTransaction extends FormLayout {
   Button close = new Button("Cancel");
 
   public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList) {
-    addClassName("contact-form");
+    addClassName("transaction-list");
     binder.bindInstanceFields(this);
 
     // laden der Listen für die Dropdowns
