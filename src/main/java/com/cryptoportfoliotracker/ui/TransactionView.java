@@ -14,8 +14,8 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 @PageTitle("Transactions")
-@Route(value = "", layout = MainView.class)
-public class ListView extends VerticalLayout {
+@Route(value = "transactions", layout = MainView.class)
+public class TransactionView extends VerticalLayout {
 
     Grid<Transaction> grid = new Grid<>(Transaction.class, false);
     TextField filterText = new TextField();
@@ -23,7 +23,7 @@ public class ListView extends VerticalLayout {
     CompAddTransaction compAddTransaction;
     CptService service;
 
-    public ListView(CptService service) {
+    public TransactionView(CptService service) {
         this.service = service;
 
         add(new H2("Transactions"));

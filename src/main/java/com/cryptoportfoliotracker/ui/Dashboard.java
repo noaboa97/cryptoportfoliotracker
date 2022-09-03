@@ -1,12 +1,14 @@
 package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.icon.VaadinIcon;
@@ -16,28 +18,30 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.router.RouteAlias;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-@Route(value = "dashboard", layout = MainView.class)
+@Route(value = "", layout = MainView.class)
+@RouteAlias("dashboard")
 @PageTitle("Dashboard")
 public class Dashboard extends VerticalLayout {
 
     CptService service;
 
-
-
-
+    Board board = new Board();
 
     public Dashboard(CptService service) {
         this.service = service;
         addClassName("dashboard-view");
-
-
-        Board board = new Board();
-        board.addRow(createHighlight("Invested Capital", getInvestedCapital().toString()), createHighlight("Current Value", getCurrentValue().toString()),
-                createHighlight("Return rate", getReturnRate()+"%"), createHighlight("Custom metric", "-123.45"));
+        board.addRow(createHeader("Overview", "Total"));
+        board.addRow(createSingleCard("Invested Capital", getInvestedCapital().toString()), createSingleCard("Current Value", getCurrentValue().toString()), createSingleCard("Return rate", getReturnRate() + "%"), createSingleCard("Custom metric", "-123.45"));
+        board.addRow(createHeader("Platforms", "Platform total"));
+        createPlatformOverview();
         //board.addRow(createViewEvents());
         //board.addRow(/*createServiceHealth()*/ createResponseTimes());
         add(board);
@@ -45,26 +49,26 @@ public class Dashboard extends VerticalLayout {
 
     private BigDecimal getReturnRate() {
         BigDecimal returnRate;
-        if(getInvestedCapital().compareTo(getCurrentValue()) < 0) {
+        if (getInvestedCapital().compareTo(getCurrentValue()) < 0) {
             returnRate = getInvestedCapital().divide(getCurrentValue(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
-        }else{
+        } else {
             returnRate = getCurrentValue().divide(getInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
         }
 
         return returnRate;
     }
 
-    private BigDecimal PercentageChange (){
-        BigDecimal increase,pIncreace,decrease,pDecrease;
+    private BigDecimal PercentageChange() {
+        BigDecimal increase, pIncreace, decrease, pDecrease;
         BigDecimal h = new BigDecimal("100");
         //https://www.educative.io/answers/how-to-compare-two-bigdecimals-in-java
         //https://www.investopedia.com/terms/p/percentage-change.asp
-        if(getInvestedCapital().compareTo(getCurrentValue()) < 0) {
+        if (getInvestedCapital().compareTo(getCurrentValue()) < 0) {
             // increase calc
             increase = getCurrentValue().subtract(getInvestedCapital());
             pIncreace = increase.divide(getInvestedCapital()).multiply(h);
             return pIncreace;
-        }else{
+        } else {
             // decrease calc
             decrease = getInvestedCapital().subtract(getCurrentValue());
             pDecrease = decrease.divide(getInvestedCapital()).multiply(h);
@@ -73,18 +77,21 @@ public class Dashboard extends VerticalLayout {
         }
 
 
-    };
+    }
+
+    ;
 
 
-    private BigDecimal getInvestedCapital(){
+    private BigDecimal getInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");
 
-        for(Transaction t : service.findAllTransactions("")){
+        for (Transaction t : service.findAllTransactions("")) {
             investedCapital = investedCapital.add(t.getSrcAmount());
             System.out.println("Src Amount " + t.getSrcAmount());
             System.out.println("Src Amount " + investedCapital);
 
-        };
+        }
+        ;
 
 
         System.out.println("Invested Capital " + investedCapital);
@@ -92,7 +99,9 @@ public class Dashboard extends VerticalLayout {
 
         return investedCapital;
 
-    };
+    }
+
+    ;
 
     private BigDecimal getCurrentValue() {
         BigDecimal currentValue = new BigDecimal("0");
@@ -113,14 +122,17 @@ public class Dashboard extends VerticalLayout {
             currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
 
             System.out.println("current Value " + currentValue);
-        };
+        }
+        ;
 
         return currentValue;
 
-    };
+    }
+
+    ;
 
 
-    private Component createHighlight(String title, String value /*,String percentage*/) {
+    private Component createSingleCard(String title, String value /*,String percentage*/) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
         String prefix = "";
         String theme = "badge";
@@ -153,6 +165,81 @@ public class Dashboard extends VerticalLayout {
         layout.setSpacing(false);
         return layout;
     }
+
+    private Component createTrippleCard(String title, String value1, String value2) {
+        VaadinIcon icon = VaadinIcon.ARROW_UP;
+        String prefix = "";
+        String theme = "badge";
+/*
+        if (percentage == 0) {
+            prefix = "±";
+        } else if (percentage > 0) {
+            prefix = "+";
+            theme += " success";
+        } else if (percentage < 0) {
+            icon = VaadinIcon.ARROW_DOWN;
+            theme += " error";
+        }*/
+
+        H3 h3 = new H3(title);
+        h3.addClassNames("font-normal", "m-0", "text-secondary", "text-xs");
+
+        Span span1 = new Span(value1);
+        span1.addClassNames("font-semibold", "text-3xl");
+
+        Span span2 = new Span(value2);
+        span2.addClassNames("font-semibold", "text-3xl");
+
+        Span span3 = new Span(value2);
+        span2.addClassNames("font-semibold", "text-3xl");
+
+        Icon i = icon.create();
+        i.addClassNames("box-border", "p-xs");
+
+        //Span badge = new Span(i, new Span(prefix + percentage.toString()));
+        //badge.getElement().getThemeList().add(theme);
+
+        VerticalLayout layout = new VerticalLayout(h3, span1, span2 /*, badge*/);
+        layout.addClassName("p-l");
+        layout.setPadding(false);
+        layout.setSpacing(false);
+        return layout;
+    }
+
+    private void createPlatformOverview() {
+
+        List<Platform> list = service.findAllPlatforms();
+
+        ArrayList<Component> cList = new ArrayList<Component>();
+        System.out.println("createPlatformOverview");
+        int i = 1;
+
+        int s = list.size();
+
+        System.out.println(s);
+        for (Platform p : list) {
+
+            System.out.println("adding to list" +p.getName());
+            cList.add(createTrippleCard(p.getName(), "Invested Capital: " + p.getInvestedCapitalFiat(service) + " CHF", "Current Value: " + p.getCurrentBalanceFiat(service) + " CHF"));
+            if (i == s) {
+                if (i == 1) {
+                    board.addRow(cList.get(0));
+                } else if (i == 2) {
+                    board.addRow(cList.get(0), cList.get(1));
+                } else if (i == 3) {
+                    board.addRow(cList.get(0), cList.get(1), cList.get(2));
+                } else {
+                    board.addRow(cList.get(0), cList.get(1), cList.get(2), cList.get(3));
+                    cList.remove(cList);
+                }
+
+
+            }
+            i++;
+
+        }
+    }
+
 /*
     private Component createViewEvents() {
         // Header
@@ -278,7 +365,6 @@ public class Dashboard extends VerticalLayout {
         header.setWidthFull();
         return header;
     }
-
 
 
 }

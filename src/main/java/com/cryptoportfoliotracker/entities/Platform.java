@@ -62,10 +62,10 @@ public class Platform {
 
             List<Transaction> transactionList = service.findBySrcPlatform(this);
 
-            for(Transaction t : transactionList)
+            for(Transaction t : transactionList) {
 
                 currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
-
+            }
         }
 
         return currentBalanceFiat;
@@ -77,13 +77,14 @@ public class Platform {
 
         List<CryptoAsset> assetlist = service.findAllAssetsOfPlatform(this);
 
-        for (CryptoAsset a : assetlist){
+        for (CryptoAsset a : assetlist) {
 
             List<Transaction> transactionList = service.findByDestPlatform(this);
 
-            for(Transaction t : transactionList)
+            for (Transaction t : transactionList){
 
                 currentBalanceCrypto = currentBalanceCrypto.add(t.getDestAmount());
+            }
 
         }
 
@@ -101,29 +102,17 @@ public class Platform {
 
             List<Transaction> transactionList = service.findBySrcPlatform(this);
 
-            for(Transaction t : transactionList)
+            for(Transaction t : transactionList) {
+                BigDecimal la = a.getCurrentValueFiat();
+                System.out.println(t.getSrcAmount());
+                BigDecimal lo = t.getSrcAmount().multiply(la);
 
-                currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount().multiply(a.getCurrentValueFiat()));
-
+                //currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount().multiply(a.getCurrentValueFiat()));
+                currentBalanceFiat = currentBalanceFiat.add(la);
+            }
         }
 
         return currentBalanceFiat;
     }
 
-/*
-    public BigDecimal getInvestedBalance() {
-        return investedBalance;
-    }
-
-    public void setInvestedBalance(BigDecimal investedBalance) {
-        this.investedBalance = investedBalance;
-    }
-
-    public BigDecimal getCurrentBalance() {
-        return CurrentBalance;
-    }
-
-    public void setCurrentBalance(BigDecimal currentBalance) {
-        CurrentBalance = currentBalance;
-    }*/
 }
