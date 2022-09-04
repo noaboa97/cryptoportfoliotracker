@@ -16,8 +16,8 @@ public class CryptoAsset extends Asset {
     private BigDecimal interestEarnedFiat;
     private BigDecimal interestEarnedCrypto;
 
-    public CryptoAsset(/*UUID id,*/ String fullname, String shortname, Platform platform) {
-        super(/*id,*/ fullname, shortname, platform);
+    public CryptoAsset( String fullname, String shortname, Platform platform) {
+        super( fullname, shortname, platform);
     }
 
     public CryptoAsset() {

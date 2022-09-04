@@ -39,23 +39,12 @@ public class Dashboard extends VerticalLayout {
         this.service = service;
         addClassName("dashboard-view");
         board.addRow(createHeader("Overview", "Total"));
-        board.addRow(createSingleCard("Invested Capital", getInvestedCapital().toString()), createSingleCard("Current Value", getCurrentValue().toString()), createSingleCard("Return rate", getReturnRate() + "%"), createSingleCard("Custom metric", "-123.45"));
+        board.addRow(createSingleCard("Invested Capital", getInvestedCapital().toString()), createSingleCard("Current Value", getCurrentValue().toString()), createSingleCard("Return rate", PercentageChange() + "%"), createSingleCard("Custom metric", "-123.45"));
         board.addRow(createHeader("Platforms", "Platform total"));
         createPlatformOverview();
         //board.addRow(createViewEvents());
         //board.addRow(/*createServiceHealth()*/ createResponseTimes());
         add(board);
-    }
-
-    private BigDecimal getReturnRate() {
-        BigDecimal returnRate;
-        if (getInvestedCapital().compareTo(getCurrentValue()) < 0) {
-            returnRate = getInvestedCapital().divide(getCurrentValue(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
-        } else {
-            returnRate = getCurrentValue().divide(getInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(new BigDecimal("100"));
-        }
-
-        return returnRate;
     }
 
     private BigDecimal PercentageChange() {
@@ -87,49 +76,29 @@ public class Dashboard extends VerticalLayout {
 
         for (Transaction t : service.findAllTransactions("")) {
             investedCapital = investedCapital.add(t.getSrcAmount());
-            System.out.println("Src Amount " + t.getSrcAmount());
-            System.out.println("Src Amount " + investedCapital);
-
         }
-        ;
-
-
-        System.out.println("Invested Capital " + investedCapital);
-
 
         return investedCapital;
 
     }
 
-    ;
 
     private BigDecimal getCurrentValue() {
         BigDecimal currentValue = new BigDecimal("0");
         String s = new String("Test");
         for (Transaction t : service.findAllTransactions("")) {
 
-            System.out.println(service.findAllCryptoAssets(t.getDestAsset().getFullname()).size());
-            System.out.println(service.findAllCryptoAssets(t.getDestAsset().getFullname()).indexOf(t.getDestAsset()));
-
-            System.out.println("Dest Asset " + service.findAllCryptoAssets(t.getDestAsset().getFullname()).get(0).getFullname());
-
             // get dest asset fullname and search for it in the repo get the first object of the list - assuming there is one - none will throw error
             CryptoAsset ca = service.findAllCryptoAssets(t.getDestAsset().getFullname()).get(0);
-
-            System.out.println("Dest Amount " + s);
 
             // multiply the destination amount with the current value of the crypto asset
             currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
 
-            System.out.println("current Value " + currentValue);
         }
-        ;
-
         return currentValue;
-
     }
 
-    ;
+
 
 
     private Component createSingleCard(String title, String value /*,String percentage*/) {
@@ -211,15 +180,13 @@ public class Dashboard extends VerticalLayout {
         List<Platform> list = service.findAllPlatforms();
 
         ArrayList<Component> cList = new ArrayList<Component>();
-        System.out.println("createPlatformOverview");
+
         int i = 1;
 
         int s = list.size();
 
-        System.out.println(s);
         for (Platform p : list) {
 
-            System.out.println("adding to list" +p.getName());
             cList.add(createTrippleCard(p.getName(), "Invested Capital: " + p.getInvestedCapitalFiat(service) + " CHF", "Current Value: " + p.getCurrentBalanceFiat(service) + " CHF"));
             if (i == s) {
                 if (i == 1) {
@@ -232,7 +199,6 @@ public class Dashboard extends VerticalLayout {
                     board.addRow(cList.get(0), cList.get(1), cList.get(2), cList.get(3));
                     cList.remove(cList);
                 }
-
 
             }
             i++;
@@ -320,7 +286,7 @@ public class Dashboard extends VerticalLayout {
         serviceHealth.getElement().getThemeList().add("spacing-l");
         return serviceHealth;
     }
-*/
+
     private Component createResponseTimes() {
         HorizontalLayout header = createHeader("Response times", "Average across all systems");
 
@@ -347,7 +313,7 @@ public class Dashboard extends VerticalLayout {
         serviceHealth.getElement().getThemeList().add("spacing-l");
         return serviceHealth;
     }
-
+*/
     private HorizontalLayout createHeader(String title, String subtitle) {
         H2 h2 = new H2(title);
         h2.addClassNames("text-xl", "m-0");

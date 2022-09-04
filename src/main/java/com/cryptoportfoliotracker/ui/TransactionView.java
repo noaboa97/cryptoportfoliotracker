@@ -128,7 +128,6 @@ public class TransactionView extends VerticalLayout {
 
 
     private void saveTransaction(CompAddTransaction.SaveEvent event) {
-        System.out.println("ListView saveTransaction");
         event.getTransaction().getTransaction();
         service.saveTransaction(event.getTransaction());
         updateList();

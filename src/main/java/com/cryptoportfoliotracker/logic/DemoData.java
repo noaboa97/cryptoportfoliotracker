@@ -26,7 +26,7 @@ public class DemoData {
             Platform P3 = new Platform( "Crypto.com");
             Platform P4 = new Platform( "Nexo");
             Platform P5 = new Platform( "Bitpanda");
-            Platform P2 = new Platform( "PostFinance");
+            Platform P2 = new Platform( "PostFinance", true);
             platformRepository.save(P);
             platformRepository.save(P2);
             platformRepository.save(P3);

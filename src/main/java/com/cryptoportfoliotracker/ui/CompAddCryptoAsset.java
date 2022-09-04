@@ -94,8 +94,6 @@ public class CompAddCryptoAsset extends FormLayout {
         try {
 
             binder.writeBean(cryptoAsset);
-            System.out.println("CompAddCryptoAsset validateAndSave");
-            /*            cryptoAsset..getCryptoAsset();*/
 
             fireEvent(new SaveEvent(this, cryptoAsset));
 

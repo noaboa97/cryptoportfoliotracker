@@ -18,11 +18,17 @@ public class Platform {
     private String name;
     private BigDecimal investedBalanceFiat;
     private BigDecimal investedBalanceCrypto;
-    //private BigDecimal currentBalanceFiat;
+    private boolean isFiatPlatform = false;
     private BigDecimal currentValueFiat;
 
     public Platform(String name) {
         this.name = name;
+    }
+
+    public Platform(String name, boolean isFiatPlatform) {
+
+        this.name = name;
+        this.isFiatPlatform = isFiatPlatform;
     }
 
     public Platform() {
@@ -70,7 +76,7 @@ public class Platform {
 
         return currentBalanceFiat;
     }
-
+/*
     public BigDecimal getInvestedCapitalCrypto(CptService service) {
 
         BigDecimal currentBalanceCrypto = new BigDecimal("0");
@@ -89,7 +95,7 @@ public class Platform {
         }
 
         return currentBalanceCrypto;
-    }
+    }*/
 
 
     public BigDecimal getCurrentBalanceFiat(CptService service) {
@@ -104,7 +110,6 @@ public class Platform {
 
             for(Transaction t : transactionList) {
                 BigDecimal la = a.getCurrentValueFiat();
-                System.out.println(t.getSrcAmount());
                 BigDecimal lo = t.getSrcAmount().multiply(la);
 
                 //currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount().multiply(a.getCurrentValueFiat()));
