@@ -42,14 +42,14 @@ public class TransactionView extends VerticalLayout {
         grid.addClassNames("transaction-grid");
         grid.setSizeFull();
 
-        grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
+        grid.addColumn(transaction -> transaction.getStringDate()).setHeader("Timestamp");
         grid.addColumn(transaction -> transaction.getSrcAmount().stripTrailingZeros()).setHeader("Source Amount");
         grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
         grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
         grid.addColumn(transaction -> transaction.getDestAmount().stripTrailingZeros()).setHeader("Destination Amount");
         grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
-        grid.addColumn(transaction -> transaction.getFees()).setHeader("Fees");
+        grid.addColumn(transaction -> transaction.getFee().stripTrailingZeros()).setHeader("Fees");
         grid.addColumn(transaction -> transaction.getFeeAsset()).setHeader("Fee Asset");
         grid.addColumn(transaction -> transaction.getNotes()).setHeader("Notes");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));

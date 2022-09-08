@@ -4,6 +4,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 @Entity
 public class Transaction {
 
@@ -77,6 +79,10 @@ public class Transaction {
     }
 
     public void setDateAndTime(LocalDateTime dateAndTime) {
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+        dateAndTime.format(formatter);
+
         this.dateAndTime = dateAndTime;
     }
 
@@ -128,11 +134,11 @@ public class Transaction {
         this.destPlatform = destPlatform;
     }
 
-    public BigDecimal getFees() {
+    public BigDecimal getFee() {
         return fee;
     }
 
-    public void setFees(BigDecimal fee) {
+    public void setFee(BigDecimal fee) {
         this.fee = fee;
     }
 
@@ -166,4 +172,9 @@ public class Transaction {
         System.out.println("Notes "+notes);
 
     }
+    public String getStringDate(){
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MMM yyyy HH:mm:ss");
+        return dateAndTime.format(formatter);
+    };
+
 }
