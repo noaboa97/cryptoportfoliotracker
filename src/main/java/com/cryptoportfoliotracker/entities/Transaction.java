@@ -14,6 +14,7 @@ public class Transaction {
     @NotNull
     private LocalDateTime dateAndTime;
     @NotNull
+    @Column(precision = 30, scale = 10)
     private BigDecimal srcAmount;
     @NotNull
     @ManyToOne()
@@ -21,6 +22,7 @@ public class Transaction {
             foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
     private Asset srcAsset;
     @NotNull
+    @Column(precision = 30, scale = 10)
     private BigDecimal destAmount;
     @NotNull
     @ManyToOne()
@@ -38,6 +40,7 @@ public class Transaction {
             foreignKey = @javax.persistence.ForeignKey(name = "destplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform destPlatform;
 
+    @Column(precision = 30, scale = 10)
     private BigDecimal fee;
 
     @ManyToOne()
@@ -151,16 +154,16 @@ public class Transaction {
 
     public void getTransaction() {
 
-        System.out.println(dateAndTime);
-        System.out.println(srcAmount);
-        System.out.println(srcAsset);
-        System.out.println(destAmount);
-        System.out.println(destAsset);
-        System.out.println(srcPlatform);
-        System.out.println(destPlatform);
-        System.out.println(fee);
-        System.out.println(feeAsset);
-        System.out.println(notes);
+        System.out.println("Date "+dateAndTime);
+        System.out.println("Src Amount "+srcAmount);
+        System.out.println("Src Asset "+srcAsset);
+        System.out.println("Dest Amount "+destAmount);
+        System.out.println("Src Asset "+destAsset);
+        System.out.println("Src Platform "+srcPlatform);
+        System.out.println("Dest Amount "+destPlatform);
+        System.out.println("Fee "+fee);
+        System.out.println("Fee Asset "+feeAsset);
+        System.out.println("Notes "+notes);
 
     }
 }

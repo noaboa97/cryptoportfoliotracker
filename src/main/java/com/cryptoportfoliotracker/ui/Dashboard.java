@@ -1,12 +1,8 @@
 package com.cryptoportfoliotracker.ui;
 
-import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.board.Board;
-import com.vaadin.flow.component.charts.Chart;
-import com.vaadin.flow.component.charts.model.*;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.Span;
@@ -20,10 +16,7 @@ import com.vaadin.flow.router.Route;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.RouteAlias;
 
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Route(value = "", layout = MainView.class)
@@ -39,7 +32,7 @@ public class Dashboard extends VerticalLayout {
         this.service = service;
         addClassName("dashboard-view");
         board.addRow(createHeader("Overview", "Total"));
-        board.addRow(createSingleCard("Invested Capital", service.getInvestedCapital().toString()), createSingleCard("Current Value", service.getCurrentValue().toString()), createSingleCard("Return rate", service.PercentageChange() + "%"), createSingleCard("Custom metric", "-123.45"));
+        board.addRow(createSingleCard("Invested Capital", service.getTotalInvestedCapital().toString() + " CHF"), createSingleCard("Current Value", service.getTotalCurrentValue().toString() + " CHF"), createSingleCard("Return rate", service.getTotalPercentageChange() + " %"), createSingleCard("Custom metric", "-123.45"));
         board.addRow(createHeader("Platforms", "Platform total"));
         createPlatformOverview();
         //board.addRow(createViewEvents());
@@ -133,7 +126,7 @@ public class Dashboard extends VerticalLayout {
 
         for (Platform p : list) {
 
-            cList.add(createTrippleCard(p.getName(), "Invested Capital: " + p.getInvestedCapitalFiat(service) + " CHF", "Current Value: " + p.getCurrentBalanceFiat(service) + " CHF"));
+            cList.add(createTrippleCard(p.getName(), "Invested Capital: " + p.getInvestedCapitalFiat(service) + " CHF", "Current Value: " + p.getCurrentValueFiat(service) + " CHF"));
             if (i == s) {
                 if (i == 1) {
                     board.addRow(cList.get(0));

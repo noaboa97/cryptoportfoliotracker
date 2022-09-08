@@ -4,20 +4,15 @@ import com.cryptoportfoliotracker.logic.CptService;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 @Entity
 public class CryptoAsset extends Asset {
     private BigDecimal currentValueFiat;
 
-    private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto
-    private BigDecimal currentBalanceCrypto; // stores the total value in crypto
-    private BigDecimal currentBalanceFiat; // stores the total value in fiat
-    private BigDecimal interestEarnedFiat;
-    private BigDecimal interestEarnedCrypto;
-
-    public CryptoAsset( String fullname, String shortname, Platform platform) {
-        super( fullname, shortname, platform);
+    public CryptoAsset(String fullname, String shortname, Platform platform) {
+        super(fullname, shortname, platform);
     }
 
     public CryptoAsset() {
@@ -33,9 +28,10 @@ public class CryptoAsset extends Asset {
 
         List<Transaction> list = service.findByDestAsset(this);
 
-        for ( Transaction t : list){
-
-            investedCapitalCrypto.add(t.getDestAmount());
+        for (Transaction t : list) {
+            if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
+                investedCapitalCrypto = investedCapitalCrypto.add(t.getDestAmount());
+            }
 
         }
 
@@ -45,53 +41,31 @@ public class CryptoAsset extends Asset {
     public BigDecimal getInvestedCapitalFiat(CptService service) {
 
         BigDecimal investedCapitalFiat = new BigDecimal("0");
-
-        List<Transaction> list = service.findBySrcAsset(this);
-        for ( Transaction t : list){
-
-            // wenn dest assset == this
-            investedCapitalFiat.add(t.getSrcAmount());
-
+        List<Transaction> list = service.findBySrcAsset((Asset)service.findStandard());
+        for (Transaction t : list) {
+            if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
+                investedCapitalFiat = investedCapitalFiat.add(t.getSrcAmount());
+            }
         }
-        investedCapitalFiat = investedCapitalFiat;
         return investedCapitalFiat;
     }
 
-    /* TO DO
-    public BigDecimal getCurrentBalanceCrypto(CptService service) {
-
-        BigDecimal currentBalanceCrypto = new BigDecimal("0");
-
-        List<Transaction> list = service.findByDestAsset(this.getFullname());
-
-        for ( Transaction t : list){
-
-            currentBalanceCrypto.add(t.getDestAmount().multiply(this.currentValue));
-
-        }
-
-        //
-
-        return currentBalanceCrypto;
-    }*/
-
-
-
     public BigDecimal getCurrentValueFiat(CptService service) {
 
-        BigDecimal currentBalanceFiat = new BigDecimal("0");
+        BigDecimal currentValueFiat = new BigDecimal("0");
 
         List<Transaction> list = service.findByDestAsset(this);
 
-        for ( Transaction t : list){
+        for (Transaction t : list) {
 
-            currentBalanceFiat.add(t.getDestAmount().multiply(this.currentValueFiat));
-
+            if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
+                BigDecimal DestAmountCurrentValue = t.getDestAmount().multiply(this.currentValueFiat);
+                currentValueFiat = currentValueFiat.add(DestAmountCurrentValue);
+            }
         }
 
-        return currentBalanceFiat;
+        return currentValueFiat.setScale(2, RoundingMode.HALF_UP);
     }
-
 
 
     public BigDecimal getCurrentValueFiat() {

@@ -3,6 +3,7 @@ package com.cryptoportfoliotracker.entities;
 import com.cryptoportfoliotracker.logic.CptService;
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 
 
@@ -62,20 +63,25 @@ public class Platform {
 
         BigDecimal currentBalanceFiat = new BigDecimal("0");
 
-
         List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
         for (CryptoAsset a : assetList){
 
-            List<Transaction> transactionList = service.findBySrcPlatform(this);
+            List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
 
             for(Transaction t : transactionList) {
 
-                currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
+                if (t.getDestPlatform().toString() == this.toString()) {
+
+                    currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
+
+                }
+
+
             }
         }
 
-        return currentBalanceFiat;
+        return currentBalanceFiat.setScale(2, RoundingMode.HALF_UP);
     }
 /*
     public BigDecimal getInvestedCapitalCrypto(CptService service) {
@@ -99,26 +105,33 @@ public class Platform {
     }*/
 
 
-    public BigDecimal getCurrentBalanceFiat(CptService service) {
+    public BigDecimal getCurrentValueFiat(CptService service) {
 
-        BigDecimal currentBalanceFiat = new BigDecimal("0");
+        BigDecimal currentValueFiat = new BigDecimal("0");
 
-        List<CryptoAsset> assetlist = service.findAllCryptoAssetsOfPlatform(this);
+        List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
-        for (CryptoAsset a : assetlist){
+        System.out.println("CV A List "+assetList.size());
 
-            List<Transaction> transactionList = service.findBySrcPlatform(this);
+        for (CryptoAsset a : assetList){
+
+            List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
+
+            System.out.println("CV T List "+transactionList.size());
 
             for(Transaction t : transactionList) {
-                BigDecimal la = a.getCurrentValueFiat();
-                BigDecimal lo = t.getSrcAmount().multiply(la);
+                t.getTransaction();
+                if(t.getDestPlatform().toString() == this.toString()) {
 
-                //currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount().multiply(a.getCurrentValueFiat()));
-                currentBalanceFiat = currentBalanceFiat.add(la);
+                    BigDecimal la = a.getCurrentValueFiat();
+                    BigDecimal lo = t.getDestAmount().multiply(la);
+                    currentValueFiat = currentValueFiat.add(lo);
+
+                }
             }
         }
 
-        return currentBalanceFiat;
+        return currentValueFiat.setScale(2, RoundingMode.HALF_UP);
     }
 
     public boolean isFiatPlatform() {

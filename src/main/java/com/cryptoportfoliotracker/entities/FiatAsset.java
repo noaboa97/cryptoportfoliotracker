@@ -4,18 +4,25 @@ import com.cryptoportfoliotracker.logic.CptService;
 
 import javax.persistence.Entity;
 import java.math.BigDecimal;
-import java.util.List;
 
 @Entity
 public class FiatAsset extends Asset{
-
-    private BigDecimal investedCapitalFiat; // stores the invested money in fiat
-    public FiatAsset( String fullname, String shortname, Platform platform) {
+    private boolean standard = false;
+    public FiatAsset( String fullname, String shortname, Platform platform, boolean standard) {
         super( fullname, shortname, platform);
+        this.standard = standard;
     }
 
     public FiatAsset() {
         super();
+    }
+
+    public boolean getStandard() {
+        return standard;
+    }
+
+    public void setStandard(boolean standard) {
+        this.standard = standard;
     }
 
     public BigDecimal getInvestedCapitalCrypto(CptService service){

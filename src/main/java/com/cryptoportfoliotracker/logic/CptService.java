@@ -1,10 +1,7 @@
 package com.cryptoportfoliotracker.logic;
 
 import com.cryptoportfoliotracker.entities.*;
-import com.cryptoportfoliotracker.repository.AssetRepository;
-import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
-import com.cryptoportfoliotracker.repository.PlatformRepository;
-import com.cryptoportfoliotracker.repository.TransactionRepository;
+import com.cryptoportfoliotracker.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,15 +20,19 @@ public class CptService {
     @Autowired
     private TransactionRepository transactionRepository;
 
+    private FiatAssetRepository fiatAssetRepository;
+
 
     public CptService(AssetRepository assetRepository,
                       CryptoAssetRepository cryptoAssetRepository,
                       PlatformRepository platformRepository,
-                      TransactionRepository transactionRepository) {
+                      TransactionRepository transactionRepository,
+                      FiatAssetRepository fiatAssetRepository) {
         this.assetRepository = assetRepository;
         this.cryptoAssetRepository = cryptoAssetRepository;
         this.platformRepository = platformRepository;
         this.transactionRepository = transactionRepository;
+        this.fiatAssetRepository = fiatAssetRepository;
     }
 
     public List<Asset> findAllAssets() {
@@ -101,6 +102,9 @@ public class CptService {
         return transactionRepository.findBySrcAsset(a);
     }
 
+    public FiatAsset findStandard(){
+        return fiatAssetRepository.findStandard(true);
+    };
 
     public List<Transaction> findByDestAsset(CryptoAsset ca) {
 
@@ -132,12 +136,11 @@ public class CptService {
             System.err.println("Transaction is null. Are you sure you have connected your form to the application?");
             return;
         }
-        System.out.println("CptService saveTransaction");
         transaction.getTransaction();
         transactionRepository.save(transaction);
     }
 
-    public BigDecimal getCurrentValue() {
+    public BigDecimal getTotalCurrentValue() {
         BigDecimal currentValue = new BigDecimal("0");
         String s = new String("Test");
         for (Transaction t : findAllTransactions("")) {
@@ -149,37 +152,37 @@ public class CptService {
             currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
 
         }
-        return currentValue;
+        return currentValue.setScale(2, RoundingMode.HALF_UP);
     }
 
-    public BigDecimal PercentageChange() {
+    public BigDecimal getTotalPercentageChange() {
         BigDecimal increase, pIncreace, decrease, pDecrease;
         BigDecimal h = new BigDecimal("100");
         //https://www.educative.io/answers/how-to-compare-two-bigdecimals-in-java
         //https://www.investopedia.com/terms/p/percentage-change.asp
-        if (getInvestedCapital().compareTo(getCurrentValue()) < 0) {
+        if (getTotalInvestedCapital().compareTo(getTotalCurrentValue()) < 0) {
             // increase calc
-            increase = getCurrentValue().subtract(getInvestedCapital());
-            pIncreace = increase.divide(getInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
-            return pIncreace;
+            increase = getTotalCurrentValue().subtract(getTotalInvestedCapital());
+            pIncreace = increase.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pIncreace.setScale(2, RoundingMode.HALF_UP);
         } else {
             // decrease calc
-            decrease = getInvestedCapital().subtract(getCurrentValue());
-            pDecrease = decrease.divide(getInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
-            return pDecrease;
+            decrease = getTotalInvestedCapital().subtract(getTotalCurrentValue());
+            pDecrease = decrease.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pDecrease.negate().setScale(2, RoundingMode.HALF_UP);
 
         }
 
 
     }
-    public BigDecimal getInvestedCapital() {
+    public BigDecimal getTotalInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");
 
         for (Transaction t : findAllTransactions("")) {
             investedCapital = investedCapital.add(t.getSrcAmount());
         }
 
-        return investedCapital;
+        return investedCapital.setScale(2, RoundingMode.HALF_UP);
 
     }
 }

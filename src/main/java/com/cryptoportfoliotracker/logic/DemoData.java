@@ -32,11 +32,15 @@ public class DemoData {
             CA.setCurrentValueFiat(BD);
             cryptoAssetRepository.save(CA);
 
-            FiatAsset a = new FiatAsset("Schweizer Franken", "CHF", P2);
+            FiatAsset a = new FiatAsset("Schweizer Franken", "CHF", P2, true);
             fiatAssetRepository.save(a);
 
-            Transaction T = new Transaction(LocalDateTime.now(),new BigDecimal("2300"),a,new BigDecimal("0.23"),CA,P2,P,new BigDecimal("0"),a);
+            Transaction T = new Transaction(LocalDateTime.now(),new BigDecimal("93.21"),a,new BigDecimal("0.00217952"),CA,P2,P,new BigDecimal("0"),a);
+            Transaction T1 = new Transaction(LocalDateTime.now(),new BigDecimal("49.62"),a,new BigDecimal("0.00240903"),CA,P2,P,new BigDecimal("0"),a);
+            System.out.println(new BigDecimal("0.00217952"));
             transactionRepository.save(T);
+            transactionRepository.save(T1);
+
 
         };
     }

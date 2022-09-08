@@ -1,6 +1,5 @@
 package com.cryptoportfoliotracker.repository;
 
-import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +13,10 @@ public interface FiatAssetRepository extends JpaRepository<FiatAsset, Long> {
     @Query("select a from Asset a " +
             "where a.fullname = :searchTerm")
     List<FiatAsset> search(@Param("searchTerm") String searchTerm);
+
+    @Query("select a from Asset a " +
+            "where a.standard = :searchTerm")
+    FiatAsset findStandard(@Param("searchTerm") boolean searchTerm);
 
     @Query("select a from Asset a " +
             "where a.platform = :searchTerm")
