@@ -12,14 +12,7 @@ import java.util.List;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Long> {
-/*
-    @Query("select t from Transaction t " +
-            "where lower(t.dateAndTime) like lower(concat('%', :searchTerm, '%')) " +
-            "or lower(t.notes) like lower(concat('%', :searchTerm, '%'))")
 
-    List<Transaction> search(@Param("searchTerm") String searchTerm);
-
-*/
     @Query("select t from Transaction t " +
             "where t.srcAsset = :searchTerm")
     List<Transaction> findBySrcAsset(@Param("searchTerm") Asset searchTerm);
