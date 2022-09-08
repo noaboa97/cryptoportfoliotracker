@@ -28,7 +28,7 @@ public class TransactionView extends VerticalLayout {
 
         add(new H2("Transactions"));
 
-        addClassName("list-view");
+        addClassName("transaction-view");
         setSizeFull();
         configureGrid();
         configureCompAddTransaction();
@@ -39,7 +39,7 @@ public class TransactionView extends VerticalLayout {
     }
 
     private void configureGrid() {
-        grid.addClassNames("contact-grid");
+        grid.addClassNames("transaction-grid");
         grid.setSizeFull();
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");

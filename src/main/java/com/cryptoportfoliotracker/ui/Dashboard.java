@@ -32,7 +32,7 @@ public class Dashboard extends VerticalLayout {
         this.service = service;
         addClassName("dashboard-view");
         board.addRow(createHeader("Overview", "Total"));
-        board.addRow(createSingleCard("Invested Capital", service.getTotalInvestedCapital().toString() + " CHF"), createSingleCard("Current Value", service.getTotalCurrentValue().toString() + " CHF"), createSingleCard("Return rate", service.getTotalPercentageChange() + " %"), createSingleCard("Custom metric", "-123.45"));
+        board.addRow(createSingleCard("Invested Capital", service.getTotalInvestedCapital().toString() + " CHF"), createSingleCard("Current Value", service.getTotalCurrentValue().toString() + " CHF", service.getTotalPercentageChange().doubleValue()) /*,createSingleCard("Return rate", service.getTotalPercentageChange() + " %") */);
         board.addRow(createHeader("Platforms", "Platform total"));
         createPlatformOverview();
         //board.addRow(createViewEvents());
@@ -40,11 +40,25 @@ public class Dashboard extends VerticalLayout {
         add(board);
     }
 
-    private Component createSingleCard(String title, String value /*,String percentage*/) {
+    private Component createSingleCard(String title, String value) {
+
+        H2 h2 = new H2(title);
+        h2.addClassNames("font-normal", "m-0", "text-secondary", "text-xs");
+
+        Span span = new Span(value);
+        span.addClassNames("font-semibold", "text-3xl");
+
+        VerticalLayout layout = new VerticalLayout(h2, span);
+        layout.addClassName("p-l");
+        layout.setPadding(false);
+        layout.setSpacing(false);
+        return layout;
+    }
+    private Component createSingleCard(String title, String value ,double percentage) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
         String prefix = "";
         String theme = "badge";
-/*
+
         if (percentage == 0) {
             prefix = "±";
         } else if (percentage > 0) {
@@ -53,7 +67,7 @@ public class Dashboard extends VerticalLayout {
         } else if (percentage < 0) {
             icon = VaadinIcon.ARROW_DOWN;
             theme += " error";
-        }*/
+        }
 
         H2 h2 = new H2(title);
         h2.addClassNames("font-normal", "m-0", "text-secondary", "text-xs");
@@ -64,21 +78,21 @@ public class Dashboard extends VerticalLayout {
         Icon i = icon.create();
         i.addClassNames("box-border", "p-xs");
 
-        //Span badge = new Span(i, new Span(prefix + percentage.toString()));
-        //badge.getElement().getThemeList().add(theme);
+        Span badge = new Span(i, new Span(prefix + percentage +"%"));
+        badge.getElement().getThemeList().add(theme);
 
-        VerticalLayout layout = new VerticalLayout(h2, span /*, badge*/);
+        VerticalLayout layout = new VerticalLayout(h2, span, badge);
         layout.addClassName("p-l");
         layout.setPadding(false);
         layout.setSpacing(false);
         return layout;
     }
 
-    private Component createTrippleCard(String title, String value1, String value2) {
+    private Component createTrippleCard(String title, String key, String value, String key2, String value2, double percentage) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
         String prefix = "";
         String theme = "badge";
-/*
+
         if (percentage == 0) {
             prefix = "±";
         } else if (percentage > 0) {
@@ -87,27 +101,30 @@ public class Dashboard extends VerticalLayout {
         } else if (percentage < 0) {
             icon = VaadinIcon.ARROW_DOWN;
             theme += " error";
-        }*/
+        }
 
         H3 h3 = new H3(title);
-        h3.addClassNames("font-normal", "m-0", "text-secondary", "text-xs");
+        h3.addClassNames("font-normal", "m-0", "py-m", "text-secondary", "text-xl");
 
-        Span span1 = new Span(value1);
-        span1.addClassNames("font-semibold", "text-3xl");
+        Span span1 = new Span(key);
+        span1.addClassNames("font-normal", "text-xs", "py-xs");
 
-        Span span2 = new Span(value2);
-        span2.addClassNames("font-semibold", "text-3xl");
+        Span span2 = new Span(value);
+        span2.addClassNames("font-semibold", "text-2xl");
 
-        Span span3 = new Span(value2);
-        span2.addClassNames("font-semibold", "text-3xl");
+        Span span3 = new Span(key2);
+        span3.addClassNames("font-normal", "text-xs", "py-xs");
+
+        Span span4 = new Span(value2);
+        span4.addClassNames("font-semibold", "text-2xl");
 
         Icon i = icon.create();
         i.addClassNames("box-border", "p-xs");
 
-        //Span badge = new Span(i, new Span(prefix + percentage.toString()));
-        //badge.getElement().getThemeList().add(theme);
+        Span badge = new Span(i, new Span(prefix + percentage + "%"));
+        badge.getElement().getThemeList().add(theme);
 
-        VerticalLayout layout = new VerticalLayout(h3, span1, span2 /*, badge*/);
+        VerticalLayout layout = new VerticalLayout(h3, span1, span2, span3, span4 , badge);
         layout.addClassName("p-l");
         layout.setPadding(false);
         layout.setSpacing(false);
@@ -126,7 +143,7 @@ public class Dashboard extends VerticalLayout {
 
         for (Platform p : list) {
 
-            cList.add(createTrippleCard(p.getName(), "Invested Capital: " + p.getInvestedCapitalFiat(service) + " CHF", "Current Value: " + p.getCurrentValueFiat(service) + " CHF"));
+            cList.add(createTrippleCard(p.getName(), "Invested Capital",p.getInvestedCapitalFiat(service) + " CHF", "Current Value", p.getCurrentValueFiat(service) + " CHF", service.getPlatformPercentageChange().doubleValue()));
             if (i == s) {
                 if (i == 1) {
                     board.addRow(cList.get(0));
@@ -268,6 +285,7 @@ public class Dashboard extends VerticalLayout {
         header.setJustifyContentMode(FlexComponent.JustifyContentMode.BETWEEN);
         header.setSpacing(false);
         header.setWidthFull();
+        header.setPadding(true);
         return header;
     }
 

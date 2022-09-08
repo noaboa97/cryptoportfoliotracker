@@ -175,6 +175,29 @@ public class CptService {
 
 
     }
+
+
+    // TO DO!!!----------------------------------------------------
+    public BigDecimal getPlatformPercentageChange() {
+        BigDecimal increase, pIncreace, decrease, pDecrease;
+        BigDecimal h = new BigDecimal("100");
+        //https://www.educative.io/answers/how-to-compare-two-bigdecimals-in-java
+        //https://www.investopedia.com/terms/p/percentage-change.asp
+        if (getTotalInvestedCapital().compareTo(getTotalCurrentValue()) < 0) {
+            // increase calc
+            increase = getTotalCurrentValue().subtract(getTotalInvestedCapital());
+            pIncreace = increase.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pIncreace.setScale(2, RoundingMode.HALF_UP);
+        } else {
+            // decrease calc
+            decrease = getTotalInvestedCapital().subtract(getTotalCurrentValue());
+            pDecrease = decrease.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pDecrease.negate().setScale(2, RoundingMode.HALF_UP);
+
+        }
+
+
+    }
     public BigDecimal getTotalInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");
 
