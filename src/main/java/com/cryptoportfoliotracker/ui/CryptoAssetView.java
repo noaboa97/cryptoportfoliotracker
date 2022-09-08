@@ -1,6 +1,8 @@
 package com.cryptoportfoliotracker.ui;
 
+import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -44,14 +46,14 @@ public class CryptoAssetView extends VerticalLayout {
         grid.addClassNames("cryptoasset-grid");
         grid.setSizeFull();
 
-        grid.addColumn(cryptoAsset -> cryptoAsset.getFullname()).setHeader("Name");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getShortname()).setHeader("Abbr.");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getPlatform().getName()).setHeader("Platform");
+        grid.addColumn(Asset::getFullname).setHeader("Name");
+        grid.addColumn(Asset::getShortname).setHeader("Abbr.");
+        grid.addColumn(Asset::getPlatform).setHeader("Platform");
         System.out.println("Try to add Invested Capital Fiat");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getInvestedCapitalFiat(service)).setHeader("Invested Capital Fiat");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getInvestedCapitalCrypto(service)).setHeader("Invested Capital Crypto");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getCurrentValueFiat(service)).setHeader("Current Total Value Fiat");
-        grid.addColumn(cryptoAsset -> cryptoAsset.getCurrentValueFiat()).setHeader("Current Value");
+        grid.addColumn(asset -> asset.getInvestedCapitalFiat(service)).setHeader("Invested Capital Fiat");
+        grid.addColumn(asset -> asset.getInvestedCapitalCrypto(service)).setHeader("Invested Capital Crypto");
+        grid.addColumn(asset -> asset.getCurrentValueFiat(service)).setHeader("Current Total Value Fiat");
+        //grid.addColumn(asset -> asset.getCurrentValueFiat()).setHeader("Current Value");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
         grid.asSingleSelect().addValueChangeListener(event -> editCryptoAsset(event.getValue()));

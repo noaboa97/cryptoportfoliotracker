@@ -19,14 +19,14 @@ public class Transaction {
     @ManyToOne()
     @JoinColumn(name = "srcasset",
             foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
-    private CryptoAsset srcAsset;
+    private Asset srcAsset;
     @NotNull
     private BigDecimal destAmount;
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "destasset",
             foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk")/*,insertable = false,updatable = false*/)
-    private CryptoAsset destAsset;
+    private Asset destAsset;
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "srcplatform",
@@ -43,10 +43,10 @@ public class Transaction {
     @ManyToOne()
     @JoinColumn(name = "feeasset",
             foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
-    private CryptoAsset feeAsset;
+    private Asset feeAsset;
     private String notes;
 
-    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, CryptoAsset srcAsset, BigDecimal destAmount, CryptoAsset destAsset, Platform srcPlatform, Platform destPlatform,BigDecimal fee,CryptoAsset feeAsset) {
+    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform,BigDecimal fee,Asset feeAsset) {
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
@@ -85,11 +85,11 @@ public class Transaction {
         this.srcAmount = srcAmount;
     }
 
-    public CryptoAsset getSrcAsset() {
+    public Asset getSrcAsset() {
         return srcAsset;
     }
 
-    public void setSrcAsset(CryptoAsset srcAsset) {
+    public void setSrcAsset(Asset srcAsset) {
         this.srcAsset = srcAsset;
     }
 
@@ -101,11 +101,11 @@ public class Transaction {
         this.destAmount = destAmount;
     }
 
-    public CryptoAsset getDestAsset() {
+    public Asset getDestAsset() {
         return destAsset;
     }
 
-    public void setDestAsset(CryptoAsset destAsset) {
+    public void setDestAsset(Asset destAsset) {
         this.destAsset = destAsset;
     }
 
@@ -133,11 +133,11 @@ public class Transaction {
         this.fee = fee;
     }
 
-    public CryptoAsset getFeeAsset() {
+    public Asset getFeeAsset() {
         return feeAsset;
     }
 
-    public void setFeeAsset(CryptoAsset feeAsset) {
+    public void setFeeAsset(Asset feeAsset) {
         this.feeAsset = feeAsset;
     }
 

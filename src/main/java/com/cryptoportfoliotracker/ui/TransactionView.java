@@ -44,13 +44,13 @@ public class TransactionView extends VerticalLayout {
 
         grid.addColumn(transaction -> transaction.getDateAndTime()).setHeader("Timestamp");
         grid.addColumn(transaction -> transaction.getSrcAmount()).setHeader("Source Amount");
-        grid.addColumn(transaction -> transaction.getSrcAsset().getShortname()).setHeader("Source Asset");
-        grid.addColumn(transaction -> transaction.getSrcPlatform().getName()).setHeader("Source Platform");
+        grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
+        grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
         grid.addColumn(transaction -> transaction.getDestAmount()).setHeader("Destination Amount");
-        grid.addColumn(transaction -> transaction.getDestAsset().getShortname()).setHeader("Destination Asset");
+        grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
         grid.addColumn(transaction -> transaction.getFees()).setHeader("Fees");
-        grid.addColumn(transaction -> transaction.getFeeAsset().getShortname()).setHeader("Fee Asset");
+        grid.addColumn(transaction -> transaction.getFeeAsset()).setHeader("Fee Asset");
         grid.addColumn(transaction -> transaction.getNotes()).setHeader("Notes");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -112,7 +112,7 @@ public class TransactionView extends VerticalLayout {
 
     private void configureCompAddTransaction() {
 
-        compAddTransaction = new CompAddTransaction(service.findAllCryptoAssets(""), service.findAllPlatforms());
+        compAddTransaction = new CompAddTransaction(service.findAllAssets(), service.findAllPlatforms());
         compAddTransaction.setWidth("25em");
         compAddTransaction.addListener(CompAddTransaction.SaveEvent.class, this::saveTransaction);
         compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);

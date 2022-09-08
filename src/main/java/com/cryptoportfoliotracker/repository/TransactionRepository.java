@@ -1,8 +1,6 @@
 package com.cryptoportfoliotracker.repository;
 
-import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.Transaction;
+import com.cryptoportfoliotracker.entities.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -24,7 +22,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 */
     @Query("select t from Transaction t " +
             "where t.srcAsset = :searchTerm")
-    List<Transaction> findBySrcAsset(@Param("searchTerm") CryptoAsset searchTerm);
+    List<Transaction> findBySrcAsset(@Param("searchTerm") Asset searchTerm);
 
     @Query("select t from Transaction t " +
             "where t.destAsset = :searchTerm")

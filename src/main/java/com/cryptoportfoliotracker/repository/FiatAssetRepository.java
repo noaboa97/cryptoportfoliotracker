@@ -1,25 +1,22 @@
 package com.cryptoportfoliotracker.repository;
 
 import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Repository
-public interface CryptoAssetRepository extends JpaRepository<CryptoAsset, Long> {
+public interface FiatAssetRepository extends JpaRepository<FiatAsset, Long> {
 
     @Query("select a from Asset a " +
             "where a.fullname = :searchTerm")
-    List<CryptoAsset> search(@Param("searchTerm") String searchTerm);
+    List<FiatAsset> search(@Param("searchTerm") String searchTerm);
 
     @Query("select a from Asset a " +
             "where a.platform = :searchTerm")
-    List<CryptoAsset> findAllCryptoAssetsOfPlatform(@Param("searchTerm") Platform searchTerm);
-
+    List<FiatAsset> findAllAssetsOfPlatform(@Param("searchTerm") Platform searchTerm);
 
 }

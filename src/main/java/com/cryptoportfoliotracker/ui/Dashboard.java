@@ -39,67 +39,13 @@ public class Dashboard extends VerticalLayout {
         this.service = service;
         addClassName("dashboard-view");
         board.addRow(createHeader("Overview", "Total"));
-        board.addRow(createSingleCard("Invested Capital", getInvestedCapital().toString()), createSingleCard("Current Value", getCurrentValue().toString()), createSingleCard("Return rate", PercentageChange() + "%"), createSingleCard("Custom metric", "-123.45"));
+        board.addRow(createSingleCard("Invested Capital", service.getInvestedCapital().toString()), createSingleCard("Current Value", service.getCurrentValue().toString()), createSingleCard("Return rate", service.PercentageChange() + "%"), createSingleCard("Custom metric", "-123.45"));
         board.addRow(createHeader("Platforms", "Platform total"));
         createPlatformOverview();
         //board.addRow(createViewEvents());
         //board.addRow(/*createServiceHealth()*/ createResponseTimes());
         add(board);
     }
-
-    private BigDecimal PercentageChange() {
-        BigDecimal increase, pIncreace, decrease, pDecrease;
-        BigDecimal h = new BigDecimal("100");
-        //https://www.educative.io/answers/how-to-compare-two-bigdecimals-in-java
-        //https://www.investopedia.com/terms/p/percentage-change.asp
-        if (getInvestedCapital().compareTo(getCurrentValue()) < 0) {
-            // increase calc
-            increase = getCurrentValue().subtract(getInvestedCapital());
-            pIncreace = increase.divide(getInvestedCapital()).multiply(h);
-            return pIncreace;
-        } else {
-            // decrease calc
-            decrease = getInvestedCapital().subtract(getCurrentValue());
-            pDecrease = decrease.divide(getInvestedCapital()).multiply(h);
-            return pDecrease;
-
-        }
-
-
-    }
-
-    ;
-
-
-    private BigDecimal getInvestedCapital() {
-        BigDecimal investedCapital = new BigDecimal("0");
-
-        for (Transaction t : service.findAllTransactions("")) {
-            investedCapital = investedCapital.add(t.getSrcAmount());
-        }
-
-        return investedCapital;
-
-    }
-
-
-    private BigDecimal getCurrentValue() {
-        BigDecimal currentValue = new BigDecimal("0");
-        String s = new String("Test");
-        for (Transaction t : service.findAllTransactions("")) {
-
-            // get dest asset fullname and search for it in the repo get the first object of the list - assuming there is one - none will throw error
-            CryptoAsset ca = service.findAllCryptoAssets(t.getDestAsset().getFullname()).get(0);
-
-            // multiply the destination amount with the current value of the crypto asset
-            currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
-
-        }
-        return currentValue;
-    }
-
-
-
 
     private Component createSingleCard(String title, String value /*,String percentage*/) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
@@ -177,7 +123,7 @@ public class Dashboard extends VerticalLayout {
 
     private void createPlatformOverview() {
 
-        List<Platform> list = service.findAllPlatforms();
+        List<Platform> list = service.findAllCryptoPlatforms();
 
         ArrayList<Component> cList = new ArrayList<Component>();
 
@@ -331,6 +277,5 @@ public class Dashboard extends VerticalLayout {
         header.setWidthFull();
         return header;
     }
-
 
 }

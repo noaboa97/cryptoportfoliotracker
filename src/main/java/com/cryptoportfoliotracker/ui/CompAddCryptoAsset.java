@@ -2,14 +2,12 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.BigDecimalField;
@@ -19,21 +17,11 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 public class CompAddCryptoAsset extends FormLayout {
     CryptoAsset cryptoAsset;
-/*  DateTimePicker dateAndTime = new DateTimePicker();
-  ComboBox<CryptoAsset> srcAsset = new ComboBox<>("Source Asset");
-  ComboBox<CryptoAsset> destAsset = new ComboBox<>("Destination Asset");
-  BigDecimalField srcAmount = new BigDecimalField("Source Amount");
-  BigDecimalField destAmount = new BigDecimalField("Destination Amount");
-  ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
-  ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");
-  BigDecimalField fee = new BigDecimalField("Fee");
-  ComboBox<CryptoAsset> feeAsset = new ComboBox<>("Fee Asset");
-  TextField notes = new TextField("Notes");*/
+
 
     TextField fullname = new TextField("Name");
     TextField shortname = new TextField("Short");
@@ -50,8 +38,8 @@ public class CompAddCryptoAsset extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
-    public CompAddCryptoAsset(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList) {
-        addClassName("cryptoasset-list");
+    public CompAddCryptoAsset(List<CryptoAsset> AssetList, List<Platform> PlatformList) {
+        addClassName("Asset-list");
         binder.bindInstanceFields(this);
 
         // laden der Listen für die Dropdowns
@@ -103,10 +91,10 @@ public class CompAddCryptoAsset extends FormLayout {
     }
 
     // Events
-    public static abstract class CompAddCryptoAssetEvent extends ComponentEvent<CompAddCryptoAsset> {
+    public static abstract class CompAddAssetEvent extends ComponentEvent<CompAddCryptoAsset> {
         private CryptoAsset cryptoAsset;
 
-        protected CompAddCryptoAssetEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
+        protected CompAddAssetEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, false);
             this.cryptoAsset = cryptoAsset;
         }
@@ -116,20 +104,20 @@ public class CompAddCryptoAsset extends FormLayout {
         }
     }
 
-    public static class SaveEvent extends CompAddCryptoAssetEvent {
+    public static class SaveEvent extends CompAddAssetEvent {
         SaveEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, cryptoAsset);
         }
     }
 
-    public static class DeleteEvent extends CompAddCryptoAssetEvent {
+    public static class DeleteEvent extends CompAddAssetEvent {
         DeleteEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, cryptoAsset);
         }
 
     }
 
-    public static class CloseEvent extends CompAddCryptoAssetEvent {
+    public static class CloseEvent extends CompAddAssetEvent {
         CloseEvent(CompAddCryptoAsset source) {
             super(source, null);
         }

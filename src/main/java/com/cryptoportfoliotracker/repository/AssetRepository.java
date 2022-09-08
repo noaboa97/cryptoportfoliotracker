@@ -20,4 +20,6 @@ public interface AssetRepository extends JpaRepository<Asset, Long> {
     List<Asset> search(@Param("searchTerm") String searchTerm);
 
 */
+
+
 }

@@ -62,7 +62,8 @@ public class Platform {
 
         BigDecimal currentBalanceFiat = new BigDecimal("0");
 
-        List<CryptoAsset> assetList = service.findAllAssetsOfPlatform(this);
+
+        List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
         for (CryptoAsset a : assetList){
 
@@ -102,7 +103,7 @@ public class Platform {
 
         BigDecimal currentBalanceFiat = new BigDecimal("0");
 
-        List<CryptoAsset> assetlist = service.findAllAssetsOfPlatform(this);
+        List<CryptoAsset> assetlist = service.findAllCryptoAssetsOfPlatform(this);
 
         for (CryptoAsset a : assetlist){
 
@@ -118,6 +119,19 @@ public class Platform {
         }
 
         return currentBalanceFiat;
+    }
+
+    public boolean isFiatPlatform() {
+        return isFiatPlatform;
+    }
+
+    public void setFiatPlatform(boolean fiatPlatform) {
+        isFiatPlatform = fiatPlatform;
+    }
+
+    @Override
+    public String toString(){
+        return name;
     }
 
 }
