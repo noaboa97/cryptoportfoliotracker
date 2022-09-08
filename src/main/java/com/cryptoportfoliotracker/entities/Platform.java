@@ -106,7 +106,6 @@ public class Platform {
             List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
 
             for(Transaction t : transactionList) {
-                t.getTransaction();
                 if(t.getDestPlatform().toString() == this.toString()) {
 
                     BigDecimal la = a.getCurrentValueFiat();
