@@ -25,5 +25,7 @@ public interface PlatformRepository extends JpaRepository<Platform, Long> {
     List<Platform> getId(@Param("searchTerm") Long id);
 */
 
-
+    @Query("select p from Platform p " +
+            "where p.isFiatPlatform = :searchTerm")
+    List<Platform> findAllCryptoPlatforms(@Param("searchTerm") boolean searchTerm);
 }

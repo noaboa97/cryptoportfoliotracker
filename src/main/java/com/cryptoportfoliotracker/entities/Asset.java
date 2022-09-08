@@ -1,12 +1,15 @@
 package com.cryptoportfoliotracker.entities;
 
+import com.cryptoportfoliotracker.logic.CptService;
 import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
-public class Asset {
+public abstract class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="asset_id")
@@ -68,5 +71,30 @@ public class Asset {
         public FiatAsset() {
         }
 
+    }
+
+
+    public BigDecimal getInvestedCapitalFiat(CptService service) {
+
+        BigDecimal investedCapitalFiat = new BigDecimal("0");
+
+        List<Transaction> list = service.findBySrcAsset(this);
+        for ( Transaction t : list){
+
+            // wenn dest assset == this
+            investedCapitalFiat.add(t.getSrcAmount());
+
+        }
+        investedCapitalFiat = investedCapitalFiat;
+        return investedCapitalFiat;
+    }
+
+
+    public abstract BigDecimal getInvestedCapitalCrypto(CptService service);
+
+    public abstract BigDecimal getCurrentValueFiat(CptService service);
+    @Override
+    public String toString(){
+        return shortname;
     }
 }

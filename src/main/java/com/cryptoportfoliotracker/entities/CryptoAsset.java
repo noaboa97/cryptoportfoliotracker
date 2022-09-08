@@ -9,7 +9,7 @@ import java.util.List;
 @Entity
 public class CryptoAsset extends Asset {
     private BigDecimal currentValueFiat;
-    private BigDecimal investedCapitalFiat; // stores the invested money in fiat
+
     private BigDecimal investedCapitalCrypto; // stores the invested amount in crypto
     private BigDecimal currentBalanceCrypto; // stores the total value in crypto
     private BigDecimal currentBalanceFiat; // stores the total value in fiat
@@ -25,19 +25,7 @@ public class CryptoAsset extends Asset {
     }
 
     // calculates how much money has been invested into crypto by adding all the source (CHF) amount
-    public BigDecimal getInvestedCapitalFiat(CptService service) {
 
-        BigDecimal investedCapitalFiat = new BigDecimal("0");
-
-        List<Transaction> list = service.findBySrcAsset(this);
-        for ( Transaction t : list){
-
-            investedCapitalFiat.add(t.getSrcAmount());
-
-        }
-        this.investedCapitalFiat = investedCapitalFiat;
-        return this.investedCapitalFiat;
-    }
 
     public BigDecimal getInvestedCapitalCrypto(CptService service) {
 
@@ -52,6 +40,21 @@ public class CryptoAsset extends Asset {
         }
 
         return investedCapitalCrypto;
+    }
+
+    public BigDecimal getInvestedCapitalFiat(CptService service) {
+
+        BigDecimal investedCapitalFiat = new BigDecimal("0");
+
+        List<Transaction> list = service.findBySrcAsset(this);
+        for ( Transaction t : list){
+
+            // wenn dest assset == this
+            investedCapitalFiat.add(t.getSrcAmount());
+
+        }
+        investedCapitalFiat = investedCapitalFiat;
+        return investedCapitalFiat;
     }
 
     /* TO DO

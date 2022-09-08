@@ -1,12 +1,7 @@
 package com.cryptoportfoliotracker.logic;
 
-import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.Transaction;
-import com.cryptoportfoliotracker.repository.AssetRepository;
-import com.cryptoportfoliotracker.repository.CryptoAssetRepository;
-import com.cryptoportfoliotracker.repository.PlatformRepository;
-import com.cryptoportfoliotracker.repository.TransactionRepository;
+import com.cryptoportfoliotracker.entities.*;
+import com.cryptoportfoliotracker.repository.*;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -18,14 +13,14 @@ import java.time.LocalDateTime;
 public class DemoData {
 
     @Bean
-    public CommandLineRunner loadData(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository, PlatformRepository platformRepository, TransactionRepository transactionRepository) {
+    public CommandLineRunner loadData(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository, PlatformRepository platformRepository, TransactionRepository transactionRepository, FiatAssetRepository fiatAssetRepository) {
 
         return args -> {
 
             Platform P = new Platform( "Bitpanda");
             Platform P3 = new Platform( "Crypto.com");
             Platform P4 = new Platform( "Nexo");
-            Platform P5 = new Platform( "Bitpanda");
+            Platform P5 = new Platform( "Kraken");
             Platform P2 = new Platform( "PostFinance", true);
             platformRepository.save(P);
             platformRepository.save(P2);
@@ -37,12 +32,10 @@ public class DemoData {
             CA.setCurrentValueFiat(BD);
             cryptoAssetRepository.save(CA);
 
-            CryptoAsset CA2 = new CryptoAsset("Schweizer Franken", "CHF", P2);
-            BigDecimal BD1 = new BigDecimal("1");
-            CA2.setCurrentValueFiat(BD1);
-            cryptoAssetRepository.save(CA2);
-            ;
-            Transaction T = new Transaction(LocalDateTime.now(),new BigDecimal("2300"),CA2,new BigDecimal("0.23"),CA,P2,P,new BigDecimal("0"),CA2);
+            FiatAsset a = new FiatAsset("Schweizer Franken", "CHF", P2);
+            fiatAssetRepository.save(a);
+
+            Transaction T = new Transaction(LocalDateTime.now(),new BigDecimal("2300"),a,new BigDecimal("0.23"),CA,P2,P,new BigDecimal("0"),a);
             transactionRepository.save(T);
 
         };

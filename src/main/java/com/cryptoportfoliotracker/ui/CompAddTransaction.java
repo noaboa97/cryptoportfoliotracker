@@ -1,5 +1,6 @@
 
 package com.cryptoportfoliotracker.ui;
+import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
@@ -23,38 +24,38 @@ import java.util.List;
 public class CompAddTransaction extends FormLayout {
   Transaction transaction;
   DateTimePicker dateAndTime = new DateTimePicker();
-  ComboBox<CryptoAsset> srcAsset = new ComboBox<>("Source Asset");
-  ComboBox<CryptoAsset> destAsset = new ComboBox<>("Destination Asset");
+  ComboBox<Asset> srcAsset = new ComboBox<>("Source Asset");
+  ComboBox<Asset> destAsset = new ComboBox<>("Destination Asset");
   BigDecimalField srcAmount = new BigDecimalField("Source Amount");
   BigDecimalField destAmount = new BigDecimalField("Destination Amount");
   ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
   ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");
   BigDecimalField fee = new BigDecimalField("Fee");
-  ComboBox<CryptoAsset> feeAsset = new ComboBox<>("Fee Asset");
+  ComboBox<Asset> feeAsset = new ComboBox<>("Fee Asset");
   TextField notes = new TextField("Notes");
   Binder<Transaction> binder = new BeanValidationBinder<>(Transaction.class);
   Button save = new Button("Save");
   Button delete = new Button("Delete");
   Button close = new Button("Cancel");
 
-  public CompAddTransaction(List<CryptoAsset> CryptoAssetList, List<Platform> PlatformList) {
+  public CompAddTransaction(List<Asset> assetList, List<Platform> platformList) {
     addClassName("transaction-list");
     binder.bindInstanceFields(this);
 
     // laden der Listen für die Dropdowns
-    srcAsset.setItems(CryptoAssetList);
-    destAsset.setItems(CryptoAssetList);
-    srcPlatform.setItems(PlatformList);
-    destPlatform.setItems(PlatformList);
-    feeAsset.setItems(CryptoAssetList);
+    srcAsset.setItems(assetList);
+    destAsset.setItems(assetList);
+    srcPlatform.setItems(platformList);
+    destPlatform.setItems(platformList);
+    feeAsset.setItems(assetList);
 
     // Anzeigename defineieren welche in der Dropdown angezeigt werden
-    srcAsset.setItemLabelGenerator(CryptoAsset::getShortname);
-    destAsset.setItemLabelGenerator(CryptoAsset::getShortname);
+    srcAsset.setItemLabelGenerator(Asset::getShortname);
+    destAsset.setItemLabelGenerator(Asset::getShortname);
     srcPlatform.setItemLabelGenerator(Platform::getName);
     destPlatform.setItemLabelGenerator(Platform::getName);
     destPlatform.setItemLabelGenerator(Platform::getName);
-    feeAsset.setItemLabelGenerator(CryptoAsset::getShortname);
+    feeAsset.setItemLabelGenerator(Asset::getShortname);
 
     add(dateAndTime,
         srcAmount,
