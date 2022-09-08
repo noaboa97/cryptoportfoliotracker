@@ -96,7 +96,6 @@ public class CompAddTransaction extends FormLayout {
     try {
 
       binder.writeBean(transaction);
-      System.out.println("CompAddTransaction validateAndSave");
       transaction.getTransaction();
 
       fireEvent(new SaveEvent(this, transaction));

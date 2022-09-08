@@ -49,7 +49,6 @@ public class CryptoAssetView extends VerticalLayout {
         grid.addColumn(Asset::getFullname).setHeader("Name");
         grid.addColumn(Asset::getShortname).setHeader("Abbr.");
         grid.addColumn(Asset::getPlatform).setHeader("Platform");
-        System.out.println("Try to add Invested Capital Fiat");
         grid.addColumn(asset -> asset.getInvestedCapitalFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortname()).setHeader("Invested Capital Fiat");
         grid.addColumn(asset -> asset.getInvestedCapitalCrypto(service).stripTrailingZeros() + " " + asset.getShortname()).setHeader("Invested Capital Crypto");
         grid.addColumn(asset -> asset.getCurrentValueFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortname()).setHeader("Current Total Value Fiat");
@@ -130,7 +129,6 @@ public class CryptoAssetView extends VerticalLayout {
 
 
     private void saveCryptoAsset(CompAddCryptoAsset.SaveEvent event) {
-        System.out.println("ListView saveCryptoAsset");
         event.getCryptoAsset();
         service.saveCryptoAsset(event.getCryptoAsset());
         updateList();

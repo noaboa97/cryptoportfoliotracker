@@ -17,10 +17,8 @@ public class Platform {
 
     //@NotNull
     private String name;
-    private BigDecimal investedBalanceFiat;
-    private BigDecimal investedBalanceCrypto;
     private boolean isFiatPlatform = false;
-    private BigDecimal currentValueFiat;
+
 
     public Platform(String name) {
         this.name = name;
@@ -49,14 +47,6 @@ public class Platform {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public BigDecimal getCurrentValueFiat() {
-        return currentValueFiat;
-    }
-
-    public void setCurrentValueFiat(BigDecimal currentValueFiat) {
-        this.currentValueFiat = currentValueFiat;
     }
 
     public BigDecimal getInvestedCapitalFiat(CptService service) {
@@ -111,13 +101,9 @@ public class Platform {
 
         List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
-        System.out.println("CV A List "+assetList.size());
-
         for (CryptoAsset a : assetList){
 
             List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
-
-            System.out.println("CV T List "+transactionList.size());
 
             for(Transaction t : transactionList) {
                 t.getTransaction();
