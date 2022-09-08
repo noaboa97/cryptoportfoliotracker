@@ -58,14 +58,6 @@ public class CptService {
     }
 
     public void saveCryptoAsset(CryptoAsset cryptoAsset) {
-        if (cryptoAsset == null) {
-
-
-            System.err.println("Transaction is null. Are you sure you have connected your form to the application?");
-            return;
-        }
-        System.out.println("CptService saveTransaction");
-
         cryptoAssetRepository.save(cryptoAsset);
     }
 
@@ -92,6 +84,7 @@ public class CptService {
 
         return transactionRepository.findBySrcPlatform(p);
     }
+
     public List<Transaction> findByDestPlatform(Platform p) {
 
         return transactionRepository.findByDestPlatform(p);
@@ -102,9 +95,11 @@ public class CptService {
         return transactionRepository.findBySrcAsset(a);
     }
 
-    public FiatAsset findStandard(){
+    public FiatAsset findStandard() {
         return fiatAssetRepository.findStandard(true);
-    };
+    }
+
+    ;
 
     public List<Transaction> findByDestAsset(CryptoAsset ca) {
 
@@ -130,13 +125,6 @@ public class CptService {
     }
 
     public void saveTransaction(Transaction transaction) {
-        if (transaction == null) {
-
-
-            System.err.println("Transaction is null. Are you sure you have connected your form to the application?");
-            return;
-        }
-        transaction.getTransaction();
         transactionRepository.save(transaction);
     }
 
@@ -178,26 +166,34 @@ public class CptService {
 
 
     // TO DO!!!----------------------------------------------------
-    public BigDecimal getPlatformPercentageChange() {
+    public double getPlatformPercentageChange(Platform platform) {
         BigDecimal increase, pIncreace, decrease, pDecrease;
         BigDecimal h = new BigDecimal("100");
+
         //https://www.educative.io/answers/how-to-compare-two-bigdecimals-in-java
         //https://www.investopedia.com/terms/p/percentage-change.asp
-        if (getTotalInvestedCapital().compareTo(getTotalCurrentValue()) < 0) {
+        BigDecimal investedCapital = platform.getInvestedCapitalFiat(this);
+        BigDecimal currentValue = platform.getCurrentValueFiat(this);
+
+        if (investedCapital.compareTo(currentValue) == 0) {
+            return 0.00;
+        } else if (investedCapital.compareTo(currentValue) < 0) {
             // increase calc
-            increase = getTotalCurrentValue().subtract(getTotalInvestedCapital());
-            pIncreace = increase.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
-            return pIncreace.setScale(2, RoundingMode.HALF_UP);
+            increase = currentValue.subtract(investedCapital);
+            pIncreace = increase.divide(investedCapital, 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pIncreace.setScale(2, RoundingMode.HALF_UP).doubleValue();
         } else {
             // decrease calc
-            decrease = getTotalInvestedCapital().subtract(getTotalCurrentValue());
-            pDecrease = decrease.divide(getTotalInvestedCapital(), 5, RoundingMode.HALF_EVEN).multiply(h);
-            return pDecrease.negate().setScale(2, RoundingMode.HALF_UP);
+            decrease = investedCapital.subtract(currentValue);
+            pDecrease = decrease.divide(investedCapital, 5, RoundingMode.HALF_EVEN).multiply(h);
+            return pDecrease.negate().setScale(2, RoundingMode.HALF_UP).doubleValue();
 
         }
 
 
     }
+
+
     public BigDecimal getTotalInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");
 

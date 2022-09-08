@@ -143,7 +143,7 @@ public class Dashboard extends VerticalLayout {
 
         for (Platform p : list) {
 
-            cList.add(createTrippleCard(p.getName(), "Invested Capital",p.getInvestedCapitalFiat(service) + " CHF", "Current Value", p.getCurrentValueFiat(service) + " CHF", service.getPlatformPercentageChange().doubleValue()));
+            cList.add(createTrippleCard(p.getName(), "Invested Capital",p.getInvestedCapitalFiat(service) + " CHF", "Current Value", p.getCurrentValueFiat(service) + " CHF" ,service.getPlatformPercentageChange(p)));
             if (i == s) {
                 if (i == 1) {
                     board.addRow(cList.get(0));
