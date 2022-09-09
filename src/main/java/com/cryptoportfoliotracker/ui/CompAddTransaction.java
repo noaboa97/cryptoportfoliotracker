@@ -50,10 +50,10 @@ public class CompAddTransaction extends FormLayout {
 
     // Anzeigename defineieren welche in der Dropdown angezeigt werden
     srcAsset.setItemLabelGenerator(Asset::getShortName);
-    destAsset.setItemLabelGenerator(Asset::getShortName);
+    destAsset.setItemLabelGenerator(Asset::getShortNameAndPlatform);
     srcPlatform.setItemLabelGenerator(Platform::getName);
     destPlatform.setItemLabelGenerator(Platform::getName);
-    destPlatform.setItemLabelGenerator(Platform::getName);
+    //destPlatform.setItemLabelGenerator(Platform::getName);
     feeAsset.setItemLabelGenerator(Asset::getShortName);
 
     add(dateAndTime,

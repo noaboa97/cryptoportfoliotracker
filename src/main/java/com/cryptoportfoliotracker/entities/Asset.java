@@ -165,4 +165,11 @@ public abstract class Asset {
     public String toString() {
         return shortName;
     }
+
+    public String getShortNameAndPlatform(){
+
+        String shortNameAndPlatform = getShortName() + " - " + getPlatform().getName();
+
+        return shortNameAndPlatform;
+    };
 }
