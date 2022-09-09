@@ -1,7 +1,6 @@
 
 package com.cryptoportfoliotracker.ui;
 import com.cryptoportfoliotracker.entities.Asset;
-import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
 import com.vaadin.flow.component.ComponentEvent;
@@ -50,12 +49,12 @@ public class CompAddTransaction extends FormLayout {
     feeAsset.setItems(assetList);
 
     // Anzeigename defineieren welche in der Dropdown angezeigt werden
-    srcAsset.setItemLabelGenerator(Asset::getShortname);
-    destAsset.setItemLabelGenerator(Asset::getShortname);
+    srcAsset.setItemLabelGenerator(Asset::getShortName);
+    destAsset.setItemLabelGenerator(Asset::getShortName);
     srcPlatform.setItemLabelGenerator(Platform::getName);
     destPlatform.setItemLabelGenerator(Platform::getName);
     destPlatform.setItemLabelGenerator(Platform::getName);
-    feeAsset.setItemLabelGenerator(Asset::getShortname);
+    feeAsset.setItemLabelGenerator(Asset::getShortName);
 
     add(dateAndTime,
         srcAmount,
@@ -96,7 +95,6 @@ public class CompAddTransaction extends FormLayout {
     try {
 
       binder.writeBean(transaction);
-      transaction.getTransaction();
 
       fireEvent(new SaveEvent(this, transaction));
 

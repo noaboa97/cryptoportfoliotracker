@@ -9,6 +9,12 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.List;
 
+/**
+ * Controller which lets the view talk to the model
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ */
 @Service
 public class CptService {
     @Autowired
@@ -18,11 +24,20 @@ public class CptService {
     @Autowired
     private final PlatformRepository platformRepository;
     @Autowired
-    private TransactionRepository transactionRepository;
+    private final TransactionRepository transactionRepository;
+    @Autowired
+    private final FiatAssetRepository fiatAssetRepository;
 
-    private FiatAssetRepository fiatAssetRepository;
 
-
+    /**
+     * Creates a new transaction instance
+     *
+     * @param assetRepository The asset repository
+     * @param cryptoAssetRepository The crypto asset repository
+     * @param platformRepository The platform repository
+     * @param transactionRepository The transaction repository
+     * @param fiatAssetRepository The fiat asset repository
+     */
     public CptService(AssetRepository assetRepository,
                       CryptoAssetRepository cryptoAssetRepository,
                       PlatformRepository platformRepository,
@@ -35,13 +50,24 @@ public class CptService {
         this.fiatAssetRepository = fiatAssetRepository;
     }
 
+    /**
+     * Returns all assets in a list
+     *
+     * @Return list of all assets
+     * @see AssetRepository
+     */
     public List<Asset> findAllAssets() {
         return assetRepository.findAll();
     }
 
+    /**
+     * Returns all crypto assets or one crypto asset
+     *
+     * @Return all crypto assets or one crypto asset
+     * @see CryptoAssetRepository
+     */
     public List<CryptoAsset> findAllCryptoAssets(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
-
 
             return cryptoAssetRepository.findAll();
         } else {
@@ -49,92 +75,155 @@ public class CptService {
         }
     }
 
-    public long countCryptoAsset() {
-        return cryptoAssetRepository.count();
-    }
-
+    /**
+     * Deletes one crypto asset
+     *
+     * @param cryptoAsset crypto asset to be deleted
+     * @see CryptoAssetRepository
+     */
     public void deleteCryptoAsset(CryptoAsset cryptoAsset) {
         cryptoAssetRepository.delete(cryptoAsset);
     }
 
+    /**
+     * Saves one crypto asset
+     *
+     * @param cryptoAsset crypto asset to be saved
+     * @see CryptoAssetRepository
+     */
     public void saveCryptoAsset(CryptoAsset cryptoAsset) {
         cryptoAssetRepository.save(cryptoAsset);
     }
 
-
+    /**
+     * Returns all platforms in a list
+     *
+     * @Return list of all platforms
+     * @see PlatformRepository
+     */
     public List<Platform> findAllPlatforms() {
 
         return platformRepository.findAll();
     }
 
+    /**
+     * Returns all crypto platforms in a list
+     *
+     * @Return all crypto platforms in a list
+     * @see PlatformRepository
+     */
     public List<Platform> findAllCryptoPlatforms() {
-
         boolean isFiatPlatform = false;
-
         return platformRepository.findAllCryptoPlatforms(isFiatPlatform);
     }
 
-
+    /**
+     * Returns all crypto assets of a platforms in a list
+     *
+     * @Return all crypto assets of a platforms in a list
+     * @see CryptoAssetRepository
+     */
     public List<CryptoAsset> findAllCryptoAssetsOfPlatform(Platform p) {
-
         return cryptoAssetRepository.findAllCryptoAssetsOfPlatform(p);
     }
 
+    /**
+     * Returns all transaction filtered by source platform in a list
+     *
+     * @Return Returns all transaction by source platform in a list
+     * @see TransactionRepository
+     */
     public List<Transaction> findBySrcPlatform(Platform p) {
-
         return transactionRepository.findBySrcPlatform(p);
     }
 
+    /**
+     * Returns all transaction filtered by destination platform in a list
+     *
+     * @Return Returns all transaction by destination platform in a list
+     * @see TransactionRepository
+     */
     public List<Transaction> findByDestPlatform(Platform p) {
-
         return transactionRepository.findByDestPlatform(p);
     }
 
-
+    /**
+     * Returns all transaction filtered by source asset in a list
+     *
+     * @Return Returns all transaction by source asset in a list
+     * @see TransactionRepository
+     */
     public List<Transaction> findBySrcAsset(Asset a) {
         return transactionRepository.findBySrcAsset(a);
     }
 
+    /**
+     * Returns the default fiat platform
+     *
+     * @Return Returns the default fiat platform
+     * @see FiatAssetRepository
+     */
     public FiatAsset findStandard() {
         return fiatAssetRepository.findStandard(true);
     }
 
-    ;
-
+    /**
+     * Returns all transaction filtered by destination asset in a list
+     *
+     * @Return Returns all transaction by destination asset in a list
+     * @see TransactionRepository
+     */
     public List<Transaction> findByDestAsset(CryptoAsset ca) {
 
         return transactionRepository.findByDestAsset(ca);
     }
 
+    /**
+     * Returns all transactions or one transaction in a list
+     *
+     * @Return all transactions or one transaction in a list
+     * @see TransactionRepository
+     */
     public List<Transaction> findAllTransactions(String stringFilter) {
         if (stringFilter == null || stringFilter.isEmpty()) {
-
-
             return transactionRepository.findAll();
         } else {
-            return null; //transactionRepository.search(stringFilter);
+            return transactionRepository.search(stringFilter);
         }
     }
 
-    public long countTransactions() {
-        return transactionRepository.count();
-    }
-
+    /**
+     * Deletes one transaction
+     *
+     * @param transaction to be deleted
+     * @see TransactionRepository
+     */
     public void deleteTransaction(Transaction transaction) {
         transactionRepository.delete(transaction);
     }
 
+    /**
+     * Saves one transaction
+     *
+     * @param transaction to be saved
+     * @see TransactionRepository
+     */
     public void saveTransaction(Transaction transaction) {
         transactionRepository.save(transaction);
     }
 
+    /**
+     * Calculates the total current value of all assets
+     *
+     * @Return BigDecimal
+     *         Returns the total current value of all assets from the transactions
+     */
     public BigDecimal getTotalCurrentValue() {
         BigDecimal currentValue = new BigDecimal("0");
-        String s = new String("Test");
         for (Transaction t : findAllTransactions("")) {
 
             // get dest asset fullname and search for it in the repo get the first object of the list - assuming there is one - none will throw error
-            CryptoAsset ca = findAllCryptoAssets(t.getDestAsset().getFullname()).get(0);
+            CryptoAsset ca = findAllCryptoAssets(t.getDestAsset().getFullName()).get(0);
 
             // multiply the destination amount with the current value of the crypto asset
             currentValue = currentValue.add(t.getDestAmount().multiply(ca.getCurrentValueFiat()));
@@ -143,6 +232,12 @@ public class CptService {
         return currentValue.setScale(2, RoundingMode.HALF_UP);
     }
 
+    /**
+     * Calculates the total percentage change of invested to current value
+     *
+     * @Return BigDecimal
+     *         Returns the total percentage change of invested to current value
+     */
     public BigDecimal getTotalPercentageChange() {
         BigDecimal increase, pIncreace, decrease, pDecrease;
         BigDecimal h = new BigDecimal("100");
@@ -164,8 +259,12 @@ public class CptService {
 
     }
 
-
-    // TO DO!!!----------------------------------------------------
+    /**
+     * Calculates the platform percentage change of invested to current value
+     *
+     * @Return BigDecimal
+     *         Returns the platform percentage change of invested to current value
+     */
     public double getPlatformPercentageChange(Platform platform) {
         BigDecimal increase, pIncreace, decrease, pDecrease;
         BigDecimal h = new BigDecimal("100");
@@ -193,7 +292,12 @@ public class CptService {
 
     }
 
-
+    /**
+     * Calculates the total invested capital
+     *
+     * @Return BigDecimal
+     *         Returns the total invested capital
+     */
     public BigDecimal getTotalInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");
 

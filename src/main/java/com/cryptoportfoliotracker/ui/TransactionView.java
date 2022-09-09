@@ -23,6 +23,7 @@ public class TransactionView extends VerticalLayout {
     CompAddTransaction compAddTransaction;
     CptService service;
 
+
     public TransactionView(CptService service) {
         this.service = service;
 
@@ -128,7 +129,6 @@ public class TransactionView extends VerticalLayout {
 
 
     private void saveTransaction(CompAddTransaction.SaveEvent event) {
-        event.getTransaction().getTransaction();
         service.saveTransaction(event.getTransaction());
         updateList();
         closeEditor();

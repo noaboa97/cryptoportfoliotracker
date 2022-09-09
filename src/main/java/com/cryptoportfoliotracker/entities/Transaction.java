@@ -6,6 +6,14 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+/***
+ * Class for a transaction which holds information about what has been exchanged or transferred
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ * @see Asset
+ * @see Platform
+ */
 @Entity
 public class Transaction {
 
@@ -51,6 +59,19 @@ public class Transaction {
     private Asset feeAsset;
     private String notes;
 
+    /**
+     * Creates a new transaction instance
+     *
+     * @param dateAndTime date and time of the transaction
+     * @param srcAmount source amount which has been transferred
+     * @param srcAsset source asset which has been transferred
+     * @param destAmount destination amount which has been transferred
+     * @param destAsset source asset which has been transferred
+     * @param srcPlatform source platform from which the transaction originated
+     * @param destPlatform destination platform from where the transaction was sent to
+     * @param fee amount for the transaction
+     * @param fee asset of the fee amount
+     */
     public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform,BigDecimal fee,Asset feeAsset) {
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
@@ -63,21 +84,50 @@ public class Transaction {
         this.feeAsset = feeAsset;
     }
 
+    /**
+     * Creates a new empty platform instance
+     * Need for the bean creation of Spring because it uses the setter and getter methods
+     *
+     */
     public Transaction() {
     }
 
+    /**
+     * Getter for the id of the transaction
+     *
+     * @Return  Long
+     *          The id of the transaction
+     */
     public Long getId() {
         return id;
     }
 
+    /**
+     * Setter for the id of the transaction
+     *
+     * @param id
+     *        The identifier of transaction
+     */
     public void setId(Long id) {
         this.id = id;
     }
 
+    /**
+     * Getter for the date and time of the transaction
+     *
+     * @Return  LocalDateTime
+     *          The date and time of the transaction
+     */
     public LocalDateTime getDateAndTime() {
         return dateAndTime;
     }
 
+    /**
+     * Setter for the date and time of the transaction
+     *
+     * @param dateAndTime
+     *        The date and time of transaction
+     */
     public void setDateAndTime(LocalDateTime dateAndTime) {
 
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
@@ -86,92 +136,202 @@ public class Transaction {
         this.dateAndTime = dateAndTime;
     }
 
+    /**
+     * Getter for the source amount of the transaction
+     *
+     * @Return  BigDecimal
+     *          The source amount of the transaction
+     */
     public BigDecimal getSrcAmount() {
         return srcAmount;
     }
 
+    /**
+     * Setter for the source amount of the transaction
+     *
+     * @param srcAmount
+     *        The source amount of transaction
+     */
     public void setSrcAmount(BigDecimal srcAmount) {
         this.srcAmount = srcAmount;
     }
 
+    /**
+     * Getter for the source asset of the transaction
+     *
+     * @Return  Asset
+     *          The source asset of the transaction
+     * @see Asset
+     */
     public Asset getSrcAsset() {
         return srcAsset;
     }
 
+    /**
+     * Setter for the source asset of the transaction
+     *
+     * @param srcAsset
+     *        The source asset of transaction
+     * @see Asset
+     */
     public void setSrcAsset(Asset srcAsset) {
         this.srcAsset = srcAsset;
     }
 
+    /**
+     * Getter for the destination amount of the transaction
+     *
+     * @Return  BigDecimal
+     *          The destination amount of the transaction
+     */
     public BigDecimal getDestAmount() {
         return destAmount;
     }
 
+    /**
+     * Setter for the destination amount of the transaction
+     *
+     * @param destAmount
+     *        The destination amount of transaction
+     */
     public void setDestAmount(BigDecimal destAmount) {
         this.destAmount = destAmount;
     }
 
+    /**
+     * Getter for the destination asset of the transaction
+     *
+     * @Return  Asset
+     *          The destination asset of the transaction
+     * @see Asset
+     */
     public Asset getDestAsset() {
         return destAsset;
     }
 
+    /**
+     * Setter for the destination asset of the transaction
+     *
+     * @param destAsset
+     *        The destination asset of transaction
+     * @see Asset
+     */
     public void setDestAsset(Asset destAsset) {
         this.destAsset = destAsset;
     }
 
+    /**
+     * Getter for the source platform of the transaction
+     *
+     * @Return  Platform
+     *          The source platform of the transaction
+     * @see Platform
+     */
     public Platform getSrcPlatform() {
         return srcPlatform;
     }
 
+    /**
+     * Setter for the source platform of the transaction
+     *
+     * @param srcPlatform
+     *        The source platform asset of transaction
+     * @see Platform
+     */
     public void setSrcPlatform(Platform srcPlatform) {
         this.srcPlatform = srcPlatform;
     }
 
+    /**
+     * Getter for the destination platform of the transaction
+     *
+     * @Return  Platform
+     *          The destination platform of the transaction
+     * @see Platform
+     */
     public Platform getDestPlatform() {
         return destPlatform;
     }
 
+    /**
+     * Setter for the destination platform of the transaction
+     *
+     * @param destPlatform
+     *        The destination platform asset of transaction
+     * @see Platform
+     */
     public void setDestPlatform(Platform destPlatform) {
         this.destPlatform = destPlatform;
     }
 
+    /**
+     * Getter for the fee amount of the transaction
+     *
+     * @Return  BigDecimal
+     *          The fee amount m of the transaction
+     */
     public BigDecimal getFee() {
         return fee;
     }
 
+    /**
+     * Setter for the fee amount of the transaction
+     *
+     * @param fee
+     *        The fee amount asset of transaction
+     */
     public void setFee(BigDecimal fee) {
         this.fee = fee;
     }
 
+    /**
+     * Getter for the fee asset of the transaction
+     *
+     * @Return  Platform
+     *          The fee asset of the transaction
+     * @see Asset
+     */
     public Asset getFeeAsset() {
         return feeAsset;
     }
 
+    /**
+     * Setter for the fee asset of the transaction
+     *
+     * @param feeAsset
+     *        The fee asset of transaction
+     * @see Asset
+     */
     public void setFeeAsset(Asset feeAsset) {
         this.feeAsset = feeAsset;
     }
 
+    /**
+     * Getter for the notes of the transaction
+     *
+     * @Return  String
+     *          The notes of the transaction
+     */
     public String getNotes() {
         return notes;
     }
 
+    /**
+     * Setter for the notes of the transaction
+     *
+     * @param notes
+     *        The notes of transaction
+     */
     public void setNotes(String notes) {
         this.notes = notes;
     }
 
-    public void getTransaction() {
-
-        System.out.println("Date "+dateAndTime);
-        System.out.println("Src Amount "+srcAmount);
-        System.out.println("Src Asset "+srcAsset);
-        System.out.println("Dest Amount "+destAmount);
-        System.out.println("Src Asset "+destAsset);
-        System.out.println("Src Platform "+srcPlatform);
-        System.out.println("Dest Amount "+destPlatform);
-        System.out.println("Fee "+fee);
-        System.out.println("Fee Asset "+feeAsset);
-        System.out.println("Notes "+notes);
-
-    }
+    /**
+     * Gets the date and time of the transaction as a string
+     *
+     * @Return  String
+     *          The date and time of the transaction as a string
+     */
     public String getStringDate(){
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MMM yyyy HH:mm:ss");
         return dateAndTime.format(formatter);

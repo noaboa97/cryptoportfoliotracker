@@ -11,8 +11,24 @@ import org.springframework.boot.web.servlet.support.SpringBootServletInitializer
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
+
+/***
+ * Entry point of the Spring Boot application
+ *
+ * @author 	Noah Li Wan Po
+ * @version 1.0
+ * @param 	args of the development environment
+ *
+ * @EnableAutoConfiguration	tries to guess and configure the beans needed for the project
+ *
+ * @ComponentScan 			packages that we want to be scanned and are needed for the application to run
+ *
+ * @Theme 					needed for Vaadin to load the appropriate theme and files for the theme
+ *
+ * @NpmPackage 				needed for Vaadin to load the needed dependencies which include the JS modules
+ */
 @EnableAutoConfiguration()
-@SpringBootApplication(scanBasePackages={"com.cryptoportfoliotracker.logic"/*,"com.service.cryptoportfoliotracker.repository"*/,"com.cryptoportfoliotracker.entities"})
+@SpringBootApplication(scanBasePackages={"com.cryptoportfoliotracker.logic","com.cryptoportfoliotracker.entities"})
 @EnableJpaRepositories(basePackages = {"com.cryptoportfoliotracker.repository"})
 @ComponentScan({"com.cryptoportfoliotracker.repository","com.cryptoportfoliotracker.logic","com.cryptoportfoliotracker.entities"})
 @Theme(value = "cryptoportfoliotracker", variant = Lumo.DARK)

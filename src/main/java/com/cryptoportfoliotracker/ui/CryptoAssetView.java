@@ -2,7 +2,6 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -46,12 +45,12 @@ public class CryptoAssetView extends VerticalLayout {
         grid.addClassNames("cryptoasset-grid");
         grid.setSizeFull();
 
-        grid.addColumn(Asset::getFullname).setHeader("Name");
-        grid.addColumn(Asset::getShortname).setHeader("Abbr.");
+        grid.addColumn(Asset::getFullName).setHeader("Name");
+        grid.addColumn(Asset::getShortName).setHeader("Abbr.");
         grid.addColumn(Asset::getPlatform).setHeader("Platform");
-        grid.addColumn(asset -> asset.getInvestedCapitalFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortname()).setHeader("Invested Capital Fiat");
-        grid.addColumn(asset -> asset.getInvestedCapitalCrypto(service).stripTrailingZeros() + " " + asset.getShortname()).setHeader("Invested Capital Crypto");
-        grid.addColumn(asset -> asset.getCurrentValueFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortname()).setHeader("Current Total Value Fiat");
+        grid.addColumn(asset -> asset.getInvestedCapitalFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortName()).setHeader("Invested Capital Fiat");
+        grid.addColumn(asset -> asset.getInvestedCapitalCrypto(service).stripTrailingZeros() + " " + asset.getShortName()).setHeader("Invested Capital Crypto");
+        grid.addColumn(asset -> asset.getCurrentValueFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortName()).setHeader("Current Total Value Fiat");
         //grid.addColumn(asset -> asset.getCurrentValueFiat()).setHeader("Current Value");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
@@ -113,7 +112,7 @@ public class CryptoAssetView extends VerticalLayout {
 
     private void configureCompAddCryptoAsset() {
 
-        compAddCryptoAsset = new CompAddCryptoAsset(service.findAllCryptoAssets(""), service.findAllPlatforms());
+        compAddCryptoAsset = new CompAddCryptoAsset(service.findAllPlatforms());
         compAddCryptoAsset.setWidth("25em");
         compAddCryptoAsset.addListener(CompAddCryptoAsset.SaveEvent.class, this::saveCryptoAsset);
         compAddCryptoAsset.addListener(CompAddCryptoAsset.DeleteEvent.class, this::deleteCryptoAsset);

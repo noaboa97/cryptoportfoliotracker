@@ -16,13 +16,17 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
-
 import java.util.List;
 
+/***
+ * Component / editor to create, update and delete crypto assets in the ui
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ * @see CryptoAssetView
+ */
 public class CompAddCryptoAsset extends FormLayout {
     CryptoAsset cryptoAsset;
-
-
     TextField fullname = new TextField("Name");
     TextField shortname = new TextField("Short");
     ComboBox<Platform> platform = new ComboBox<>("Platform");
@@ -38,16 +42,40 @@ public class CompAddCryptoAsset extends FormLayout {
     Button delete = new Button("Delete");
     Button close = new Button("Cancel");
 
-    public CompAddCryptoAsset(List<CryptoAsset> AssetList, List<Platform> PlatformList) {
+    /**
+     * Creates a new component add crypto asset instance
+     *
+     * @param PlatformList of platforms
+     */
+    public CompAddCryptoAsset(List<Platform> PlatformList) {
         addClassName("Asset-list");
+
+        /**
+         * binding field from ui to entities
+         *
+         * @param all attributes of this object/bean
+         */
         binder.bindInstanceFields(this);
 
-        // laden der Listen für die Dropdowns
+        /**
+         * Loads the dropdown list for the platform selection
+         *
+         * @aram list of all platforms
+         */
         platform.setItems(PlatformList);
 
-        // Anzeigename defineieren welche in der Dropdown angezeigt werden
+        /**
+         * Define the labels of the dropdown list
+         *
+         * @param Type and method reference
+         */
         platform.setItemLabelGenerator(Platform::getName);
 
+        /**
+         * Adds all the fields to the component
+         *
+         * @param Attributes and methods of this object to which should be displayed
+         */
         add(fullname,
             shortname,
             platform,
@@ -55,6 +83,11 @@ public class CompAddCryptoAsset extends FormLayout {
             createButtonsLayout());
     }
 
+    /**
+     * Creates the horizontal layout for the buttons
+     *
+     * @see #CompAddCryptoAsset(List)
+     */
     private HorizontalLayout createButtonsLayout() {
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
@@ -63,7 +96,11 @@ public class CompAddCryptoAsset extends FormLayout {
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-
+        /**
+         * Adds a click listener to the save button which will fire the event to save when button is clicked
+         *
+         * @see #validateAndSave()
+         */
         save.addClickListener(event -> validateAndSave());
         delete.addClickListener(event -> fireEvent(new DeleteEvent(this, cryptoAsset)));
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
@@ -73,11 +110,21 @@ public class CompAddCryptoAsset extends FormLayout {
 
     }
 
+    /**
+     * Load selected crypto asset to the component / editor
+     *
+     * @param cryptoAsset to be display
+     */
     public void setCryptoAsset(CryptoAsset cryptoAsset) {
         this.cryptoAsset = cryptoAsset;
         binder.readBean(cryptoAsset);
     }
 
+    /**
+     * Reads the crypto asset from to ui and writes it to the bean and saves it via the event
+     *
+     * @see SaveEvent
+     */
     private void validateAndSave() {
         try {
 
@@ -91,6 +138,13 @@ public class CompAddCryptoAsset extends FormLayout {
     }
 
     // Events
+    /***
+     * Event Component to handle event when button is clicke
+     *
+     * @author Noah Li Wan Po
+     * @version 1.0
+     * @see CompAddCryptoAsset
+     */
     public static abstract class CompAddAssetEvent extends ComponentEvent<CompAddCryptoAsset> {
         private CryptoAsset cryptoAsset;
 

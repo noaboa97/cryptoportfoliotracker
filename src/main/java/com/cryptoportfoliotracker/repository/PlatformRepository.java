@@ -8,23 +8,32 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
+
+/**
+ * Repository to create, read, update and delete platform to the database
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ */
 @Repository
 public interface PlatformRepository extends JpaRepository<Platform, Long> {
-
+    /**
+     * JPQL Query to search for the name of the platform
+     *
+     * @Return Platform
+     *         Returns a list with a fiat asset
+     */
     @Query("select p from Platform p " +
             "where p.name = :searchTerm")
     List<Platform> search(@Param("searchTerm") String searchTerm);
 
-    /*
-    @Query("select p from Platform p " +
-            "where p.id = :searchTerm")
-    List<Platform> getId(@Param("searchTerm") Long id);
-*/
-
+    /**
+     * JPQL Query to find all crypto platforms
+     *
+     * @Return Platform
+     *         Returns a list with all crypto platforms
+     */
     @Query("select p from Platform p " +
             "where p.isFiatPlatform = :searchTerm")
     List<Platform> findAllCryptoPlatforms(@Param("searchTerm") boolean searchTerm);
