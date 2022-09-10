@@ -95,7 +95,7 @@ public class CryptoAsset extends Asset {
         BigDecimal investedCapitalFiat = new BigDecimal("0");
         List<Transaction> list = service.findBySrcAsset(service.findStandard());
         for (Transaction t : list) {
-            if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
+            if (t.getDestPlatform().getName() == this.getPlatform().getName() && t.getDestAsset().getFullName() == this.getFullName()) {
                 investedCapitalFiat = investedCapitalFiat.add(t.getSrcAmount());
             }
         }
@@ -128,7 +128,7 @@ public class CryptoAsset extends Asset {
 
         for (Transaction t : list) {
 
-            if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
+            if (t.getDestPlatform().getName() == this.getPlatform().getName() && t.getDestAsset().getFullName() == this.getFullName()) {
                 BigDecimal DestAmountCurrentValue = t.getDestAmount().multiply(this.currentValueFiat);
                 currentValueFiat = currentValueFiat.add(DestAmountCurrentValue);
             }

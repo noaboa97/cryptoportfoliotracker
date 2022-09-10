@@ -17,19 +17,22 @@ import java.util.List;
 @Entity
 public class Platform {
 
-    /** Represents the id of the platform
+    /**
+     * Represents the id of the platform
      */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "platform_id")
     private Long id;
 
-    /** Represents the name of the platform
+    /**
+     * Represents the name of the platform
      */
     @NotNull
     private String name;
 
-    /** Represents the platform type
+    /**
+     * Represents the platform type
      */
     private boolean isFiatPlatform = false;
 
@@ -111,22 +114,12 @@ public class Platform {
 
         BigDecimal currentBalanceFiat = new BigDecimal("0");
 
-        List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
+        List<Transaction> transactionList = service.findByDestPlatform(this);
 
-        for (CryptoAsset a : assetList) {
+        for (Transaction t : transactionList) {
 
-            List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
+            currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
 
-            for (Transaction t : transactionList) {
-
-                if (t.getDestPlatform().toString() == this.toString()) {
-
-                    currentBalanceFiat = currentBalanceFiat.add(t.getSrcAmount());
-
-                }
-
-
-            }
         }
 
         return currentBalanceFiat.setScale(2, RoundingMode.HALF_UP);
@@ -143,21 +136,14 @@ public class Platform {
 
         BigDecimal currentValueFiat = new BigDecimal("0");
 
+        // Gets all crypto assets of this platform
         List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
         for (CryptoAsset a : assetList) {
 
-            List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
+            // for each crypto asset get the current value
+            currentValueFiat = currentValueFiat.add(a.getCurrentValueFiat(service));
 
-            for (Transaction t : transactionList) {
-                if (t.getDestPlatform().toString() == this.toString()) {
-
-                    BigDecimal la = a.getCurrentValueFiat();
-                    BigDecimal lo = t.getDestAmount().multiply(la);
-                    currentValueFiat = currentValueFiat.add(lo);
-
-                }
-            }
         }
 
         return currentValueFiat.setScale(2, RoundingMode.HALF_UP);
