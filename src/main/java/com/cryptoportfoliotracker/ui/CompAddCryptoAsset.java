@@ -27,12 +27,29 @@ import java.util.List;
  * @see CryptoAssetView
  */
 public class CompAddCryptoAsset extends FormLayout {
-    CryptoAsset cryptoAsset;
-    TextField fullname = new TextField("Name");
-    TextField shortname = new TextField("Short");
-    ComboBox<Platform> platform = new ComboBox<>("Platform");
-    TextField currentValueFiat = new TextField("CHF");
 
+    /** Represents the crypto asset in the ui component to make crud operations on
+     */
+    CryptoAsset cryptoAsset;
+
+    /** Represents the full name of the crypto asset in the ui
+     */
+    TextField fullname = new TextField("Name");
+
+    /** Represents the short name of the crypto asset in the ui
+     */
+    TextField shortname = new TextField("Short");
+
+    /** Represents the the platfrom of the crypto asset in the ui
+     */
+    ComboBox<Platform> platform = new ComboBox<>("Platform");
+
+    /** Represents the current market price of the crypto asset in the ui
+     */
+    TextField currentValueFiat = new TextField("Current market price");
+
+    /** Represents the
+     */
     BigDecimalField investedCapitalFiat = new BigDecimalField("Invested capital");
     BigDecimalField investedCapitalCrypto = new BigDecimalField("Invested capital");
     BigDecimalField currentBalanceCrypto = new BigDecimalField("Current balance");

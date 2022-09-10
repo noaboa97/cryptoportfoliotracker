@@ -17,13 +17,20 @@ import java.util.List;
 @Entity
 public class Platform {
 
+    /** Represents the id of the platform
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "platform_id")
     private Long id;
 
+    /** Represents the name of the platform
+     */
     @NotNull
     private String name;
+
+    /** Represents the platform type
+     */
     private boolean isFiatPlatform = false;
 
     /**

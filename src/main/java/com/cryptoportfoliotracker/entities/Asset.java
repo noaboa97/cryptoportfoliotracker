@@ -16,14 +16,26 @@ import java.math.BigDecimal;
  */
 @Entity
 public abstract class Asset {
+
+    /** Represents the asset id
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "asset_id")
     private Long id;
+
+    /** Represents the full name of the asset
+     */
     @NotNull
     private String fullName;
+
+    /** Represents the short name of the asset
+     */
     @NotNull
     private String shortName;
+
+    /** Represents the platform of the asset
+     */
     @NotNull
     @ManyToOne
     @JoinColumn(name = "platform", foreignKey = @javax.persistence.ForeignKey(name = "platform_fk"))

@@ -17,14 +17,29 @@ import java.util.List;
  */
 @Service
 public class CptService {
+
+    /** Represents the asset repository of the service
+     */
     @Autowired
     private final AssetRepository assetRepository;
+
+    /** Represents the crypto asset repository of the servie
+     */
     @Autowired
     private final CryptoAssetRepository cryptoAssetRepository;
+
+    /** Represents the platform repository of the service
+     */
     @Autowired
     private final PlatformRepository platformRepository;
+
+    /** Represents the transaction repository of the service
+     */
     @Autowired
     private final TransactionRepository transactionRepository;
+
+    /** Represents the fiat asset repository of the service
+     */
     @Autowired
     private final FiatAssetRepository fiatAssetRepository;
 

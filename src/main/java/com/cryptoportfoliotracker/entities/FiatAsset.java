@@ -15,6 +15,9 @@ import java.math.BigDecimal;
  */
 @Entity
 public class FiatAsset extends Asset {
+
+    /** Represents the standard fiat asset calculation are made with
+     */
     private boolean standard = false;
 
     /**
