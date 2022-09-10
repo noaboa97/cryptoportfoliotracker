@@ -1,5 +1,6 @@
 package com.cryptoportfoliotracker.ui;
 
+import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.logic.*;
 import com.vaadin.flow.component.Component;
@@ -12,6 +13,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.List;
 
 @PageTitle("Transactions")
 @Route(value = "transactions", layout = MainView.class)
@@ -91,6 +94,13 @@ public class TransactionView extends VerticalLayout {
         if (transaction == null) {
             closeEditor();
         } else {
+            List<Asset> destPlatformList = service.findAllAssetsOfPlatform(transaction.getDestPlatform());
+            List<Asset> srcPlatformList = service.findAllAssetsOfPlatform(transaction.getSrcPlatform());
+
+            compAddTransaction.destAsset.setItems(destPlatformList);
+            compAddTransaction.srcAsset.setItems(srcPlatformList);
+            compAddTransaction.srcAsset.setItemLabelGenerator(Asset::getShortName);
+            compAddTransaction.destAsset.setItemLabelGenerator(Asset::getShortName);
             compAddTransaction.setTransaction(transaction);
             compAddTransaction.setVisible(true);
             addClassName("editing");
@@ -119,7 +129,26 @@ public class TransactionView extends VerticalLayout {
         compAddTransaction.addListener(CompAddTransaction.DeleteEvent.class, this::deleteTransaction);
         compAddTransaction.addListener(CompAddTransaction.CloseEvent.class, e -> closeEditor());
 
+        compAddTransaction.addListener(CompAddTransaction.DestPlatformEvent.class, this::destPlatform);
+        compAddTransaction.addListener(CompAddTransaction.SrcPlatformEvent.class, this::srcPlatform);
+
+
     }
+
+    private void destPlatform(CompAddTransaction.DestPlatformEvent event) {
+        List<Asset> platformlist = service.findAllAssetsOfPlatform(event.getPlatform());
+
+        event.getAsset().setItems(platformlist);
+
+    }
+
+    private void srcPlatform(CompAddTransaction.SrcPlatformEvent event) {
+        List<Asset> platformlist = service.findAllAssetsOfPlatform(event.getPlatform());
+
+        event.getAsset().setItems(platformlist);
+
+    }
+
 
     public void updateList() {
 

@@ -28,16 +28,19 @@ public class DemoData {
             platformRepository.save(P4);
             platformRepository.save(P5);
             CryptoAsset CA = new CryptoAsset("Bitcoin", "BTC", P);
+            CryptoAsset CA2 = new CryptoAsset("Bitcoin", "BTC", P4);
             BigDecimal BD = new BigDecimal("19583.39");
             CA.setCurrentValueFiat(BD);
             cryptoAssetRepository.save(CA);
+            cryptoAssetRepository.save(CA2);
+
 
             FiatAsset a = new FiatAsset("Schweizer Franken", "CHF", P2, true);
             fiatAssetRepository.save(a);
 
             Transaction T = new Transaction(LocalDateTime.now(),new BigDecimal("93.21"),a,new BigDecimal("0.00217952"),CA,P2,P,new BigDecimal("1"),a);
             Transaction T1 = new Transaction(LocalDateTime.now(),new BigDecimal("49.62"),a,new BigDecimal("0.00240903"),CA,P2,P,new BigDecimal("2"),a);
-            Transaction T2 = new Transaction(LocalDateTime.now(),new BigDecimal("49.62"),a,new BigDecimal("0.00240903"),CA,P4,P,new BigDecimal("2"),a);
+            Transaction T2 = new Transaction(LocalDateTime.now(),new BigDecimal("49.62"),a,new BigDecimal("0.00240903"),CA2,P4,P,new BigDecimal("2"),a);
 
             transactionRepository.save(T);
             transactionRepository.save(T1);
