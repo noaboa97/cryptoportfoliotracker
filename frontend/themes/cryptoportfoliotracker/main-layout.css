@@ -59,3 +59,8 @@
   display: contents;
   font-weight: 500;
 }
+
+a[highlight] {
+    font-weight: bold;
+    text-decoration: underline;
+}
