@@ -127,6 +127,10 @@ public class CptService {
         return cryptoAssetRepository.findAllCryptoAssetsOfPlatform(p);
     }
 
+    public List<Asset> findAllAssetsOfPlatform(Platform p) {
+        return assetRepository.findAllAssetsOfPlatform(p);
+    }
+
     /**
      * Returns all transaction filtered by source platform in a list
      *

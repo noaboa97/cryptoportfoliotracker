@@ -1,5 +1,5 @@
-
 package com.cryptoportfoliotracker.ui;
+
 import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.entities.Transaction;
@@ -18,129 +18,165 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
 import java.util.List;
 
 public class CompAddTransaction extends FormLayout {
-  Transaction transaction;
-  DateTimePicker dateAndTime = new DateTimePicker();
-  ComboBox<Asset> srcAsset = new ComboBox<>("Source Asset");
-  ComboBox<Asset> destAsset = new ComboBox<>("Destination Asset");
-  BigDecimalField srcAmount = new BigDecimalField("Source Amount");
-  BigDecimalField destAmount = new BigDecimalField("Destination Amount");
-  ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
-  ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");
-  BigDecimalField fee = new BigDecimalField("Fee");
-  ComboBox<Asset> feeAsset = new ComboBox<>("Fee Asset");
-  TextField notes = new TextField("Notes");
-  Binder<Transaction> binder = new BeanValidationBinder<>(Transaction.class);
-  Button save = new Button("Save");
-  Button delete = new Button("Delete");
-  Button close = new Button("Cancel");
+    Transaction transaction;
+    DateTimePicker dateAndTime = new DateTimePicker();
+    ComboBox<Asset> srcAsset = new ComboBox<>("Source Asset");
+    ComboBox<Asset> destAsset = new ComboBox<>("Destination Asset");
+    BigDecimalField srcAmount = new BigDecimalField("Source Amount");
+    BigDecimalField destAmount = new BigDecimalField("Destination Amount");
+    ComboBox<Platform> srcPlatform = new ComboBox<>("Source Platform");
+    ComboBox<Platform> destPlatform = new ComboBox<>("Destination Platform");
+    BigDecimalField fee = new BigDecimalField("Fee");
+    ComboBox<Asset> feeAsset = new ComboBox<>("Fee Asset");
+    TextField notes = new TextField("Notes");
+    Binder<Transaction> binder = new BeanValidationBinder<>(Transaction.class);
+    Button save = new Button("Save");
+    Button delete = new Button("Delete");
+    Button close = new Button("Cancel");
 
-  public CompAddTransaction(List<Asset> assetList, List<Platform> platformList) {
-    addClassName("transaction-list");
-    binder.bindInstanceFields(this);
+    public CompAddTransaction(List<Asset> assetList, List<Platform> platformList) {
+        addClassName("transaction-list");
+        binder.bindInstanceFields(this);
 
-    // laden der Listen für die Dropdowns
-    srcAsset.setItems(assetList);
-    destAsset.setItems(assetList);
-    srcPlatform.setItems(platformList);
-    destPlatform.setItems(platformList);
-    feeAsset.setItems(assetList);
+        destPlatform.setItems(platformList);
+        // laden der Listen für die Dropdowns
+        //srcAsset.setItems(assetList);
+        //destAsset.setItems(assetList);
+        srcPlatform.setItems(platformList);
+        destPlatform.setItems(platformList);
+        feeAsset.setItems(assetList);
 
-    // Anzeigename defineieren welche in der Dropdown angezeigt werden
-    srcAsset.setItemLabelGenerator(Asset::getShortName);
-    destAsset.setItemLabelGenerator(Asset::getShortNameAndPlatform);
-    srcPlatform.setItemLabelGenerator(Platform::getName);
-    destPlatform.setItemLabelGenerator(Platform::getName);
-    //destPlatform.setItemLabelGenerator(Platform::getName);
-    feeAsset.setItemLabelGenerator(Asset::getShortName);
-
-    add(dateAndTime,
-        srcAmount,
-        srcAsset,
-        srcPlatform,
-        destAmount,
-        destAsset,
-        destPlatform,
-        fee,
-        feeAsset,
-        notes,
-        createButtonsLayout());
-  }
-
-  private HorizontalLayout createButtonsLayout() {
-    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-    delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
-    close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
-
-    save.addClickShortcut(Key.ENTER);
-    close.addClickShortcut(Key.ESCAPE);
+        // Anzeigename defineieren welche in der Dropdown angezeigt werden
+        //srcAsset.setItemLabelGenerator(Asset::getShortName);
+       // destAsset.setItemLabelGenerator(Asset::getShortName);
+        srcPlatform.setItemLabelGenerator(Platform::getName);
+        destPlatform.setItemLabelGenerator(Platform::getName);
+        feeAsset.setItemLabelGenerator(Asset::getShortNameAndPlatform);
 
 
-    save.addClickListener(event -> validateAndSave());
-    delete.addClickListener(event -> fireEvent(new DeleteEvent(this, transaction)));
-    close.addClickListener(event -> fireEvent(new CloseEvent(this)));
-    binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+        destPlatform.addValueChangeListener(event -> fireEvent(new DestPlatformEvent(this, destPlatform.getValue(), destAsset)));
+        srcPlatform.addValueChangeListener(event -> fireEvent(new SrcPlatformEvent(this, srcPlatform.getValue(), srcAsset)));
 
-    return new HorizontalLayout(save, delete, close);
-
-  }
-  public void setTransaction(Transaction transaction) {
-    this.transaction = transaction;
-    binder.readBean(transaction);
-  }
-
-  private void validateAndSave() {
-    try {
-
-      binder.writeBean(transaction);
-
-      fireEvent(new SaveEvent(this, transaction));
-
-    } catch (ValidationException e) {
-      e.printStackTrace();
-    }
-  }
-
-  // Events
-  public static abstract class CompAddTransactionEvent extends ComponentEvent<CompAddTransaction> {
-    private Transaction transaction;
-
-    protected CompAddTransactionEvent(CompAddTransaction source, Transaction transaction) {
-      super(source, false);
-      this.transaction = transaction;
-    }
-    public Transaction getTransaction() {
-      return transaction;
-    }
-  }
-
-  public static class SaveEvent extends CompAddTransactionEvent {
-    SaveEvent(CompAddTransaction source, Transaction transaction) {
-      super(source, transaction);
-    }
-  }
-
-  public static class DeleteEvent extends CompAddTransactionEvent {
-    DeleteEvent(CompAddTransaction source, Transaction transaction) {
-      super(source, transaction);
+        add(dateAndTime,srcPlatform,srcAsset,srcAmount,destPlatform,destAsset,destAmount,fee,feeAsset,notes,createButtonsLayout());
+        //add(dateAndTime, srcAmount, srcAsset, srcPlatform, destAmount, destAsset, destPlatform, fee, feeAsset, notes, createButtonsLayout());
     }
 
-  }
+    private HorizontalLayout createButtonsLayout() {
+        save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
+        close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-  public static class CloseEvent extends CompAddTransactionEvent {
-    CloseEvent(CompAddTransaction source) {
-      super(source, null);
+        save.addClickShortcut(Key.ENTER);
+        close.addClickShortcut(Key.ESCAPE);
+
+
+        save.addClickListener(event -> validateAndSave());
+        delete.addClickListener(event -> fireEvent(new DeleteEvent(this, transaction)));
+        close.addClickListener(event -> fireEvent(new CloseEvent(this)));
+        binder.addStatusChangeListener(e -> save.setEnabled(binder.isValid()));
+
+        return new HorizontalLayout(save, delete, close);
+
     }
-  }
 
-  public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType,
-                                                                ComponentEventListener<T> listener) {
+    public void setTransaction(Transaction transaction) {
+        this.transaction = transaction;
+        binder.readBean(transaction);
+        binder.readBean(transaction);
+    }
+
+    private void validateAndSave() {
+        try {
+
+            binder.writeBean(transaction);
+
+            fireEvent(new SaveEvent(this, transaction));
+
+        } catch (ValidationException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Events
+    public static abstract class CompAddTransactionEvent extends ComponentEvent<CompAddTransaction> {
+        private Transaction transaction;
+
+        protected CompAddTransactionEvent(CompAddTransaction source, Transaction transaction) {
+            super(source, false);
+            this.transaction = transaction;
+        }
+
+        public Transaction getTransaction() {
+            return transaction;
+        }
+    }
+
+    public static class SaveEvent extends CompAddTransactionEvent {
+        SaveEvent(CompAddTransaction source, Transaction transaction) {
+            super(source, transaction);
+        }
+    }
+
+    public static class DeleteEvent extends CompAddTransactionEvent {
+        DeleteEvent(CompAddTransaction source, Transaction transaction) {
+            super(source, transaction);
+        }
+
+    }
+
+    public static class CloseEvent extends CompAddTransactionEvent {
+        CloseEvent(CompAddTransaction source) {
+            super(source, null);
+        }
+    }
+
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
 
 
-    return getEventBus().addListener(eventType, listener);
-  }
+        return getEventBus().addListener(eventType, listener);
+    }
+
+
+    public static abstract class CompAddTransactionPlatformEvent extends ComponentEvent<CompAddTransaction> {
+        private Platform platform;
+        private ComboBox<Asset> asset;
+
+        protected CompAddTransactionPlatformEvent(CompAddTransaction source, Platform platform, ComboBox<Asset> asset) {
+            super(source, false);
+            this.platform = platform;
+            this.asset = asset;
+        }
+
+        public Platform getPlatform() {
+            return platform;
+        }
+
+        public ComboBox<Asset> getAsset() {
+            return asset;
+        }
+
+
+    }
+
+
+    public static class DestPlatformEvent extends CompAddTransactionPlatformEvent {
+        DestPlatformEvent(CompAddTransaction source, Platform platform, ComboBox<Asset> destAsset) {
+            super(source, platform, destAsset);
+        }
+
+    }
+
+    public static class SrcPlatformEvent extends CompAddTransactionPlatformEvent {
+        SrcPlatformEvent(CompAddTransaction source, Platform platform, ComboBox<Asset> srcAsset) {
+            super(source, platform, srcAsset);
+        }
+
+    }
+
 
 
 }
