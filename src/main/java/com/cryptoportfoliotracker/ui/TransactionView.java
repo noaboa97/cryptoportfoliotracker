@@ -14,6 +14,7 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 /***
@@ -64,10 +65,10 @@ public class TransactionView extends VerticalLayout {
 
         /** Sets the column object type, method to display and the header of the column */
         grid.addColumn(transaction -> transaction.getStringDate()).setHeader("Timestamp");
-        grid.addColumn(transaction -> transaction.getSrcAmount().stripTrailingZeros()).setHeader("Source Amount");
+        grid.addColumn(transaction -> transaction.getSrcAmountToString()).setHeader("Source Amount");
         grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
         grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
-        grid.addColumn(transaction -> transaction.getDestAmount().stripTrailingZeros()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getDestAmountToString()).setHeader("Destination Amount");
         grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
         grid.addColumn(transaction -> transaction.getFee().stripTrailingZeros()).setHeader("Fees");

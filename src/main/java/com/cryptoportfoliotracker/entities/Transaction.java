@@ -3,6 +3,7 @@ package com.cryptoportfoliotracker.entities;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -17,33 +18,56 @@ import java.time.format.DateTimeFormatter;
 @Entity
 public class Transaction {
 
+    /** Represents the id of the transactions
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "transaction_id")
     private Long id;
+
+    /** Represents the date and time of the transaction
+     */
     @NotNull
     private LocalDateTime dateAndTime;
+
+    /** Represents the source amount of the transaction
+     */
     @NotNull
     @Column(precision = 30, scale = 10)
     private BigDecimal srcAmount;
+
+    /** Represents the source asset of the transaction
+     */
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "srcasset",
             foreignKey = @javax.persistence.ForeignKey(name = "srcasset_fk")/*,insertable = false,updatable = false*/)
     private Asset srcAsset;
+
+    /** Represents the destination amount of the transaction
+     */
     @NotNull
     @Column(precision = 30, scale = 10)
     private BigDecimal destAmount;
+
+    /** Represents the destination asset of the transaction
+     */
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "destasset",
             foreignKey = @javax.persistence.ForeignKey(name = "destasset_fk")/*,insertable = false,updatable = false*/)
     private Asset destAsset;
+
+    /** Represents the source platform of the transaction
+     */
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "srcplatform",
             foreignKey = @javax.persistence.ForeignKey(name = "srcplatform_fk")/*,insertable = false,updatable = false*/)
     private Platform srcPlatform;
+
+    /** Represents the destination platfrom of the transaction
+     */
     @NotNull
     @ManyToOne()
     @JoinColumn(name = "destplatform",
@@ -51,13 +75,23 @@ public class Transaction {
     private Platform destPlatform;
 
     @Column(precision = 30, scale = 10)
+    /** Represents the fee for the transaction
+     */
     private BigDecimal fee;
 
+    /** Represents the fee asset of the tranaction
+     */
     @ManyToOne()
     @JoinColumn(name = "feeasset",
             foreignKey = @javax.persistence.ForeignKey(name = "feeasset_fk")/*,insertable = false,updatable = false*/)
     private Asset feeAsset;
+
+    /** Represents the notes of the transaction
+     */
     private String notes;
+
+    @Transient
+    DecimalFormat df = new DecimalFormat("0.00");
 
     /**
      * Creates a new transaction instance
@@ -144,6 +178,18 @@ public class Transaction {
     }
 
     /**
+     * Getter for the source amount of the transaction
+     *
+     * @return BigDecimal
+     * The source amount of the transaction
+     */
+
+    public String getSrcAmountToString() {
+
+        return df.format(srcAmount.stripTrailingZeros());
+    }
+
+    /**
      * Setter for the source amount of the transaction
      *
      * @param srcAmount The source amount of transaction
@@ -181,6 +227,11 @@ public class Transaction {
      */
     public BigDecimal getDestAmount() {
         return destAmount;
+    }
+
+    public String getDestAmountToString() {
+
+        return df.format(destAmount.stripTrailingZeros());
     }
 
     /**

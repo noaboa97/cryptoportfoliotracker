@@ -3,8 +3,10 @@ package com.cryptoportfoliotracker.entities;
 import com.cryptoportfoliotracker.logic.CptService;
 
 import javax.persistence.Entity;
+import javax.persistence.Transient;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 
@@ -18,7 +20,14 @@ import java.util.List;
  */
 @Entity
 public class CryptoAsset extends Asset {
+
+    /**
+     * Represents the current market price of the crypto asset
+     */
     private BigDecimal currentValueFiat;
+
+    @Transient
+    DecimalFormat df = new DecimalFormat("0.00");
 
     /**
      * Creates a new crypto asset instance
@@ -60,8 +69,18 @@ public class CryptoAsset extends Asset {
             }
 
         }
+            return investedCapitalCrypto;
+    }
 
-        return investedCapitalCrypto;
+    /**
+     * Converts invested capital crypto to string
+     *
+     * @param service Controller which lets the view talk to the model
+     * @return The invested crypto capital of the crypto asset as a string
+     * @see CptService
+     */
+    public String getInvestedCapitalCryptoToString(CptService service) {
+        return df.format(getInvestedCapitalCrypto(service));
     }
 
     /**
@@ -81,6 +100,17 @@ public class CryptoAsset extends Asset {
             }
         }
         return investedCapitalFiat;
+    }
+
+    /**
+     * Converts invested fiat capital to string
+     *
+     * @param service Controller which lets the view talk to the model
+     * @return The invested crypto capital of the crypto asset as a string
+     * @see CptService
+     */
+    public String getInvestedCapitalFiatToString(CptService service) {
+        return df.format(getInvestedCapitalFiat(service));
     }
 
     /***
@@ -105,6 +135,17 @@ public class CryptoAsset extends Asset {
         }
 
         return currentValueFiat.setScale(2, RoundingMode.HALF_UP);
+    }
+
+    /**
+     * Converts current value of the crypto asset in fiat to string
+     *
+     * @param service Controller which lets the view talk to the model
+     * @return current value of the crypto asset in fiat as a string
+     * @see CptService
+     */
+    public String getCurrentValueFiatToString(CptService service) {
+        return df.format(getCurrentValueFiat(service));
     }
 
     /**
