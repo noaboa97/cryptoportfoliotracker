@@ -58,7 +58,7 @@ public class Platform {
     /**
      * Getter for the id of the platform
      *
-     * @Return  Long
+     * @return  Long
      *          The id of the platform
      */
     public Long getId() {
@@ -78,7 +78,7 @@ public class Platform {
     /**
      * Getter for the name of the platform
      *
-     * @Return  String
+     * @return  String
      *          The name of the platform
      */
     public String getName() {
@@ -99,7 +99,7 @@ public class Platform {
      * Method to calculate the invested fiat capital of the platform
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The invested fiat capital of the platform
+     * @return The invested fiat capital of the platform
      * @see CptService
      */
     public BigDecimal getInvestedCapitalFiat(CptService service) {
@@ -131,7 +131,7 @@ public class Platform {
      * Method to calculate the current value of the crypto asset in fiat
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The current fiat value of the crypto asset
+     * @return The current fiat value of the crypto asset
      * @see CptService
      */
     public BigDecimal getCurrentValueFiat(CptService service) {
@@ -161,7 +161,7 @@ public class Platform {
     /**
      * Getter to check if it's a fiat platform
      *
-     * @Return  boolean
+     * @return  boolean
      *          true or false
      */
     public boolean isFiatPlatform() {
@@ -181,7 +181,7 @@ public class Platform {
     /***
      * Override of the said method that the name is retrieved instead of the object reference
      *
-     * @Return name of the platform
+     * @return name of the platform
      */
     @Override
     public String toString(){

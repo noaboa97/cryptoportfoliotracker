@@ -54,7 +54,7 @@ public abstract class Asset {
     /**
      * Getter for the id
      *
-     * @Return the id of the asset
+     * @return the id of the asset
      */
     public Long getId() {
         return id;
@@ -73,7 +73,7 @@ public abstract class Asset {
     /**
      * Getter for the full name
      *
-     * @Return The full name of the asset
+     * @return The full name of the asset
      */
     public String getFullName() {
         return fullName;
@@ -92,7 +92,7 @@ public abstract class Asset {
     /**
      * Getter for the short name
      *
-     * @Return The short name of the asset
+     * @return The short name of the asset
      */
     public String getShortName() {
         return shortName;
@@ -111,7 +111,7 @@ public abstract class Asset {
     /**
      * Getter for the platform
      *
-     * @Return  Platform
+     * @return  Platform
      *          The platform of the asset
      * @see Platform
      */
@@ -133,7 +133,7 @@ public abstract class Asset {
      * Defines abstract method to be implemented by the subclasses
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The invested fiat capital in the asset
+     * @return The invested fiat capital in the asset
      * @see CptService
      */
     public abstract BigDecimal getInvestedCapitalFiat(CptService service);
@@ -142,7 +142,7 @@ public abstract class Asset {
      * Defines abstract method to be implemented by the subclasses
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The invested crypto capital in the asset
+     * @return The invested crypto capital in the asset
      * @see CptService
      */
     public abstract BigDecimal getInvestedCapitalCrypto(CptService service);
@@ -151,7 +151,7 @@ public abstract class Asset {
      * Defines abstract method to be implemented by the subclasses
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The current fiat value of the asset
+     * @return The current fiat value of the asset
      * @see CptService
      */
     public abstract BigDecimal getCurrentValueFiat(CptService service);
@@ -159,7 +159,7 @@ public abstract class Asset {
     /***
      * Override of the said method that the short name is retrieved instead of the object reference
      *
-     * @Return short name of the asset
+     * @return short name of the asset
      */
     @Override
     public String toString() {

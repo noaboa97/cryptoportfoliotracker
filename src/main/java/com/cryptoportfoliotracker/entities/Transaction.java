@@ -95,7 +95,7 @@ public class Transaction {
     /**
      * Getter for the id of the transaction
      *
-     * @Return  Long
+     * @return  Long
      *          The id of the transaction
      */
     public Long getId() {
@@ -115,7 +115,7 @@ public class Transaction {
     /**
      * Getter for the date and time of the transaction
      *
-     * @Return  LocalDateTime
+     * @return  LocalDateTime
      *          The date and time of the transaction
      */
     public LocalDateTime getDateAndTime() {
@@ -139,7 +139,7 @@ public class Transaction {
     /**
      * Getter for the source amount of the transaction
      *
-     * @Return  BigDecimal
+     * @return  BigDecimal
      *          The source amount of the transaction
      */
     public BigDecimal getSrcAmount() {
@@ -159,7 +159,7 @@ public class Transaction {
     /**
      * Getter for the source asset of the transaction
      *
-     * @Return  Asset
+     * @return  Asset
      *          The source asset of the transaction
      * @see Asset
      */
@@ -181,7 +181,7 @@ public class Transaction {
     /**
      * Getter for the destination amount of the transaction
      *
-     * @Return  BigDecimal
+     * @return  BigDecimal
      *          The destination amount of the transaction
      */
     public BigDecimal getDestAmount() {
@@ -201,7 +201,7 @@ public class Transaction {
     /**
      * Getter for the destination asset of the transaction
      *
-     * @Return  Asset
+     * @return  Asset
      *          The destination asset of the transaction
      * @see Asset
      */
@@ -223,7 +223,7 @@ public class Transaction {
     /**
      * Getter for the source platform of the transaction
      *
-     * @Return  Platform
+     * @return  Platform
      *          The source platform of the transaction
      * @see Platform
      */
@@ -245,7 +245,7 @@ public class Transaction {
     /**
      * Getter for the destination platform of the transaction
      *
-     * @Return  Platform
+     * @return  Platform
      *          The destination platform of the transaction
      * @see Platform
      */
@@ -267,7 +267,7 @@ public class Transaction {
     /**
      * Getter for the fee amount of the transaction
      *
-     * @Return  BigDecimal
+     * @return  BigDecimal
      *          The fee amount m of the transaction
      */
     public BigDecimal getFee() {
@@ -287,7 +287,7 @@ public class Transaction {
     /**
      * Getter for the fee asset of the transaction
      *
-     * @Return  Platform
+     * @return  Platform
      *          The fee asset of the transaction
      * @see Asset
      */
@@ -309,7 +309,7 @@ public class Transaction {
     /**
      * Getter for the notes of the transaction
      *
-     * @Return  String
+     * @return  String
      *          The notes of the transaction
      */
     public String getNotes() {
@@ -329,7 +329,7 @@ public class Transaction {
     /**
      * Gets the date and time of the transaction as a string
      *
-     * @Return  String
+     * @return  String
      *          The date and time of the transaction as a string
      */
     public String getStringDate(){

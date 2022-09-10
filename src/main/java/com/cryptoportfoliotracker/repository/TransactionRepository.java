@@ -22,7 +22,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * JPQL Query to find all transaction by source asset
      *
      * @param searchTerm Asset to search for
-     * @Return Transaction
+     * @return Transaction
      *         Returns a list with all transaction by source asset
      */
     @Query("select t from Transaction t " +
@@ -33,7 +33,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * JPQL Query to find all transaction by destination asset
      *
      * @param searchTerm Crypto asset to search for
-     * @Return Transaction
+     * @return Transaction
      *         Returns a list with all transaction by destination asset
      */
     @Query("select t from Transaction t " +
@@ -44,7 +44,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * JPQL Query to find all transaction by source platform
      *
      * @param searchTerm Platform to search for
-     * @Return Transaction
+     * @return Transaction
      *         Returns a list with all transaction by source platform
      *
      */
@@ -56,7 +56,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * JPQL Query to find all transaction by destination platform
      *
      * @param searchTerm Platform to search for
-     * @Return Transaction
+     * @return Transaction
      *         Returns a list with all transaction by destination platform
      *
      */
@@ -67,7 +67,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
     /**
      * JPQL Query to search for the date and time or notes
      *
-     * @Return Transaction
+     * @return Transaction
      *         Returns a list with transactions
      */
     @Query("select t from Transaction t " +

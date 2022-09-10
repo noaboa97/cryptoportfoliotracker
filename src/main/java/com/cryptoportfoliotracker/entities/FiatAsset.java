@@ -42,7 +42,7 @@ public class FiatAsset extends Asset{
     /**
      * Getter for the standard
      *
-     * @Return  boolean
+     * @return  boolean
      *          true or false
      */
     public boolean getStandard() {
@@ -64,7 +64,7 @@ public class FiatAsset extends Asset{
      * Should get what asset and how much has been invested from it in crypto
      *
      * @param service Controller which lets the view talk to the model
-     * @Return null
+     * @return null
      * @see CptService
      */
     public BigDecimal getInvestedCapitalCrypto(CptService service){
@@ -76,7 +76,7 @@ public class FiatAsset extends Asset{
      * Should get the fiat amount invested from this fiat asset
      *
      * @param service Controller which lets the view talk to the model
-     * @Return null
+     * @return null
      * @see CptService
      */
     public BigDecimal getInvestedCapitalFiat(CptService service){
@@ -88,7 +88,7 @@ public class FiatAsset extends Asset{
      * Should calculate the current value of the fiat asset into the standard fiat asset currency
      *
      * @param service Controller which lets the view talk to the model
-     * @Return null
+     * @return null
      * @see CptService
      */
     public BigDecimal getCurrentValueFiat(CptService service){return null;}

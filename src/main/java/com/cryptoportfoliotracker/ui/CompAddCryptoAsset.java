@@ -1,6 +1,8 @@
 package com.cryptoportfoliotracker.ui;
 
+import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -16,6 +18,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+
 import java.util.List;
 
 /***
@@ -50,37 +53,17 @@ public class CompAddCryptoAsset extends FormLayout {
     public CompAddCryptoAsset(List<Platform> PlatformList) {
         addClassName("Asset-list");
 
-        /**
-         * binding field from ui to entities
-         *
-         * @param all attributes of this object/bean
-         */
+        /** binding field from ui to entities */
         binder.bindInstanceFields(this);
 
-        /**
-         * Loads the dropdown list for the platform selection
-         *
-         * @aram list of all platforms
-         */
+        /** Loads the dropdown list for the platform selection */
         platform.setItems(PlatformList);
 
-        /**
-         * Define the labels of the dropdown list
-         *
-         * @param Type and method reference
-         */
+        /** Define the labels of the dropdown list */
         platform.setItemLabelGenerator(Platform::getName);
 
-        /**
-         * Adds all the fields to the component
-         *
-         * @param Attributes and methods of this object to which should be displayed
-         */
-        add(fullname,
-            shortname,
-            platform,
-            currentValueFiat,
-            createButtonsLayout());
+        /** Adds all the fields to the component */
+        add(fullname, shortname, platform, currentValueFiat, createButtonsLayout());
     }
 
     /**
@@ -89,18 +72,16 @@ public class CompAddCryptoAsset extends FormLayout {
      * @see #CompAddCryptoAsset(List)
      */
     private HorizontalLayout createButtonsLayout() {
+        /** Add the theme to the buttons */
         save.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
         close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
+        /** Shortcurt keys which can be used on the keyboard */
         save.addClickShortcut(Key.ENTER);
         close.addClickShortcut(Key.ESCAPE);
 
-        /**
-         * Adds a click listener to the save button which will fire the event to save when button is clicked
-         *
-         * @see #validateAndSave()
-         */
+        /** Adds a click listener to the button which will fire the event to save when button is clicked */
         save.addClickListener(event -> validateAndSave());
         delete.addClickListener(event -> fireEvent(new DeleteEvent(this, cryptoAsset)));
         close.addClickListener(event -> fireEvent(new CloseEvent(this)));
@@ -113,7 +94,7 @@ public class CompAddCryptoAsset extends FormLayout {
     /**
      * Load selected crypto asset to the component / editor
      *
-     * @param cryptoAsset to be display
+     * @param cryptoAsset to be displayed
      */
     public void setCryptoAsset(CryptoAsset cryptoAsset) {
         this.cryptoAsset = cryptoAsset;
@@ -138,8 +119,9 @@ public class CompAddCryptoAsset extends FormLayout {
     }
 
     // Events
+
     /***
-     * Event Component to handle event when button is clicke
+     * Superclass for events
      *
      * @author Noah Li Wan Po
      * @version 1.0
@@ -148,30 +130,80 @@ public class CompAddCryptoAsset extends FormLayout {
     public static abstract class CompAddAssetEvent extends ComponentEvent<CompAddCryptoAsset> {
         private CryptoAsset cryptoAsset;
 
+        /**
+         * Creates a new component add crypto asset instance
+         *
+         * @param source      of the event
+         * @param cryptoAsset
+         */
         protected CompAddAssetEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, false);
             this.cryptoAsset = cryptoAsset;
         }
 
+        /**
+         * Getter for the crypto asset of the event
+         *
+         * @return cryptoAsset
+         */
         public CryptoAsset getCryptoAsset() {
             return cryptoAsset;
         }
     }
 
+    /***
+     * Class for event of saving the object
+     *
+     * @author Noah Li Wan Po
+     * @version 1.0
+     * @see CompAddAssetEvent
+     */
     public static class SaveEvent extends CompAddAssetEvent {
+
+        /**
+         * Creates a new component event to save the crypto asset
+         *
+         * @param source of the event
+         * @param cryptoAsset to be saved
+         */
         SaveEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, cryptoAsset);
         }
     }
 
+    /***
+     * Class for event of deletion of the object
+     *
+     * @author Noah Li Wan Po
+     * @version 1.0
+     * @see CompAddAssetEvent
+     */
     public static class DeleteEvent extends CompAddAssetEvent {
+        /**
+         * Creates a new component event to delete the crypto asset
+         *
+         * @param source of the event
+         * @param cryptoAsset to be saved
+         */
         DeleteEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
             super(source, cryptoAsset);
         }
 
     }
 
+    /***
+     * Class for event to close the editor
+     *
+     * @author Noah Li Wan Po
+     * @version 1.0
+     * @see CompAddAssetEvent
+     */
     public static class CloseEvent extends CompAddAssetEvent {
+        /**
+         * Creates a new component event to close the editor
+         *
+         * @param source of the event
+         */
         CloseEvent(CompAddCryptoAsset source) {
             super(source, null);
         }

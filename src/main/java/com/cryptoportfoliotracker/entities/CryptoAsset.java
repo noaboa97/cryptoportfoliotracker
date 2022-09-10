@@ -46,7 +46,7 @@ public class CryptoAsset extends Asset {
      * Implements method to calculate the invested crypto capital of the crypto asset
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The invested crypto capital of the crypto asset
+     * @return The invested crypto capital of the crypto asset
      * @see CptService
      */
     public BigDecimal getInvestedCapitalCrypto(CptService service) {
@@ -69,7 +69,7 @@ public class CryptoAsset extends Asset {
      * Implements method to calculate the invested fiat capital of the crypto asset
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The invested fiat capital of the crypto asset
+     * @return The invested fiat capital of the crypto asset
      * @see CptService
      */
     public BigDecimal getInvestedCapitalFiat(CptService service) {
@@ -88,7 +88,7 @@ public class CryptoAsset extends Asset {
      * Implements method to calculate the current value of the crypto asset in fiat
      *
      * @param service Controller which lets the view talk to the model
-     * @Return The current fiat value of the crypto asset
+     * @return The current fiat value of the crypto asset
      * @see CptService
      */
     public BigDecimal getCurrentValueFiat(CptService service) {
@@ -111,8 +111,7 @@ public class CryptoAsset extends Asset {
     /**
      * Getter for the current value in fiat of the crypto asset
      *
-     * @Return  BigDecimal
-     *          The current value in fiat of the crypto asset
+     * @return  The current value in fiat of the crypto asset as ({@code BigDecimal})
      */
     public BigDecimal getCurrentValueFiat() {
         return currentValueFiat;

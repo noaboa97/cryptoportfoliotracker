@@ -18,7 +18,7 @@ public interface FiatAssetRepository extends JpaRepository<FiatAsset, Long> {
     /**
      * JPQL Query to search for the name of the fiat asset
      *
-     * @Return FiatAsset
+     * @return FiatAsset
      *         Returns a list with a fiat asset
      */
     @Query("select a from Asset a " +
@@ -28,7 +28,7 @@ public interface FiatAssetRepository extends JpaRepository<FiatAsset, Long> {
     /**
      * JPQL Query to find the standard fiat platform
      *
-     * @Return FiatAsset
+     * @return FiatAsset
      *         Returns a list with a fiat asset
      */
     @Query("select a from Asset a " +
@@ -38,7 +38,7 @@ public interface FiatAssetRepository extends JpaRepository<FiatAsset, Long> {
     /**
      * JPQL Query to find all fiat assets of a platform
      *
-     * @Return FiatAsset
+     * @return FiatAsset
      *         Returns a list with fiat assets
      */
     @Query("select a from Asset a " +

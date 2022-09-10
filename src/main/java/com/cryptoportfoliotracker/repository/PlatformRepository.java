@@ -21,7 +21,7 @@ public interface PlatformRepository extends JpaRepository<Platform, Long> {
     /**
      * JPQL Query to search for the name of the platform
      *
-     * @Return Platform
+     * @return Platform
      *         Returns a list with a fiat asset
      */
     @Query("select p from Platform p " +
@@ -31,7 +31,7 @@ public interface PlatformRepository extends JpaRepository<Platform, Long> {
     /**
      * JPQL Query to find all crypto platforms
      *
-     * @Return Platform
+     * @return Platform
      *         Returns a list with all crypto platforms
      */
     @Query("select p from Platform p " +

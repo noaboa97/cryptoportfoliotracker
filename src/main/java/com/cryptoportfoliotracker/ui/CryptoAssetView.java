@@ -2,6 +2,7 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -14,6 +15,16 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
+import java.util.List;
+
+/***
+ * Class to display the crypto asset view in the ui
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ * @see CompAddCryptoAsset
+ * @see MainView
+ */
 @Route(value="cryptoassets", layout = MainView.class)
 @PageTitle("Crypto Assets")
 public class CryptoAssetView extends VerticalLayout {
@@ -26,6 +37,12 @@ public class CryptoAssetView extends VerticalLayout {
 
     CptService service;
 
+    /**
+     * Creates the crypto asset view
+     *
+     * @param service of platforms
+     * @see CptService
+     */
     public CryptoAssetView(CptService service) {
         this.service = service;
         add(new H2("My Crypto Assets"));
@@ -40,24 +57,34 @@ public class CryptoAssetView extends VerticalLayout {
 
 
     }
-    
+
+    /**
+     * Configures the grid / table
+     */
     private void configureGrid() {
         grid.addClassNames("cryptoasset-grid");
         grid.setSizeFull();
 
+        /** Sets the column object type, method to display and the header of the column */
         grid.addColumn(Asset::getFullName).setHeader("Name");
         grid.addColumn(Asset::getShortName).setHeader("Abbr.");
         grid.addColumn(Asset::getPlatform).setHeader("Platform");
         grid.addColumn(asset -> asset.getInvestedCapitalFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortName()).setHeader("Invested Capital Fiat");
         grid.addColumn(asset -> asset.getInvestedCapitalCrypto(service).stripTrailingZeros() + " " + asset.getShortName()).setHeader("Invested Capital Crypto");
         grid.addColumn(asset -> asset.getCurrentValueFiat(service).stripTrailingZeros() + " " + service.findStandard().getShortName()).setHeader("Current Total Value Fiat");
-        //grid.addColumn(asset -> asset.getCurrentValueFiat()).setHeader("Current Value");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
 
+        /** Event listener when a row is selected to open the editor */
         grid.asSingleSelect().addValueChangeListener(event -> editCryptoAsset(event.getValue()));
     }
 
+    /**
+     * Creates the layout for the site
+     *
+     * @return Component for the site
+     */
     private Component getContent() {
+        /** Adds the grid and the component to a horizontal layout */
         HorizontalLayout content = new HorizontalLayout(grid, compAddCryptoAsset);
         content.setFlexGrow(2, grid);
 
@@ -67,6 +94,11 @@ public class CryptoAssetView extends VerticalLayout {
         return content;
     }
 
+    /**
+     * Creates the toolbar with filter and add button
+     *
+     * @return returns the horizontal layout for the toolbar
+     */
     private HorizontalLayout getToolbar() {
         filterText.setPlaceholder("Filter by name...");
         filterText.setClearButtonVisible(true);
@@ -84,6 +116,7 @@ public class CryptoAssetView extends VerticalLayout {
         return toolbar;
     }
 
+    /** Allows to edit the crypto asset */
     public void editCryptoAsset(CryptoAsset transaction) {
 
 
@@ -96,12 +129,14 @@ public class CryptoAssetView extends VerticalLayout {
         }
     }
 
+    /** closes the editor */
     private void closeEditor() {
         compAddCryptoAsset.setCryptoAsset(null);
         compAddCryptoAsset.setVisible(false);
         removeClassName("editing");
     }
 
+    /** Method used to add a new crypto asset */
     private void addCryptoAsset() {
 
 
@@ -109,7 +144,7 @@ public class CryptoAssetView extends VerticalLayout {
         editCryptoAsset(new CryptoAsset());
     }
 
-
+    /** Configures the editor and defines the events for the buttons */
     private void configureCompAddCryptoAsset() {
 
         compAddCryptoAsset = new CompAddCryptoAsset(service.findAllPlatforms());
@@ -120,13 +155,18 @@ public class CryptoAssetView extends VerticalLayout {
 
     }
 
+    /** Updates the table / grid */
     public void updateList() {
 
         grid.setItems(service.findAllCryptoAssets(filterText.getValue()));
 
     }
 
-
+    /** Method which is called from the editor when a asset is saved
+     *
+     * @param event with all the data which where entered into the editor
+     * @see CompAddCryptoAsset.SaveEvent
+     */
     private void saveCryptoAsset(CompAddCryptoAsset.SaveEvent event) {
         event.getCryptoAsset();
         service.saveCryptoAsset(event.getCryptoAsset());
@@ -134,14 +174,14 @@ public class CryptoAssetView extends VerticalLayout {
         closeEditor();
     }
 
+    /** Method which is called from the editor when a asset is deleted
+     *
+     * @param event with all the data which where entered into the editor
+     * */
     private void deleteCryptoAsset(CompAddCryptoAsset.DeleteEvent event) {
         service.deleteCryptoAsset(event.getCryptoAsset());
         updateList();
         closeEditor();
     }
-
-
-
-
 
 }

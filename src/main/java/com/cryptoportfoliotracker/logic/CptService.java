@@ -53,7 +53,7 @@ public class CptService {
     /**
      * Returns all assets in a list
      *
-     * @Return list of all assets
+     * @return list of all assets
      * @see AssetRepository
      */
     public List<Asset> findAllAssets() {
@@ -63,7 +63,7 @@ public class CptService {
     /**
      * Returns all crypto assets or one crypto asset
      *
-     * @Return all crypto assets or one crypto asset
+     * @return all crypto assets or one crypto asset
      * @see CryptoAssetRepository
      */
     public List<CryptoAsset> findAllCryptoAssets(String stringFilter) {
@@ -98,7 +98,7 @@ public class CptService {
     /**
      * Returns all platforms in a list
      *
-     * @Return list of all platforms
+     * @return list of all platforms
      * @see PlatformRepository
      */
     public List<Platform> findAllPlatforms() {
@@ -109,7 +109,7 @@ public class CptService {
     /**
      * Returns all crypto platforms in a list
      *
-     * @Return all crypto platforms in a list
+     * @return all crypto platforms in a list
      * @see PlatformRepository
      */
     public List<Platform> findAllCryptoPlatforms() {
@@ -120,7 +120,7 @@ public class CptService {
     /**
      * Returns all crypto assets of a platforms in a list
      *
-     * @Return all crypto assets of a platforms in a list
+     * @return all crypto assets of a platforms in a list
      * @see CryptoAssetRepository
      */
     public List<CryptoAsset> findAllCryptoAssetsOfPlatform(Platform p) {
@@ -134,7 +134,7 @@ public class CptService {
     /**
      * Returns all transaction filtered by source platform in a list
      *
-     * @Return Returns all transaction by source platform in a list
+     * @return Returns all transaction by source platform in a list
      * @see TransactionRepository
      */
     public List<Transaction> findBySrcPlatform(Platform p) {
@@ -144,7 +144,7 @@ public class CptService {
     /**
      * Returns all transaction filtered by destination platform in a list
      *
-     * @Return Returns all transaction by destination platform in a list
+     * @return Returns all transaction by destination platform in a list
      * @see TransactionRepository
      */
     public List<Transaction> findByDestPlatform(Platform p) {
@@ -154,7 +154,7 @@ public class CptService {
     /**
      * Returns all transaction filtered by source asset in a list
      *
-     * @Return Returns all transaction by source asset in a list
+     * @return Returns all transaction by source asset in a list
      * @see TransactionRepository
      */
     public List<Transaction> findBySrcAsset(Asset a) {
@@ -164,7 +164,7 @@ public class CptService {
     /**
      * Returns the default fiat platform
      *
-     * @Return Returns the default fiat platform
+     * @return Returns the default fiat platform
      * @see FiatAssetRepository
      */
     public FiatAsset findStandard() {
@@ -174,7 +174,7 @@ public class CptService {
     /**
      * Returns all transaction filtered by destination asset in a list
      *
-     * @Return Returns all transaction by destination asset in a list
+     * @return Returns all transaction by destination asset in a list
      * @see TransactionRepository
      */
     public List<Transaction> findByDestAsset(CryptoAsset ca) {
@@ -185,7 +185,7 @@ public class CptService {
     /**
      * Returns all transactions or one transaction in a list
      *
-     * @Return all transactions or one transaction in a list
+     * @return all transactions or one transaction in a list
      * @see TransactionRepository
      */
     public List<Transaction> findAllTransactions(String stringFilter) {
@@ -219,7 +219,7 @@ public class CptService {
     /**
      * Calculates the total current value of all assets
      *
-     * @Return BigDecimal
+     * @return BigDecimal
      *         Returns the total current value of all assets from the transactions
      */
     public BigDecimal getTotalCurrentValue() {
@@ -239,7 +239,7 @@ public class CptService {
     /**
      * Calculates the total percentage change of invested to current value
      *
-     * @Return BigDecimal
+     * @return BigDecimal
      *         Returns the total percentage change of invested to current value
      */
     public BigDecimal getTotalPercentageChange() {
@@ -266,7 +266,7 @@ public class CptService {
     /**
      * Calculates the platform percentage change of invested to current value
      *
-     * @Return BigDecimal
+     * @return BigDecimal
      *         Returns the platform percentage change of invested to current value
      */
     public double getPlatformPercentageChange(Platform platform) {
@@ -299,7 +299,7 @@ public class CptService {
     /**
      * Calculates the total invested capital
      *
-     * @Return BigDecimal
+     * @return BigDecimal
      *         Returns the total invested capital
      */
     public BigDecimal getTotalInvestedCapital() {

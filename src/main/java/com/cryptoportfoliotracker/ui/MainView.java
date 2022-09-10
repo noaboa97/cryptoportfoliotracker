@@ -9,13 +9,21 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.RouterLink;
 
+/***
+ * Class to create the app layout which is always around the other sites.
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ */
 public class MainView extends AppLayout {
 
+    /** Constructor which calls the other methods */
     public MainView() {
         createHeader();
         createDrawer();
     }
 
+    /** Creates the header for the application with the burger menu and title */
     private void createHeader() {
         H1 logo = new H1("Crypto Portfolio Tracker");
         logo.addClassNames("text-l", "m-0");
@@ -33,11 +41,20 @@ public class MainView extends AppLayout {
 
     }
 
+    /** Creates the navigation for the application
+     *
+     * @see Dashboard
+     * @see CryptoAssetView
+     * @see TransactionView
+     * */
     private void createDrawer() {
         RouterLink dashboard = new RouterLink("Dashboard", Dashboard.class);
-        RouterLink cryptoAssetView = new RouterLink("Crypto Assets", CryptoAssetView.class);
-        RouterLink TransactionView = new RouterLink("Transactions", com.cryptoportfoliotracker.ui.TransactionView.class);
+        dashboard.setHighlightCondition(HighlightConditions.sameLocation());
 
+        RouterLink cryptoAssetView = new RouterLink("Crypto Assets", CryptoAssetView.class);
+        cryptoAssetView.setHighlightCondition(HighlightConditions.sameLocation());
+
+        RouterLink TransactionView = new RouterLink("Transactions", com.cryptoportfoliotracker.ui.TransactionView.class);
         TransactionView.setHighlightCondition(HighlightConditions.sameLocation());
 
         addToDrawer(new VerticalLayout(

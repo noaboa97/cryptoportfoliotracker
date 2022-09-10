@@ -22,7 +22,7 @@ public interface CryptoAssetRepository extends JpaRepository<CryptoAsset, Long> 
     /**
      * JPQL Query to search for the name of the crypto asset
      *
-     * @Return CryptoAsset
+     * @return CryptoAsset
      *         Returns a list with a crypto asset
      */
     @Query("select a from Asset a " +
@@ -32,7 +32,7 @@ public interface CryptoAssetRepository extends JpaRepository<CryptoAsset, Long> 
     /**
      * JPQL Query to find all crypto assets of a platform
      *
-     * @Return CryptoAsset
+     * @return CryptoAsset
      *         Returns a list with all crypto assets of a platform
      */
     @Query("select a from Asset a " +
