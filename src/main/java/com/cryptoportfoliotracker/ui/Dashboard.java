@@ -2,6 +2,7 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.Platform;
 import com.cryptoportfoliotracker.logic.CptService;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.board.Board;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
@@ -13,33 +14,57 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.Component;
 import com.vaadin.flow.router.RouteAlias;
 
 import java.util.ArrayList;
 import java.util.List;
 
+/***
+ * Class to display the dashboard in the ui
+ *
+ * @author Noah Li Wan Po
+ * @version 1.0
+ * @see MainView
+ */
 @Route(value = "", layout = MainView.class)
 @RouteAlias("dashboard")
 @PageTitle("Dashboard")
 public class Dashboard extends VerticalLayout {
-
     CptService service;
-
     Board board = new Board();
 
+    /**
+     * Creates the dashboard
+     *
+     * @param service of platforms
+     * @see CptService
+     */
     public Dashboard(CptService service) {
         this.service = service;
         addClassName("dashboard-view");
+
+        /** Adds the header to the dashboard*/
         board.addRow(createHeader("Overview", "Total"));
+
+        /** Adds the total overview to the dashboard*/
         board.addRow(createSingleCard("Invested Capital", service.getTotalInvestedCapital().toString() + " CHF"), createSingleCard("Current Value", service.getTotalCurrentValue().toString() + " CHF", service.getTotalPercentageChange().doubleValue()) /*,createSingleCard("Return rate", service.getTotalPercentageChange() + " %") */);
+
+        /** Adds the second header to the dashboard*/
         board.addRow(createHeader("Platforms", "Platform total"));
+
+        /** Adds the platform to the dashboard*/
         createPlatformOverview();
-        //board.addRow(createViewEvents());
-        //board.addRow(/*createServiceHealth()*/ createResponseTimes());
+
+        /** Adds the dashboard to the view */
         add(board);
     }
 
+    /**
+     * Creates a single card
+     *
+     * @param title of the card
+     * @param value of the card
+     */
     private Component createSingleCard(String title, String value) {
 
         H2 h2 = new H2(title);
@@ -54,7 +79,15 @@ public class Dashboard extends VerticalLayout {
         layout.setSpacing(false);
         return layout;
     }
-    private Component createSingleCard(String title, String value ,double percentage) {
+
+    /**
+     * Creates a single card with percentage change indicator
+     *
+     * @param title      of the card
+     * @param value      of the card
+     * @param percentage indicator
+     */
+    private Component createSingleCard(String title, String value, double percentage) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
         String prefix = "";
         String theme = "badge";
@@ -78,7 +111,7 @@ public class Dashboard extends VerticalLayout {
         Icon i = icon.create();
         i.addClassNames("box-border", "p-xs");
 
-        Span badge = new Span(i, new Span(prefix + percentage +"%"));
+        Span badge = new Span(i, new Span(prefix + percentage + "%"));
         badge.getElement().getThemeList().add(theme);
 
         VerticalLayout layout = new VerticalLayout(h2, span, badge);
@@ -88,6 +121,16 @@ public class Dashboard extends VerticalLayout {
         return layout;
     }
 
+    /**
+     * Creates a single card with percentage change indicator
+     *
+     * @param title      of the card
+     * @param key        of the card
+     * @param value      of the card
+     * @param key2       of the card
+     * @param value2     of the card
+     * @param percentage indicator
+     */
     private Component createTrippleCard(String title, String key, String value, String key2, String value2, double percentage) {
         VaadinIcon icon = VaadinIcon.ARROW_UP;
         String prefix = "";
@@ -124,13 +167,16 @@ public class Dashboard extends VerticalLayout {
         Span badge = new Span(i, new Span(prefix + percentage + "%"));
         badge.getElement().getThemeList().add(theme);
 
-        VerticalLayout layout = new VerticalLayout(h3, span1, span2, span3, span4 , badge);
+        VerticalLayout layout = new VerticalLayout(h3, span1, span2, span3, span4, badge);
         layout.addClassName("p-l");
         layout.setPadding(false);
         layout.setSpacing(false);
         return layout;
     }
 
+    /**
+     * Dynamically loads all crypto platforms as cards
+     */
     private void createPlatformOverview() {
 
         List<Platform> list = service.findAllCryptoPlatforms();
@@ -143,7 +189,7 @@ public class Dashboard extends VerticalLayout {
 
         for (Platform p : list) {
 
-            cList.add(createTrippleCard(p.getName(), "Invested Capital",p.getInvestedCapitalFiat(service) + " CHF", "Current Value", p.getCurrentValueFiat(service) + " CHF" ,service.getPlatformPercentageChange(p)));
+            cList.add(createTrippleCard(p.getName(), "Invested Capital", p.getInvestedCapitalFiat(service) + " CHF", "Current Value", p.getCurrentValueFiat(service) + " CHF", service.getPlatformPercentageChange(p)));
             if (i == s) {
                 if (i == 1) {
                     board.addRow(cList.get(0));
@@ -162,6 +208,9 @@ public class Dashboard extends VerticalLayout {
         }
     }
 
+    /**
+     * Creates the header for the dashboard
+     */
     private HorizontalLayout createHeader(String title, String subtitle) {
         H2 h2 = new H2(title);
         h2.addClassNames("text-xl", "m-0");

@@ -23,9 +23,9 @@ public class CryptoAsset extends Asset {
     /**
      * Creates a new crypto asset instance
      *
-     * @param fullname full name of the asset
+     * @param fullname  full name of the asset
      * @param shortname short name of the asset
-     * @param platform where the asset is held
+     * @param platform  where the asset is held
      */
     public CryptoAsset(String fullname, String shortname, Platform platform) {
         super(fullname, shortname, platform);
@@ -34,7 +34,6 @@ public class CryptoAsset extends Asset {
     /**
      * Creates a new empty crypto asset instance
      * Need for the bean creation of Spring because it uses the setter and getter methods
-     *
      */
     public CryptoAsset() {
         super();
@@ -75,7 +74,7 @@ public class CryptoAsset extends Asset {
     public BigDecimal getInvestedCapitalFiat(CptService service) {
 
         BigDecimal investedCapitalFiat = new BigDecimal("0");
-        List<Transaction> list = service.findBySrcAsset((Asset)service.findStandard());
+        List<Transaction> list = service.findBySrcAsset(service.findStandard());
         for (Transaction t : list) {
             if (t.getDestPlatform().getName() == this.getPlatform().getName()) {
                 investedCapitalFiat = investedCapitalFiat.add(t.getSrcAmount());
@@ -111,7 +110,7 @@ public class CryptoAsset extends Asset {
     /**
      * Getter for the current value in fiat of the crypto asset
      *
-     * @return  The current value in fiat of the crypto asset as ({@code BigDecimal})
+     * @return The current value in fiat of the crypto asset as ({@code BigDecimal})
      */
     public BigDecimal getCurrentValueFiat() {
         return currentValueFiat;
@@ -120,8 +119,7 @@ public class CryptoAsset extends Asset {
     /**
      * Setter for the current value in fiat of the crypto asset
      *
-     * @param currentValueFiat
-     *        The current value in fiat of the crypto asset
+     * @param currentValueFiat The current value in fiat of the crypto asset
      */
     public void setCurrentValueFiat(BigDecimal currentValueFiat) {
         this.currentValueFiat = currentValueFiat;

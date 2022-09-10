@@ -1,8 +1,10 @@
 package com.cryptoportfoliotracker.repository;
 
-import com.cryptoportfoliotracker.entities.*;
+import com.cryptoportfoliotracker.entities.Asset;
+import com.cryptoportfoliotracker.entities.CryptoAsset;
+import com.cryptoportfoliotracker.entities.Platform;
+import com.cryptoportfoliotracker.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -23,7 +25,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      *
      * @param searchTerm Asset to search for
      * @return Transaction
-     *         Returns a list with all transaction by source asset
+     * Returns a list with all transaction by source asset
      */
     @Query("select t from Transaction t " +
             "where t.srcAsset = :searchTerm")
@@ -34,7 +36,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      *
      * @param searchTerm Crypto asset to search for
      * @return Transaction
-     *         Returns a list with all transaction by destination asset
+     * Returns a list with all transaction by destination asset
      */
     @Query("select t from Transaction t " +
             "where t.destAsset = :searchTerm")
@@ -45,8 +47,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      *
      * @param searchTerm Platform to search for
      * @return Transaction
-     *         Returns a list with all transaction by source platform
-     *
+     * Returns a list with all transaction by source platform
      */
     @Query("select t from Transaction t " +
             "where t.srcPlatform = :searchTerm")
@@ -57,8 +58,7 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      *
      * @param searchTerm Platform to search for
      * @return Transaction
-     *         Returns a list with all transaction by destination platform
-     *
+     * Returns a list with all transaction by destination platform
      */
     @Query("select t from Transaction t " +
             "where t.destPlatform = :searchTerm")
@@ -68,12 +68,11 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
      * JPQL Query to search for the date and time or notes
      *
      * @return Transaction
-     *         Returns a list with transactions
+     * Returns a list with transactions
      */
     @Query("select t from Transaction t " +
             "where lower(t.dateAndTime) like lower(concat('%', :searchTerm, '%')) " +
             "or lower(t.notes) like lower(concat('%', :searchTerm, '%'))")
-
     List<Transaction> search(@Param("searchTerm") String searchTerm);
 
 }

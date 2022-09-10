@@ -14,16 +14,16 @@ import java.math.BigDecimal;
  * @see CryptoAsset
  */
 @Entity
-public class FiatAsset extends Asset{
+public class FiatAsset extends Asset {
     private boolean standard = false;
 
     /**
      * Creates a new fiat asset instance
      *
-     * @param fullName full name of the asset
+     * @param fullName  full name of the asset
      * @param shortName short name of the asset
-     * @param platform where the asset is held
-     * @param standard if this is the default fiat asset to be used if there are multiple
+     * @param platform  where the asset is held
+     * @param standard  if this is the default fiat asset to be used if there are multiple
      */
     public FiatAsset(String fullName, String shortName, Platform platform, boolean standard) {
         super(fullName, shortName, platform);
@@ -33,7 +33,6 @@ public class FiatAsset extends Asset{
     /**
      * Creates a new empty fiat asset instance
      * Need for the bean creation of Spring because it uses the setter and getter methods
-     *
      */
     public FiatAsset() {
         super();
@@ -42,8 +41,8 @@ public class FiatAsset extends Asset{
     /**
      * Getter for the standard
      *
-     * @return  boolean
-     *          true or false
+     * @return boolean
+     * true or false
      */
     public boolean getStandard() {
         return standard;
@@ -52,8 +51,7 @@ public class FiatAsset extends Asset{
     /**
      * Setter for the current value in fiat of the crypto asset
      *
-     * @param standard
-     *        true or false
+     * @param standard true or false
      */
     public void setStandard(boolean standard) {
         this.standard = standard;
@@ -67,7 +65,7 @@ public class FiatAsset extends Asset{
      * @return null
      * @see CptService
      */
-    public BigDecimal getInvestedCapitalCrypto(CptService service){
+    public BigDecimal getInvestedCapitalCrypto(CptService service) {
         return null;
     }
 
@@ -79,7 +77,7 @@ public class FiatAsset extends Asset{
      * @return null
      * @see CptService
      */
-    public BigDecimal getInvestedCapitalFiat(CptService service){
+    public BigDecimal getInvestedCapitalFiat(CptService service) {
         return null;
     }
 
@@ -91,7 +89,9 @@ public class FiatAsset extends Asset{
      * @return null
      * @see CptService
      */
-    public BigDecimal getCurrentValueFiat(CptService service){return null;}
+    public BigDecimal getCurrentValueFiat(CptService service) {
+        return null;
+    }
 
 
 }

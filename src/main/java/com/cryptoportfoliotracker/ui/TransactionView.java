@@ -2,7 +2,7 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.Transaction;
-import com.cryptoportfoliotracker.logic.*;
+import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -116,11 +116,12 @@ public class TransactionView extends VerticalLayout {
         return toolbar;
     }
 
-    /** Allows to edit the transaction
+    /**
+     * Allows to edit the transaction
      * Also loads the list of assets of the platform and sets those
      *
      * @param transaction
-     * */
+     */
     public void editTransaction(Transaction transaction) {
 
 
@@ -140,14 +141,18 @@ public class TransactionView extends VerticalLayout {
         }
     }
 
-    /** closes the editor */
+    /**
+     * closes the editor
+     */
     private void closeEditor() {
         compAddTransaction.setTransaction(null);
         compAddTransaction.setVisible(false);
         removeClassName("editing");
     }
 
-    /** Method used to add a new transaction */
+    /**
+     * Method used to add a new transaction
+     */
     private void addTransaction() {
 
 
@@ -155,7 +160,9 @@ public class TransactionView extends VerticalLayout {
         editTransaction(new Transaction());
     }
 
-    /** Configures the editor and defines the events for the buttons */
+    /**
+     * Configures the editor and defines the events for the buttons
+     */
     private void configureCompAddTransaction() {
 
         compAddTransaction = new CompAddTransaction(service.findAllAssets(), service.findAllPlatforms());
@@ -170,12 +177,13 @@ public class TransactionView extends VerticalLayout {
 
     }
 
-    /** Loads the assets of the destination platform after the value changed in editor
+    /**
+     * Loads the assets of the destination platform after the value changed in editor
      *
      * @param event with all the data
      * @see CompAddTransaction.DestPlatformEvent
      * @see CptService
-     * */
+     */
     private void getAssetofDestPlatform(CompAddTransaction.DestPlatformEvent event) {
         List<Asset> platformlist = service.findAllAssetsOfPlatform(event.getPlatform());
 
@@ -183,12 +191,13 @@ public class TransactionView extends VerticalLayout {
 
     }
 
-    /** Loads the assets of the source platform after the value changed in editor
+    /**
+     * Loads the assets of the source platform after the value changed in editor
      *
      * @param event with all the data
      * @see CompAddTransaction.SrcPlatformEvent
      * @see CptService
-     * */
+     */
     private void getAssetOfSrcPlatform(CompAddTransaction.SrcPlatformEvent event) {
         List<Asset> platformlist = service.findAllAssetsOfPlatform(event.getPlatform());
 
@@ -196,14 +205,17 @@ public class TransactionView extends VerticalLayout {
 
     }
 
-    /** Updates the table / grid */
+    /**
+     * Updates the table / grid
+     */
     public void updateList() {
 
         grid.setItems(service.findAllTransactions(filterText.getValue()));
 
     }
 
-    /** Method which is called from the editor when a transaction is saved
+    /**
+     * Method which is called from the editor when a transaction is saved
      *
      * @param event with all the data which where entered into the editor
      * @see CompAddCryptoAsset.SaveEvent
@@ -214,11 +226,12 @@ public class TransactionView extends VerticalLayout {
         closeEditor();
     }
 
-    /** Method which is called from the editor when a transaction is deleted
+    /**
+     * Method which is called from the editor when a transaction is deleted
      *
      * @param event with all the data which where entered into the editor
      * @see CompAddCryptoAsset.DeleteEvent
-     * */
+     */
     private void deleteTransaction(CompAddTransaction.DeleteEvent event) {
         service.deleteTransaction(event.getTransaction());
         updateList();

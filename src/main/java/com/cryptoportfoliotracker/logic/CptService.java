@@ -32,17 +32,13 @@ public class CptService {
     /**
      * Creates a new transaction instance
      *
-     * @param assetRepository The asset repository
+     * @param assetRepository       The asset repository
      * @param cryptoAssetRepository The crypto asset repository
-     * @param platformRepository The platform repository
+     * @param platformRepository    The platform repository
      * @param transactionRepository The transaction repository
-     * @param fiatAssetRepository The fiat asset repository
+     * @param fiatAssetRepository   The fiat asset repository
      */
-    public CptService(AssetRepository assetRepository,
-                      CryptoAssetRepository cryptoAssetRepository,
-                      PlatformRepository platformRepository,
-                      TransactionRepository transactionRepository,
-                      FiatAssetRepository fiatAssetRepository) {
+    public CptService(AssetRepository assetRepository, CryptoAssetRepository cryptoAssetRepository, PlatformRepository platformRepository, TransactionRepository transactionRepository, FiatAssetRepository fiatAssetRepository) {
         this.assetRepository = assetRepository;
         this.cryptoAssetRepository = cryptoAssetRepository;
         this.platformRepository = platformRepository;
@@ -220,7 +216,7 @@ public class CptService {
      * Calculates the total current value of all assets
      *
      * @return BigDecimal
-     *         Returns the total current value of all assets from the transactions
+     * Returns the total current value of all assets from the transactions
      */
     public BigDecimal getTotalCurrentValue() {
         BigDecimal currentValue = new BigDecimal("0");
@@ -240,7 +236,7 @@ public class CptService {
      * Calculates the total percentage change of invested to current value
      *
      * @return BigDecimal
-     *         Returns the total percentage change of invested to current value
+     * Returns the total percentage change of invested to current value
      */
     public BigDecimal getTotalPercentageChange() {
         BigDecimal increase, pIncreace, decrease, pDecrease;
@@ -267,7 +263,7 @@ public class CptService {
      * Calculates the platform percentage change of invested to current value
      *
      * @return BigDecimal
-     *         Returns the platform percentage change of invested to current value
+     * Returns the platform percentage change of invested to current value
      */
     public double getPlatformPercentageChange(Platform platform) {
         BigDecimal increase, pIncreace, decrease, pDecrease;
@@ -300,7 +296,7 @@ public class CptService {
      * Calculates the total invested capital
      *
      * @return BigDecimal
-     *         Returns the total invested capital
+     * Returns the total invested capital
      */
     public BigDecimal getTotalInvestedCapital() {
         BigDecimal investedCapital = new BigDecimal("0");

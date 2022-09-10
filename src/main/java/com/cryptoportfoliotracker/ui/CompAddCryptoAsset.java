@@ -1,8 +1,6 @@
 package com.cryptoportfoliotracker.ui;
 
-import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.entities.Platform;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.ComponentEventListener;
@@ -120,6 +118,12 @@ public class CompAddCryptoAsset extends FormLayout {
 
     // Events
 
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
+
+
+        return getEventBus().addListener(eventType, listener);
+    }
+
     /***
      * Superclass for events
      *
@@ -128,7 +132,7 @@ public class CompAddCryptoAsset extends FormLayout {
      * @see CompAddCryptoAsset
      */
     public static abstract class CompAddAssetEvent extends ComponentEvent<CompAddCryptoAsset> {
-        private CryptoAsset cryptoAsset;
+        private final CryptoAsset cryptoAsset;
 
         /**
          * Creates a new component add crypto asset instance
@@ -163,7 +167,7 @@ public class CompAddCryptoAsset extends FormLayout {
         /**
          * Creates a new component event to save the crypto asset
          *
-         * @param source of the event
+         * @param source      of the event
          * @param cryptoAsset to be saved
          */
         SaveEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
@@ -182,7 +186,7 @@ public class CompAddCryptoAsset extends FormLayout {
         /**
          * Creates a new component event to delete the crypto asset
          *
-         * @param source of the event
+         * @param source      of the event
          * @param cryptoAsset to be saved
          */
         DeleteEvent(CompAddCryptoAsset source, CryptoAsset cryptoAsset) {
@@ -207,12 +211,6 @@ public class CompAddCryptoAsset extends FormLayout {
         CloseEvent(CompAddCryptoAsset source) {
             super(source, null);
         }
-    }
-
-    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
-
-
-        return getEventBus().addListener(eventType, listener);
     }
 
 

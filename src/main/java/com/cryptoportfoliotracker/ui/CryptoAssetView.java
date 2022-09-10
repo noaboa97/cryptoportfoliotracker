@@ -2,7 +2,6 @@ package com.cryptoportfoliotracker.ui;
 
 import com.cryptoportfoliotracker.entities.Asset;
 import com.cryptoportfoliotracker.entities.CryptoAsset;
-import com.cryptoportfoliotracker.entities.FiatAsset;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -15,8 +14,6 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-import java.util.List;
-
 /***
  * Class to display the crypto asset view in the ui
  *
@@ -25,7 +22,7 @@ import java.util.List;
  * @see CompAddCryptoAsset
  * @see MainView
  */
-@Route(value="cryptoassets", layout = MainView.class)
+@Route(value = "cryptoassets", layout = MainView.class)
 @PageTitle("Crypto Assets")
 public class CryptoAssetView extends VerticalLayout {
 
@@ -116,7 +113,9 @@ public class CryptoAssetView extends VerticalLayout {
         return toolbar;
     }
 
-    /** Allows to edit the crypto asset */
+    /**
+     * Allows to edit the crypto asset
+     */
     public void editCryptoAsset(CryptoAsset transaction) {
 
 
@@ -129,14 +128,18 @@ public class CryptoAssetView extends VerticalLayout {
         }
     }
 
-    /** closes the editor */
+    /**
+     * closes the editor
+     */
     private void closeEditor() {
         compAddCryptoAsset.setCryptoAsset(null);
         compAddCryptoAsset.setVisible(false);
         removeClassName("editing");
     }
 
-    /** Method used to add a new crypto asset */
+    /**
+     * Method used to add a new crypto asset
+     */
     private void addCryptoAsset() {
 
 
@@ -144,7 +147,9 @@ public class CryptoAssetView extends VerticalLayout {
         editCryptoAsset(new CryptoAsset());
     }
 
-    /** Configures the editor and defines the events for the buttons */
+    /**
+     * Configures the editor and defines the events for the buttons
+     */
     private void configureCompAddCryptoAsset() {
 
         compAddCryptoAsset = new CompAddCryptoAsset(service.findAllPlatforms());
@@ -155,14 +160,17 @@ public class CryptoAssetView extends VerticalLayout {
 
     }
 
-    /** Updates the table / grid */
+    /**
+     * Updates the table / grid
+     */
     public void updateList() {
 
         grid.setItems(service.findAllCryptoAssets(filterText.getValue()));
 
     }
 
-    /** Method which is called from the editor when a asset is saved
+    /**
+     * Method which is called from the editor when a asset is saved
      *
      * @param event with all the data which where entered into the editor
      * @see CompAddCryptoAsset.SaveEvent
@@ -174,10 +182,11 @@ public class CryptoAssetView extends VerticalLayout {
         closeEditor();
     }
 
-    /** Method which is called from the editor when a asset is deleted
+    /**
+     * Method which is called from the editor when a asset is deleted
      *
      * @param event with all the data which where entered into the editor
-     * */
+     */
     private void deleteCryptoAsset(CompAddCryptoAsset.DeleteEvent event) {
         service.deleteCryptoAsset(event.getCryptoAsset());
         updateList();

@@ -1,6 +1,7 @@
 package com.cryptoportfoliotracker.entities;
 
 import com.cryptoportfoliotracker.logic.CptService;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -18,7 +19,7 @@ public class Platform {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="platform_id")
+    @Column(name = "platform_id")
     private Long id;
 
     @NotNull
@@ -38,7 +39,7 @@ public class Platform {
     /**
      * Creates a new platform instance
      *
-     * @param name full name of the platform
+     * @param name           full name of the platform
      * @param isFiatPlatform true or false if it's a fiat platform or not
      */
     public Platform(String name, boolean isFiatPlatform) {
@@ -50,7 +51,6 @@ public class Platform {
     /**
      * Creates a new empty platform instance
      * Need for the bean creation of Spring because it uses the setter and getter methods
-     *
      */
     public Platform() {
     }
@@ -58,8 +58,8 @@ public class Platform {
     /**
      * Getter for the id of the platform
      *
-     * @return  Long
-     *          The id of the platform
+     * @return Long
+     * The id of the platform
      */
     public Long getId() {
         return id;
@@ -68,8 +68,7 @@ public class Platform {
     /**
      * Setter for the id of the platform
      *
-     * @param id
-     *        The id of platform
+     * @param id The id of platform
      */
     public void setId(Long id) {
         this.id = id;
@@ -78,8 +77,8 @@ public class Platform {
     /**
      * Getter for the name of the platform
      *
-     * @return  String
-     *          The name of the platform
+     * @return String
+     * The name of the platform
      */
     public String getName() {
         return name;
@@ -88,8 +87,7 @@ public class Platform {
     /**
      * Setter for the name of the platform
      *
-     * @param name
-     *        The name of platform
+     * @param name The name of platform
      */
     public void setName(String name) {
         this.name = name;
@@ -108,11 +106,11 @@ public class Platform {
 
         List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
-        for (CryptoAsset a : assetList){
+        for (CryptoAsset a : assetList) {
 
             List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
 
-            for(Transaction t : transactionList) {
+            for (Transaction t : transactionList) {
 
                 if (t.getDestPlatform().toString() == this.toString()) {
 
@@ -140,12 +138,12 @@ public class Platform {
 
         List<CryptoAsset> assetList = service.findAllCryptoAssetsOfPlatform(this);
 
-        for (CryptoAsset a : assetList){
+        for (CryptoAsset a : assetList) {
 
             List<Transaction> transactionList = service.findBySrcPlatform(service.findStandard().getPlatform());
 
-            for(Transaction t : transactionList) {
-                if(t.getDestPlatform().toString() == this.toString()) {
+            for (Transaction t : transactionList) {
+                if (t.getDestPlatform().toString() == this.toString()) {
 
                     BigDecimal la = a.getCurrentValueFiat();
                     BigDecimal lo = t.getDestAmount().multiply(la);
@@ -161,8 +159,8 @@ public class Platform {
     /**
      * Getter to check if it's a fiat platform
      *
-     * @return  boolean
-     *          true or false
+     * @return boolean
+     * true or false
      */
     public boolean isFiatPlatform() {
         return isFiatPlatform;
@@ -171,8 +169,7 @@ public class Platform {
     /**
      * Setter if it's a fiat platform otherwise by default it's false
      *
-     * @param fiatPlatform
-     *        true or false
+     * @param fiatPlatform true or false
      */
     public void setFiatPlatform(boolean fiatPlatform) {
         isFiatPlatform = fiatPlatform;
@@ -184,7 +181,7 @@ public class Platform {
      * @return name of the platform
      */
     @Override
-    public String toString(){
+    public String toString() {
         return name;
     }
 

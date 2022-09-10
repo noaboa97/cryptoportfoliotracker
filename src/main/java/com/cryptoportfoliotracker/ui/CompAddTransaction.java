@@ -49,7 +49,7 @@ public class CompAddTransaction extends FormLayout {
      * Creates a new component add transaction instance
      *
      * @param platformList of platforms
-     * @param assetList of all assets
+     * @param assetList    of all assets
      */
     public CompAddTransaction(List<Asset> assetList, List<Platform> platformList) {
         addClassName("transaction-list");
@@ -71,13 +71,13 @@ public class CompAddTransaction extends FormLayout {
         srcPlatform.addValueChangeListener(event -> fireEvent(new SrcPlatformEvent(this, srcPlatform.getValue(), srcAsset)));
 
         /** Adds all the fields to the component */
-        add(dateAndTime,srcPlatform,srcAsset,srcAmount,destPlatform,destAsset,destAmount,fee,feeAsset,notes,createButtonsLayout());
+        add(dateAndTime, srcPlatform, srcAsset, srcAmount, destPlatform, destAsset, destAmount, fee, feeAsset, notes, createButtonsLayout());
     }
 
     /**
      * Creates the horizontal layout for the buttons
      *
-     * @see #CompAddTransaction(List,List)
+     * @see #CompAddTransaction(List, List)
      */
     private HorizontalLayout createButtonsLayout() {
 
@@ -128,6 +128,12 @@ public class CompAddTransaction extends FormLayout {
         }
     }
 
+    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
+
+
+        return getEventBus().addListener(eventType, listener);
+    }
+
     /***
      * Superclass for CRUD events
      *
@@ -136,7 +142,7 @@ public class CompAddTransaction extends FormLayout {
      * @see CompAddTransaction
      */
     public static abstract class CompAddTransactionEvent extends ComponentEvent<CompAddTransaction> {
-        private Transaction transaction;
+        private final Transaction transaction;
 
         /**
          * Creates a new component add transaction instance
@@ -170,7 +176,7 @@ public class CompAddTransaction extends FormLayout {
         /**
          * Creates a new component event to save the crypto asset
          *
-         * @param source of the event
+         * @param source      of the event
          * @param transaction to be saved
          */
         SaveEvent(CompAddTransaction source, Transaction transaction) {
@@ -210,13 +216,6 @@ public class CompAddTransaction extends FormLayout {
         }
     }
 
-    public <T extends ComponentEvent<?>> Registration addListener(Class<T> eventType, ComponentEventListener<T> listener) {
-
-
-        return getEventBus().addListener(eventType, listener);
-    }
-
-
     /***
      * Superclass for platform dropdown list events
      *
@@ -225,15 +224,15 @@ public class CompAddTransaction extends FormLayout {
      * @see CompAddTransaction
      */
     public static abstract class CompAddTransactionPlatformEvent extends ComponentEvent<CompAddTransaction> {
-        private Platform platform;
-        private ComboBox<Asset> asset;
+        private final Platform platform;
+        private final ComboBox<Asset> asset;
 
         /**
          * Creates a new component add transaction instance
          *
-         * @param source      of the event
-         * @param platform  which has been selected
-         * @param asset field of the view
+         * @param source   of the event
+         * @param platform which has been selected
+         * @param asset    field of the view
          */
         protected CompAddTransactionPlatformEvent(CompAddTransaction source, Platform platform, ComboBox<Asset> asset) {
             super(source, false);
@@ -241,18 +240,20 @@ public class CompAddTransaction extends FormLayout {
             this.asset = asset;
         }
 
-        /** Getter for the platform
+        /**
+         * Getter for the platform
          *
          * @return platform
-         * */
+         */
         public Platform getPlatform() {
             return platform;
         }
 
-        /** Getter for the platform
+        /**
+         * Getter for the platform
          *
          * @return asset
-         * */
+         */
         public ComboBox<Asset> getAsset() {
             return asset;
         }
@@ -271,7 +272,7 @@ public class CompAddTransaction extends FormLayout {
         /**
          * Creates a new component event so that the transaction view can load the assets of the platform
          *
-         * @param source of the event
+         * @param source    of the event
          * @param platform
          * @param destAsset
          */
@@ -292,7 +293,7 @@ public class CompAddTransaction extends FormLayout {
         /**
          * Creates a new component event so that the transaction view can load the assets of the platform
          *
-         * @param source of the event
+         * @param source   of the event
          * @param platform
          * @param srcAsset
          */
@@ -301,7 +302,6 @@ public class CompAddTransaction extends FormLayout {
         }
 
     }
-
 
 
 }

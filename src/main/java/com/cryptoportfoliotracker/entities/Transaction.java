@@ -19,7 +19,7 @@ public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="transaction_id")
+    @Column(name = "transaction_id")
     private Long id;
     @NotNull
     private LocalDateTime dateAndTime;
@@ -62,17 +62,17 @@ public class Transaction {
     /**
      * Creates a new transaction instance
      *
-     * @param dateAndTime date and time of the transaction
-     * @param srcAmount source amount which has been transferred
-     * @param srcAsset source asset which has been transferred
-     * @param destAmount destination amount which has been transferred
-     * @param destAsset source asset which has been transferred
-     * @param srcPlatform source platform from which the transaction originated
+     * @param dateAndTime  date and time of the transaction
+     * @param srcAmount    source amount which has been transferred
+     * @param srcAsset     source asset which has been transferred
+     * @param destAmount   destination amount which has been transferred
+     * @param destAsset    source asset which has been transferred
+     * @param srcPlatform  source platform from which the transaction originated
      * @param destPlatform destination platform from where the transaction was sent to
-     * @param fee amount for the transaction
-     * @param fee asset of the fee amount
+     * @param fee          amount for the transaction
+     * @param fee          asset of the fee amount
      */
-    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform,BigDecimal fee,Asset feeAsset) {
+    public Transaction(LocalDateTime dateAndTime, BigDecimal srcAmount, Asset srcAsset, BigDecimal destAmount, Asset destAsset, Platform srcPlatform, Platform destPlatform, BigDecimal fee, Asset feeAsset) {
         this.dateAndTime = dateAndTime;
         this.srcAmount = srcAmount;
         this.srcAsset = srcAsset;
@@ -87,7 +87,6 @@ public class Transaction {
     /**
      * Creates a new empty platform instance
      * Need for the bean creation of Spring because it uses the setter and getter methods
-     *
      */
     public Transaction() {
     }
@@ -95,8 +94,8 @@ public class Transaction {
     /**
      * Getter for the id of the transaction
      *
-     * @return  Long
-     *          The id of the transaction
+     * @return Long
+     * The id of the transaction
      */
     public Long getId() {
         return id;
@@ -105,8 +104,7 @@ public class Transaction {
     /**
      * Setter for the id of the transaction
      *
-     * @param id
-     *        The identifier of transaction
+     * @param id The identifier of transaction
      */
     public void setId(Long id) {
         this.id = id;
@@ -115,8 +113,8 @@ public class Transaction {
     /**
      * Getter for the date and time of the transaction
      *
-     * @return  LocalDateTime
-     *          The date and time of the transaction
+     * @return LocalDateTime
+     * The date and time of the transaction
      */
     public LocalDateTime getDateAndTime() {
         return dateAndTime;
@@ -125,8 +123,7 @@ public class Transaction {
     /**
      * Setter for the date and time of the transaction
      *
-     * @param dateAndTime
-     *        The date and time of transaction
+     * @param dateAndTime The date and time of transaction
      */
     public void setDateAndTime(LocalDateTime dateAndTime) {
 
@@ -139,8 +136,8 @@ public class Transaction {
     /**
      * Getter for the source amount of the transaction
      *
-     * @return  BigDecimal
-     *          The source amount of the transaction
+     * @return BigDecimal
+     * The source amount of the transaction
      */
     public BigDecimal getSrcAmount() {
         return srcAmount;
@@ -149,8 +146,7 @@ public class Transaction {
     /**
      * Setter for the source amount of the transaction
      *
-     * @param srcAmount
-     *        The source amount of transaction
+     * @param srcAmount The source amount of transaction
      */
     public void setSrcAmount(BigDecimal srcAmount) {
         this.srcAmount = srcAmount;
@@ -159,8 +155,8 @@ public class Transaction {
     /**
      * Getter for the source asset of the transaction
      *
-     * @return  Asset
-     *          The source asset of the transaction
+     * @return Asset
+     * The source asset of the transaction
      * @see Asset
      */
     public Asset getSrcAsset() {
@@ -170,8 +166,7 @@ public class Transaction {
     /**
      * Setter for the source asset of the transaction
      *
-     * @param srcAsset
-     *        The source asset of transaction
+     * @param srcAsset The source asset of transaction
      * @see Asset
      */
     public void setSrcAsset(Asset srcAsset) {
@@ -181,8 +176,8 @@ public class Transaction {
     /**
      * Getter for the destination amount of the transaction
      *
-     * @return  BigDecimal
-     *          The destination amount of the transaction
+     * @return BigDecimal
+     * The destination amount of the transaction
      */
     public BigDecimal getDestAmount() {
         return destAmount;
@@ -191,8 +186,7 @@ public class Transaction {
     /**
      * Setter for the destination amount of the transaction
      *
-     * @param destAmount
-     *        The destination amount of transaction
+     * @param destAmount The destination amount of transaction
      */
     public void setDestAmount(BigDecimal destAmount) {
         this.destAmount = destAmount;
@@ -201,8 +195,8 @@ public class Transaction {
     /**
      * Getter for the destination asset of the transaction
      *
-     * @return  Asset
-     *          The destination asset of the transaction
+     * @return Asset
+     * The destination asset of the transaction
      * @see Asset
      */
     public Asset getDestAsset() {
@@ -212,8 +206,7 @@ public class Transaction {
     /**
      * Setter for the destination asset of the transaction
      *
-     * @param destAsset
-     *        The destination asset of transaction
+     * @param destAsset The destination asset of transaction
      * @see Asset
      */
     public void setDestAsset(Asset destAsset) {
@@ -223,8 +216,8 @@ public class Transaction {
     /**
      * Getter for the source platform of the transaction
      *
-     * @return  Platform
-     *          The source platform of the transaction
+     * @return Platform
+     * The source platform of the transaction
      * @see Platform
      */
     public Platform getSrcPlatform() {
@@ -234,8 +227,7 @@ public class Transaction {
     /**
      * Setter for the source platform of the transaction
      *
-     * @param srcPlatform
-     *        The source platform asset of transaction
+     * @param srcPlatform The source platform asset of transaction
      * @see Platform
      */
     public void setSrcPlatform(Platform srcPlatform) {
@@ -245,8 +237,8 @@ public class Transaction {
     /**
      * Getter for the destination platform of the transaction
      *
-     * @return  Platform
-     *          The destination platform of the transaction
+     * @return Platform
+     * The destination platform of the transaction
      * @see Platform
      */
     public Platform getDestPlatform() {
@@ -256,8 +248,7 @@ public class Transaction {
     /**
      * Setter for the destination platform of the transaction
      *
-     * @param destPlatform
-     *        The destination platform asset of transaction
+     * @param destPlatform The destination platform asset of transaction
      * @see Platform
      */
     public void setDestPlatform(Platform destPlatform) {
@@ -267,8 +258,8 @@ public class Transaction {
     /**
      * Getter for the fee amount of the transaction
      *
-     * @return  BigDecimal
-     *          The fee amount m of the transaction
+     * @return BigDecimal
+     * The fee amount m of the transaction
      */
     public BigDecimal getFee() {
         return fee;
@@ -277,8 +268,7 @@ public class Transaction {
     /**
      * Setter for the fee amount of the transaction
      *
-     * @param fee
-     *        The fee amount asset of transaction
+     * @param fee The fee amount asset of transaction
      */
     public void setFee(BigDecimal fee) {
         this.fee = fee;
@@ -287,8 +277,8 @@ public class Transaction {
     /**
      * Getter for the fee asset of the transaction
      *
-     * @return  Platform
-     *          The fee asset of the transaction
+     * @return Platform
+     * The fee asset of the transaction
      * @see Asset
      */
     public Asset getFeeAsset() {
@@ -298,8 +288,7 @@ public class Transaction {
     /**
      * Setter for the fee asset of the transaction
      *
-     * @param feeAsset
-     *        The fee asset of transaction
+     * @param feeAsset The fee asset of transaction
      * @see Asset
      */
     public void setFeeAsset(Asset feeAsset) {
@@ -309,8 +298,8 @@ public class Transaction {
     /**
      * Getter for the notes of the transaction
      *
-     * @return  String
-     *          The notes of the transaction
+     * @return String
+     * The notes of the transaction
      */
     public String getNotes() {
         return notes;
@@ -319,8 +308,7 @@ public class Transaction {
     /**
      * Setter for the notes of the transaction
      *
-     * @param notes
-     *        The notes of transaction
+     * @param notes The notes of transaction
      */
     public void setNotes(String notes) {
         this.notes = notes;
@@ -329,12 +317,12 @@ public class Transaction {
     /**
      * Gets the date and time of the transaction as a string
      *
-     * @return  String
-     *          The date and time of the transaction as a string
+     * @return String
+     * The date and time of the transaction as a string
      */
-    public String getStringDate(){
+    public String getStringDate() {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd. MMM yyyy HH:mm:ss");
         return dateAndTime.format(formatter);
-    };
+    }
 
 }

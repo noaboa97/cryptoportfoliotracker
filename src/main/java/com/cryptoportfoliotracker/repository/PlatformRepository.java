@@ -1,13 +1,11 @@
 package com.cryptoportfoliotracker.repository;
 
-import com.cryptoportfoliotracker.entities.Asset;
-import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.entities.Platform;
-import com.cryptoportfoliotracker.entities.Transaction;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
 import java.util.List;
 
 /**
@@ -22,7 +20,7 @@ public interface PlatformRepository extends JpaRepository<Platform, Long> {
      * JPQL Query to search for the name of the platform
      *
      * @return Platform
-     *         Returns a list with a fiat asset
+     * Returns a list with a fiat asset
      */
     @Query("select p from Platform p " +
             "where p.name = :searchTerm")
@@ -32,7 +30,7 @@ public interface PlatformRepository extends JpaRepository<Platform, Long> {
      * JPQL Query to find all crypto platforms
      *
      * @return Platform
-     *         Returns a list with all crypto platforms
+     * Returns a list with all crypto platforms
      */
     @Query("select p from Platform p " +
             "where p.isFiatPlatform = :searchTerm")

@@ -5,7 +5,6 @@ import com.cryptoportfoliotracker.logic.CptService;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
-import java.util.List;
 
 /**
  * Superclass for asset types
@@ -33,9 +32,9 @@ public abstract class Asset {
     /**
      * Creates a new Asset instance
      *
-     * @param fullName the name of the asset
+     * @param fullName  the name of the asset
      * @param shortName the name of the asset
-     * @param platform where the asset is held
+     * @param platform  where the asset is held
      */
     public Asset(String fullName, String shortName, Platform platform) {
         this.fullName = fullName;
@@ -46,7 +45,6 @@ public abstract class Asset {
     /**
      * Creates a new empty asset instance
      * Need for the bean creation of Spring because it uses the setter and getter methods
-     *
      */
     public Asset() {
     }
@@ -63,8 +61,7 @@ public abstract class Asset {
     /**
      * Setter for the id
      *
-     * @param id
-     *        The identifier of the asset
+     * @param id The identifier of the asset
      */
     public void setId(Long id) {
         this.id = id;
@@ -82,8 +79,7 @@ public abstract class Asset {
     /**
      * Setter for the full name of the asset
      *
-     * @param fullName
-     *        The name of the asset
+     * @param fullName The name of the asset
      */
     public void setFullName(String fullName) {
         this.fullName = fullName;
@@ -101,8 +97,7 @@ public abstract class Asset {
     /**
      * Setter for the short name of the asset
      *
-     * @param shortName
-     *        The name of the asset
+     * @param shortName The name of the asset
      */
     public void setShortName(String shortName) {
         this.shortName = shortName;
@@ -111,8 +106,8 @@ public abstract class Asset {
     /**
      * Getter for the platform
      *
-     * @return  Platform
-     *          The platform of the asset
+     * @return Platform
+     * The platform of the asset
      * @see Platform
      */
     public Platform getPlatform() {
@@ -122,8 +117,7 @@ public abstract class Asset {
     /**
      * Setter for the short name of the asset
      *
-     * @param platform
-     *        The platform name of the asset
+     * @param platform The platform name of the asset
      */
     public void setPlatform(Platform platform) {
         this.platform = platform;
@@ -166,10 +160,11 @@ public abstract class Asset {
         return shortName;
     }
 
-    public String getShortNameAndPlatform(){
+    public String getShortNameAndPlatform() {
 
         String shortNameAndPlatform = getShortName() + " - " + getPlatform().getName();
 
         return shortNameAndPlatform;
-    };
+    }
+
 }
