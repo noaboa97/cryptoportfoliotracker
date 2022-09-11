@@ -72,6 +72,7 @@ public class DemoData {
             BigDecimal cardanoValue = new BigDecimal("0.5012");
             BigDecimal usdCoinValue = new BigDecimal("1");
             BigDecimal ltcValue = new BigDecimal("63.62");
+            BigDecimal nexoValue = new BigDecimal("0.98");
 
             // Adds the current value to the crypto asset objects
             bitcoinBitpanda.setCurrentValueFiat(btcValue);
@@ -85,6 +86,7 @@ public class DemoData {
             cardanoCcom.setCurrentValueFiat(cardanoValue);
             usdCoinCelcius.setCurrentValueFiat(usdCoinValue);
             ltcNexo.setCurrentValueFiat(ltcValue);
+            nexoNexo.setCurrentValueFiat(nexoValue);
 
             // Saves the crypto assets objects to the repository
             cryptoAssetRepository.save(bitcoinBitpanda);
@@ -97,10 +99,10 @@ public class DemoData {
             cryptoAssetRepository.save(cardanoCcom);
             cryptoAssetRepository.save(usdCoinCelcius);
             cryptoAssetRepository.save(ltcNexo);
+            cryptoAssetRepository.save(nexoNexo);
 
 
-
-            // Creates the fiat assets objects 
+            // Creates the fiat assets objects
             FiatAsset chf = new FiatAsset("Schweizer Franken", "CHF", postFinance, true);
 
             // Saves the fiat assets objects to the repository
@@ -132,7 +134,7 @@ public class DemoData {
             transactionRepository.save(T7);
             transactionRepository.save(T8);
             transactionRepository.save(T9);
-           // transactionRepository.save(T10);
+            transactionRepository.save(T10);
             transactionRepository.save(T11);
 
 
