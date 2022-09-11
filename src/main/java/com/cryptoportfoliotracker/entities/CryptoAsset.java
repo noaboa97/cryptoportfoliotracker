@@ -69,7 +69,7 @@ public class CryptoAsset extends Asset {
             }
 
         }
-            return investedCapitalCrypto;
+        return investedCapitalCrypto;
     }
 
     /**
@@ -80,7 +80,22 @@ public class CryptoAsset extends Asset {
      * @see CptService
      */
     public String getInvestedCapitalCryptoToString(CptService service) {
-        return df.format(getInvestedCapitalCrypto(service));
+
+        BigDecimal investedCapitalCrypto = getInvestedCapitalCrypto(service);
+
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(investedCapitalCrypto);
+
+        if (investedCapitalCrypto.compareTo(zero) == 0) {
+            return s;
+        } else if (investedCapitalCrypto.intValue() > 0) {
+            return s;
+        } else {
+            return investedCapitalCrypto.stripTrailingZeros().toString();
+        }
+
+
     }
 
     /**
@@ -110,7 +125,21 @@ public class CryptoAsset extends Asset {
      * @see CptService
      */
     public String getInvestedCapitalFiatToString(CptService service) {
-        return df.format(getInvestedCapitalFiat(service));
+
+        BigDecimal investedCapitalFiat = getInvestedCapitalFiat(service);
+
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(investedCapitalFiat);
+
+        if (investedCapitalFiat.compareTo(zero) == 0) {
+            return s;
+        } else if (investedCapitalFiat.intValue() > 0) {
+            return s;
+        } else {
+            return investedCapitalFiat.stripTrailingZeros().toString();
+        }
+
     }
 
     /***
@@ -145,7 +174,21 @@ public class CryptoAsset extends Asset {
      * @see CptService
      */
     public String getCurrentValueFiatToString(CptService service) {
-        return df.format(getCurrentValueFiat(service));
+
+        BigDecimal currentValueFiat = getCurrentValueFiat(service);
+
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(currentValueFiat);
+
+        if (currentValueFiat.compareTo(zero) == 0) {
+            return s;
+        } else if (currentValueFiat.intValue() > 0) {
+            return s;
+        } else {
+            return currentValueFiat.stripTrailingZeros().toString();
+        }
+
     }
 
     /**

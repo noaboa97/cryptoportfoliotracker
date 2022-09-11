@@ -178,15 +178,25 @@ public class Transaction {
     }
 
     /**
-     * Getter for the source amount of the transaction
+     * Getter for the source amount of the transaction as string
      *
-     * @return BigDecimal
-     * The source amount of the transaction
+     * @return String
+     * The source amount of the transaction as string
      */
-
     public String getSrcAmountToString() {
 
-        return df.format(srcAmount.stripTrailingZeros());
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(srcAmount);
+
+        if (srcAmount.compareTo(zero) == 0) {
+            return s;
+        } else if (srcAmount.intValue() > 0) {
+            return s;
+        } else {
+            return srcAmount.stripTrailingZeros().toString();
+        }
+
     }
 
     /**
@@ -229,9 +239,25 @@ public class Transaction {
         return destAmount;
     }
 
+    /**
+     * Getter for the destination amount of the transaction as string
+     *
+     * @return String
+     * The source destination of the transaction as string
+     */
     public String getDestAmountToString() {
 
-        return df.format(destAmount.stripTrailingZeros());
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(destAmount);
+
+        if (destAmount.compareTo(zero) == 0) {
+            return s;
+        } else if (destAmount.intValue() > 0) {
+            return s;
+        } else {
+            return destAmount.stripTrailingZeros().toString();
+        }
     }
 
     /**
@@ -314,6 +340,27 @@ public class Transaction {
      */
     public BigDecimal getFee() {
         return fee;
+    }
+
+    /**
+     * Getter for the fee amount of the transaction as string
+     *
+     * @return String
+     * The source fee of the transaction as string
+     */
+    public String getFeeToString() {
+
+        BigDecimal zero = new BigDecimal("0");
+
+        String s = df.format(fee);
+
+        if (fee.compareTo(zero) == 0) {
+            return s;
+        } else if (fee.intValue() > 0) {
+            return s;
+        } else {
+            return fee.stripTrailingZeros().toString();
+        }
     }
 
     /**
