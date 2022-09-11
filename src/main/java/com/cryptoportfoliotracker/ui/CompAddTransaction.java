@@ -18,6 +18,7 @@ import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
+import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 
@@ -66,12 +67,23 @@ public class CompAddTransaction extends FormLayout {
         destPlatform.setItemLabelGenerator(Platform::getName);
         feeAsset.setItemLabelGenerator(Asset::getShortNameAndPlatform);
 
+
+        srcAmount.setWidthFull();
+        srcAsset.setWidthFull();
+        HorizontalLayout source = new HorizontalLayout();
+        source.add(srcAmount, srcAsset);
+
+        destAmount.setWidthFull();
+        destAsset.setWidthFull();
+        HorizontalLayout destination = new HorizontalLayout();
+        destination.add(destAmount, destAsset);
+
+
         /** Listener on the field when changed load the dropdown for the assets but only assets from the selected platform */
         destPlatform.addValueChangeListener(event -> fireEvent(new DestPlatformEvent(this, destPlatform.getValue(), destAsset)));
         srcPlatform.addValueChangeListener(event -> fireEvent(new SrcPlatformEvent(this, srcPlatform.getValue(), srcAsset)));
-
         /** Adds all the fields to the component */
-        add(dateAndTime, srcPlatform, srcAsset, srcAmount, destPlatform, destAsset, destAmount, fee, feeAsset, notes, createButtonsLayout());
+        add(dateAndTime, srcPlatform, source, destPlatform, destination, fee, feeAsset, notes, createButtonsLayout());
     }
 
     /**

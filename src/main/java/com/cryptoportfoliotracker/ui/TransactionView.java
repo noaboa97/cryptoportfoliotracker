@@ -5,7 +5,9 @@ import com.cryptoportfoliotracker.entities.Transaction;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -65,16 +67,19 @@ public class TransactionView extends VerticalLayout {
 
         /** Sets the column object type, method to display and the header of the column */
         grid.addColumn(transaction -> transaction.getStringDate()).setHeader("Timestamp");
-        grid.addColumn(transaction -> transaction.getSrcAmountToString()).setHeader("Source Amount");
+        grid.addColumn(transaction -> transaction.getSrcAmountToString()).setHeader("Source Amount").setTextAlign(ColumnTextAlign.END);
         grid.addColumn(transaction -> transaction.getSrcAsset()).setHeader("Source Asset");
         grid.addColumn(transaction -> transaction.getSrcPlatform()).setHeader("Source Platform");
-        grid.addColumn(transaction -> transaction.getDestAmountToString()).setHeader("Destination Amount");
+        grid.addColumn(transaction -> transaction.getDestAmountToString()).setHeader("Destination Amount").setTextAlign(ColumnTextAlign.END);
         grid.addColumn(transaction -> transaction.getDestAsset()).setHeader("Destination Asset");
         grid.addColumn(transaction -> transaction.getDestPlatform().getName()).setHeader("Destination Platform");
-        grid.addColumn(transaction -> transaction.getFee().stripTrailingZeros()).setHeader("Fees");
+        grid.addColumn(transaction -> transaction.getFeeToString()).setHeader("Fees").setTextAlign(ColumnTextAlign.END);
         grid.addColumn(transaction -> transaction.getFeeAsset()).setHeader("Fee Asset");
         grid.addColumn(transaction -> transaction.getNotes()).setHeader("Notes");
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
+        grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
 
         /** Event listener when a row is selected to open the editor */
         grid.asSingleSelect().addValueChangeListener(event -> editTransaction(event.getValue()));

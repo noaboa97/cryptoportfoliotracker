@@ -5,7 +5,9 @@ import com.cryptoportfoliotracker.entities.CryptoAsset;
 import com.cryptoportfoliotracker.logic.CptService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.grid.ColumnTextAlign;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridVariant;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -66,10 +68,14 @@ public class CryptoAssetView extends VerticalLayout {
         grid.addColumn(Asset::getFullName).setHeader("Name");
         grid.addColumn(Asset::getShortName).setHeader("Abbr.");
         grid.addColumn(Asset::getPlatform).setHeader("Platform");
-        grid.addColumn(asset -> asset.getInvestedCapitalFiatToString(service) + " " + service.findStandard().getShortName()).setHeader("Invested Capital Fiat");
-        grid.addColumn(asset -> asset.getInvestedCapitalCryptoToString(service) + " " + asset.getShortName()).setHeader("Invested Capital Crypto");
-        grid.addColumn(asset -> asset.getCurrentValueFiatToString(service) + " " + service.findStandard().getShortName()).setHeader("Current Total Value Fiat");
+        grid.addColumn(cryptoAsset -> cryptoAsset.getCurrentValueFiat() + " " + service.findStandard().getShortName()).setHeader("Current Market Price").setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(asset -> asset.getInvestedCapitalFiatToString(service) + " " + service.findStandard().getShortName()).setHeader("Invested Capital Fiat").setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(asset -> asset.getInvestedCapitalCryptoToString(service) + " " + asset.getShortName()).setHeader("Invested Capital Crypto").setTextAlign(ColumnTextAlign.END);
+        grid.addColumn(asset -> asset.getCurrentValueFiatToString(service) + " " + service.findStandard().getShortName()).setHeader("Current Total Value Fiat").setTextAlign(ColumnTextAlign.END);
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
+        grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
 
         /** Event listener when a row is selected to open the editor */
         grid.asSingleSelect().addValueChangeListener(event -> editCryptoAsset(event.getValue()));
